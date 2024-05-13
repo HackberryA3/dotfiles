@@ -1,0 +1,191 @@
+{
+  "main": {
+    "id": "95d2ca2a63f0394d",
+    "type": "split",
+    "children": [
+      {
+        "id": "f520fe9ecee236a3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "596b07398de52390",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SMB.md",
+                "mode": "source",
+                "source": true
+              }
+            },
+            "group": "bb79b1e79c840ad8"
+          }
+        ]
+      },
+      {
+        "id": "68c863db10d74530",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2959900aa3f01e4a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SMB.md",
+                "mode": "preview",
+                "source": true
+              }
+            },
+            "group": "bb79b1e79c840ad8"
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "b1c00904bd196208",
+    "type": "split",
+    "children": [
+      {
+        "id": "ce3d073c6f27b09a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "04bb35ab91baaaa1",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "93b0f7fd3a81b783",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "3b53f755a7996738",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "4242d13ba77b7a7b",
+    "type": "split",
+    "children": [
+      {
+        "id": "890f007d8a2489e5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f560e65a3b8963df",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "SMB.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "5752c0fadf392c68",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "SMB.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "2568ad4f74aed316",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "820ed2b0fc3328dd",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "SMB.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "switcher:クイックスイッチャーを開く": false,
+      "graph:グラフビューを開く": false,
+      "canvas:新規キャンバスを作成": false,
+      "daily-notes:今日のデイリーノートを開く": false,
+      "templates:テンプレートを挿入": false,
+      "command-palette:コマンドパレットを開く": false
+    }
+  },
+  "active": "596b07398de52390",
+  "lastOpenFiles": [
+    "CrackWithNmap.md",
+    "ScanSNMP.md",
+    "SNMP.md",
+    "BannerGrabbing.md",
+    "DefaultPort CheatSheet.md",
+    "NTFS.md",
+    "PortScanning.md",
+    "RDP.md",
+    "SDDL.md",
+    "SetupSSH.md",
+    "SMB.md",
+    "WMI.md",
+    "WinServices.md",
+    "SSH issue when using VPN with UDP.md",
+    "Memo_WMI.md",
+    "Memo_WinServices.md",
+    "Memo_SDDL.md",
+    "Memo_NTFS.md"
+  ]
+}

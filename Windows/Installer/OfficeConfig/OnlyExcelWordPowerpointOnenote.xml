@@ -1,0 +1,17 @@
+<Configuration>
+	<Add OfficeClientEdition="64" Channel="Current">
+		<Product ID="O365BusinessRetail">
+			<Language ID="ja-jp" />
+			<ExcludeApp ID="Access" />
+			<ExcludeApp ID="Groove" />
+			<ExcludeApp ID="Lync" />
+			<ExcludeApp ID="OneDrive" />
+			<ExcludeApp ID="Outlook" />
+			<ExcludeApp ID="Publisher" />
+			<ExcludeApp ID="Teams" />
+		</Product>
+	</Add>
+	<Updates Enabled="TRUE" />
+	<RemoveMSI />
+	<Display Level="None" AcceptEULA="TRUE" />
+</Configuration>
