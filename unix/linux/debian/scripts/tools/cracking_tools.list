@@ -1,0 +1,8 @@
+telnet
+ssh
+ftp
+smbclient
+freerdp2-x11
+nmap
+gobuster
+seclists
