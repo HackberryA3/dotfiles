@@ -1,5 +1,9 @@
 unzip
+gzip
 tar
 curl
 wget
 jq
+less
+fzf
+tmux
