@@ -17,6 +17,9 @@ for dotfile in .??*; do
 		rm ~/$dotfile
 	fi
 	if [ -e ~/$dotfile ]; then
+		if [ ! -d ~/.dotbackup ]; then
+			mkdir ~/.dotbackup
+		fi
 		echo "Backing up existing file: ~/$dotfile"
 		mv ~/$dotfile ~/.dotbackup/$dotfile.bak
 	fi

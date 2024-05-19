@@ -17,6 +17,9 @@ for dotfile in .??*; do
 		rm ~/$dotfile
 	fi
 	if [ -e ~/$dotfile ]; then
+		if [ ! -d ~/.dotbackup ]; then
+			mkdir ~/.dotbackup
+		fi
 		echo "Backing up existing file: ~/$dotfile"
 		mv ~/$dotfile ~/.dotbackup/$dotfile.bak
 	fi
@@ -24,7 +27,7 @@ for dotfile in .??*; do
 	ln -snfv "$(pwd)/$dotfile" ~/$dotfile 
 done
 
-PARENT=$(dirname $DOTFILES_DIR)/scripts/install.sh
+PARENT="$(dirname $DOTFILES_DIR)/scripts/install.sh"
 if [ -f $PARENT ]; then
 	chmod +x $PARENT
 	echo "Running parent script: $PARENT"
