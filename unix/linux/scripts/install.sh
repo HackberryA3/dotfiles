@@ -1,8 +1,9 @@
 #!/bin/bash
 
-PWD=$(pwd)
-SCRIPT_DIR=$(cd $(dirname $0); pwd)
-DOTFILES_DIR=$(cd $(dirname $(pwd)); pwd)
+PWD="$(pwd)"
+SCRIPT_DIR="$(dirname $0)"
+DOTFILES_DIR="$(dirname $SCRIPT_DIR)"
+cd "$DOTFILES_DIR"
 
 for dotfile in .??*; do
 	[ "$dotfile" = ".git" ] && continue
@@ -14,7 +15,6 @@ for dotfile in .??*; do
 	if [ -L ~/$dotfile ]; then
 		echo "Removing existing symlink: ~/$dotfile"
 		unlink ~/$dotfile
-		rm ~/$dotfile
 	fi
 	if [ -e ~/$dotfile ]; then
 		if [ ! -d ~/.dotbackup ]; then
@@ -27,9 +27,12 @@ for dotfile in .??*; do
 	ln -snfv "$(pwd)/$dotfile" ~/$dotfile 
 done
 
-PARENT="$(dirname $DOTFILES_DIR)/scripts/install.sh"
-if [ -f $PARENT ]; then
-	chmod +x $PARENT
+PARENT="$(dirname $(pwd))/scripts/install.sh"
+echo "Current directory: $PWD"
+echo "Dotfiles directory: $DOTFILES_DIR"
+echo "Parent script: $PARENT"
+if [ -e "$PARENT" ]; then
+	chmod u+x $PARENT
 	echo "Running parent script: $PARENT"
 	bash $PARENT
 fi

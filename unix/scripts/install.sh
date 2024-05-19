@@ -1,8 +1,9 @@
 #!/bin/bash
 
 PWD=$(pwd)
-SCRIPT_DIR=$(cd $(dirname $0); pwd)
-DOTFILES_DIR=$(cd $(dirname $(pwd)); pwd)
+SCRIPT_DIR="$(dirname $0)"
+DOTFILES_DIR="$(dirname $SCRIPT_DIR)"
+cd $DOTFILES_DIR
 
 for dotfile in .??*; do
 	[ "$dotfile" = ".git" ] && continue
@@ -14,7 +15,6 @@ for dotfile in .??*; do
 	if [ -L ~/$dotfile ]; then
 		echo "Removing existing symlink: ~/$dotfile"
 		unlink ~/$dotfile
-		rm ~/$dotfile
 	fi
 	if [ -e ~/$dotfile ]; then
 		if [ ! -d ~/.dotbackup ]; then
