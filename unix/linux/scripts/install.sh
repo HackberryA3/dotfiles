@@ -24,4 +24,11 @@ for dotfile in .??*; do
 	ln -snfv "$(pwd)/$dotfile" ~/$dotfile 
 done
 
+PARENT=$(dirname $DOTFILES_DIR)/scripts/install.sh
+if [ -f $PARENT ]; then
+	chmod +x $PARENT
+	echo "Running parent script: $PARENT"
+	bash $PARENT
+fi
+
 cd $PWD
