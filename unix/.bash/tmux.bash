@@ -15,16 +15,16 @@ fi
 if [[ ! -n $TMUX ]]; then
 	ID="`tmux list-sessions`"
 	if [[ -z "$ID" ]]; then
-    	tmux new-session
+    	tmux new-session -u
 	elif [[ -z "$PERCOL" ]]; then
-		tmux attach-session
+		tmux attach-session -u
 	else
 		create_new_session="Create New Session"
 		ID="$ID\n${create_new_session}:"
 		ID="`echo $ID | $PERCOL | cut -d: -f1`"
 		if [[ "$ID" = "${create_new_session}" ]]; then
-    		tmux new-session
+    		tmux new-session -u
 		fi
-		tmux attach-session -t "$ID"
+		tmux attach-session -tu "$ID"
 	fi
 fi

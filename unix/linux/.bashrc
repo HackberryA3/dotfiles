@@ -55,6 +55,8 @@ fi
 if [ -f ~/.bash/nvm.bash ]; then
 	source ~/.bash/nvm.bash
 fi
-if [ -f ~/.bash/tmux.bash ]; then
-	source ~/.bash/tmux.bash
+if (which "tmux" > /dev/null 2>&1); then
+	if [ -f ~/.bash/tmux.bash ]; then
+		source ~/.bash/tmux.bash
+	fi
 fi
