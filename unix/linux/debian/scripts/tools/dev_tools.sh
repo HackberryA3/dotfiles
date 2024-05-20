@@ -3,6 +3,6 @@
 PWD=$(pwd)
 cd "$(dirname $0)"
 
-apt install $(cat "dev_tools.list" | tr '\n' ' ') -y
+grep -vE '^\s*$|^\s*#' -- dev_tools.list | xargs -I APP sudo apt install APP -y
 
 cd $PWD

@@ -3,6 +3,6 @@
 PWD=$(pwd)
 cd "$(dirname $0)"
 
-apt install $(cat "pg_lang.list" | tr '\n' ' ') -y
+grep -vE '^\s*$|^\s*#' -- pg_lang.list | xargs -I APP sudo apt install APP -y
 
 cd $PWD

@@ -1,8 +1,13 @@
+# protocol ----------
 telnet
 ssh
 ftp
 smbclient
 freerdp2-x11
+
+# scanning ----------
 nmap
 gobuster
+
+# util --------------
 seclists

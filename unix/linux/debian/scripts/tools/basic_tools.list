@@ -1,10 +1,20 @@
+# zip ---------
 unzip
 gzip
 tar
+
+# http --------
 curl
 wget
+
+# util --------
 jq
 less
+fuse
+
+# editor ------
+vim
+
+# terminal ----
 fzf
 tmux
-fuse

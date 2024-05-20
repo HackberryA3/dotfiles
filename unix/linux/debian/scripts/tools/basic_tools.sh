@@ -3,6 +3,6 @@
 PWD=$(pwd)
 cd "$(dirname $0)"
 
-apt install $(cat "basic_tools.list" | tr '\n' ' ') -y
+grep -vE '^\s*$|^\s*#' -- basic_tools.list | xargs -I APP sudo apt install APP -y
 
 cd $PWD
