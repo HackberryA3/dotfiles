@@ -27,7 +27,7 @@ if !(which "jq" > /dev/null 2>&1); then
 fi
 
 # rcに書き込まないようにする
-PROFILE ="/dev/null"
+export PROFILE="/dev/null"
 
 LATEST=$(curl  "https://api.github.com/repos/nvm-sh/nvm/tags" | jq -r '.[0].name')
 INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$LATEST/install.sh"
