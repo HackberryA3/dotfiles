@@ -1,8 +1,8 @@
 #!/bin/bash
 
 PWD=$(pwd)
-cd $(dirname $0)
+cd "$(dirname $0)"
 
-apt install $(cat pg_lang.list | tr '\n' ' ') -y
+apt install $(cat "pg_lang.list" | tr '\n' ' ') -y
 
 cd $PWD
