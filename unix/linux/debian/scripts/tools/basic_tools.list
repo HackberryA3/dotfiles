@@ -9,6 +9,8 @@ wget
 
 # util --------
 jq
+fd-find
+ripgrep
 less
 fuse
 
