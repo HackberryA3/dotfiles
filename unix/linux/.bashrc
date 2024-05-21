@@ -1,7 +1,7 @@
 # インタラクティブでなければ終了
 case $- in
 	*i*) ;;
-	*) return;;
+	*) exit 0;;
 esac
 
 
