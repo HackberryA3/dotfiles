@@ -6,6 +6,7 @@ DOTFILES_DIR="$(dirname "$SCRIPT_DIR")"
 cd "$DOTFILES_DIR" || (echo "Faild run script" && exit 1)
 
 for dotfile in .??*; do
+	[ ! -e "$dotfile" ] && continue
 	[ "$dotfile" = ".git" ] && continue
     [ "$dotfile" = ".gitignore" ] && continue
     [ "$dotfile" = ".gitconfig.local.template" ] && continue
