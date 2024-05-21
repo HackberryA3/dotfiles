@@ -3,7 +3,7 @@
 PWD="$(pwd)"
 SCRIPT_DIR="$(dirname "$0")"
 DOTFILES_DIR="$(dirname "$SCRIPT_DIR")"
-cd "$DOTFILES_DIR" || echo "Faild run script" && exit 1
+cd "$DOTFILES_DIR" || (echo "Faild run script" && exit 1)
 
 for dotfile in .??*; do
 	[ "$dotfile" = ".git" ] && continue
