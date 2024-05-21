@@ -15,7 +15,7 @@ jobs:
 
     # Error Check
     - name: Run install.sh
-      run: ${GITHUB_WORKSPACE}/unix/linux/debian/scripts/install.sh
+      run: sudo ${GITHUB_WORKSPACE}/unix/linux/debian/scripts/install.sh
 
     - name: Load .bash_profile
       run: |
