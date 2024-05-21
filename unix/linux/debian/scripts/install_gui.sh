@@ -7,7 +7,7 @@ if [ -d "./gui/" ]; then
 	find ./gui/ -type f -name "*.sh" -exec bash {} \;
 fi
 
-PARENT="$(dirname "$(dirname "$(dirname "$0")")")/scripts/install_gui.sh"
+PARENT="$(dirname "$(dirname "$(pwd)")")/scripts/install_gui.sh"
 if [ -e "$PARENT" ]; then
 	chmod u+x "$PARENT"
 	echo "Running parent script: $PARENT"
