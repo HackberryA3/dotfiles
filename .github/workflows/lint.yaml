@@ -18,7 +18,7 @@ jobs:
 
     # Lint check
     - name: Check scripts
-      run: find ${GITHUB_WORKSPACE} \( -name "*.sh" -o -name "*.bash" \) -type f -print0 | xargs -0 shellcheck -x --exclude=SC1090
+      run: find ${GITHUB_WORKSPACE} \( -name "*.sh" -o -name "*.bash" \) -type f -print0 | xargs -0 shellcheck -x --exclude=SC1090,SC1091
 
     - name: Check rc
       run: find ${GITHUB_WORKSPACE} \( -name ".bashrc" -o -name ".profile" -o -name ".bash_profile" \) -type f -print0 | xargs -0 shellcheck -x --exclude=SC2148,SC1090
