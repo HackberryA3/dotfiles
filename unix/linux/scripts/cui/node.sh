@@ -3,12 +3,6 @@
 if which "nvm" > /dev/null 2>&1; then
 	echo "nvm is already installed."
 
-	echo "Do you want to update nvm? (y/n)"
-	read -n 1 -s -r
-	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-		exit
-	fi
-
 	if [ "${NVM_DIR}" ]; then
 		(cd "${NVM_DIR}" && git pull)
 	else

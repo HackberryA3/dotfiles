@@ -7,6 +7,10 @@ fi
 
 git config --global init.defaultBranch main
 
+if [ -z "$PS1" ]; then
+	exit
+fi
+
 echo -n "Your email address for git : "
 read -r email
 git config --global user.email "$email"

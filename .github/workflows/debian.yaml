@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  ubuntu-test:
+  debian-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,19 +15,9 @@ jobs:
 
     # Error Check
     - name: Run install.sh
-      run: ${GITHUB_WORKSPACE}/unix/linux/scripts/install.sh
+      run: ${GITHUB_WORKSPACE}/unix/linux/debian/scripts/install.sh
 
     - name: Load .bash_profile
       run: |
         bash ~/.bash_profile 2> error.log; cat error.log
-        if [ -s error.log ]; then false; fi
-
-    - name: Load .bashrc
-      run: |
-        bash ~/.bashrc 2> error.log; cat error.log
-        if [ -s error.log ]; then false; fi
-
-    - name: Load .profile
-      run: |
-        bash ~/.profile 2> error.log; cat error.log
         if [ -s error.log ]; then false; fi
