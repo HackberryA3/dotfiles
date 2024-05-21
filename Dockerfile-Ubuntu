@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+
+SHELL ["/bin/bash", "-c"]
+WORKDIR /root
+RUN apt-get update -y && apt-get upgrade -y \
+	&& apt install git -y \
+	&& git clone https://github.com/HackberryA3/dotfiles \
+	&& ./dotfiles/unix/linux/debian/scripts/install_cui.sh \
+	&& ./dotfiles/unix/linux/debian/scripts/dotfiles.sh \
+	&& source ~/.bash/nvm.bash \
+	&& nvm install 22 \
+	&& npm i -g tree-sitter-cli \
+	&& git clone https://github.com/HackberryA3/.dotfiles.nvim .config/nvim \
