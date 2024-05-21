@@ -12,8 +12,8 @@ if (which peco > /dev/null 2>&1); then
   	PERCOL="peco"
 fi
 
-if [[ ! -n $TMUX ]]; then
-	IFS=$'\n' ID="`tmux list-sessions`"
+if [[ -z $TMUX ]]; then
+	IFS=$'\n' ID="$(tmux list-sessions)"
 	unset IFS
 	if [[ -z "$ID" ]]; then
     	tmux -u new-session
@@ -22,7 +22,7 @@ if [[ ! -n $TMUX ]]; then
 	else
 		create_new_session="Create New Session"
 		ID="$ID\n${create_new_session}:"
-		ID="`echo -e $ID | $PERCOL | cut -d: -f1`"
+		ID="$(echo -e "$ID" | $PERCOL | cut -d: -f1)"
 		if [[ "$ID" = "${create_new_session}" ]]; then
     		tmux -u new-session
 		fi

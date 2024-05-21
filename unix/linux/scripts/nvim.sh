@@ -1,15 +1,14 @@
 #!/bin/bash
 
-if !(which "curl" > /dev/null 2>&1); then
+if ! (which "curl" > /dev/null 2>&1); then
 	echo "curl is not installed, Please install it."
 	exit
 fi
 
 if [ -f ~/.local/bin/nvim ]; then
 	echo "nvim is already installed. Do you want to update it? (y/n)"
-	read TO_UPDATE
-
-	if [ ! "$TO_UPDATE" = "y" ]; then
+	read -n 1 -s -r	
+	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 		exit
 	fi
 

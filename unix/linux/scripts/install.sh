@@ -1,9 +1,9 @@
 #!/bin/bash
 
 PWD="$(pwd)"
-SCRIPT_DIR="$(dirname $0)"
-DOTFILES_DIR="$(dirname $SCRIPT_DIR)"
-cd "$DOTFILES_DIR"
+SCRIPT_DIR="$(dirname "$0")"
+DOTFILES_DIR="$(dirname "$SCRIPT_DIR")"
+cd "$DOTFILES_DIR" || echo "Faild run script"; exit 1
 
 for dotfile in .??*; do
 	[ "$dotfile" = ".git" ] && continue
@@ -13,29 +13,29 @@ for dotfile in .??*; do
     [ "$dotfile" = ".DS_Store" ] && continue
 	[ "$dotfile" = ".github" ] && continue
 
-	if [ -L ~/$dotfile ]; then
+	if [ -L ~/"$dotfile" ]; then
 		echo "Removing existing symlink: ~/$dotfile"
-		unlink ~/$dotfile
+		unlink ~/"$dotfile"
 	fi
-	if [ -e ~/$dotfile ]; then
+	if [ -e ~/"$dotfile" ]; then
 		if [ ! -d ~/.dotbackup ]; then
 			mkdir ~/.dotbackup
 		fi
 		echo "Backing up existing file: ~/$dotfile"
-		mv ~/$dotfile ~/.dotbackup/$dotfile.bak
+		mv ~/"$dotfile" ~/.dotbackup/"$dotfile".bak
 	fi
 
-	ln -snfv "$(pwd)/$dotfile" ~/$dotfile 
+	ln -snfv "$(pwd)/$dotfile" ~/"$dotfile" 
 done
 
-PARENT="$(dirname $(pwd))/scripts/install.sh"
+PARENT="$(dirname "$(pwd)")/scripts/install.sh"
 echo "Current directory: $PWD"
 echo "Dotfiles directory: $DOTFILES_DIR"
 echo "Parent script: $PARENT"
 if [ -e "$PARENT" ]; then
-	chmod u+x $PARENT
+	chmod u+x "$PARENT"
 	echo "Running parent script: $PARENT"
-	bash $PARENT
+	bash "$PARENT"
 fi
 
-cd $PWD
+cd "$PWD" || exit

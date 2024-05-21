@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if !(which "flatpak" > /dev/null 2>&1); then
+if ! (which "flatpak" > /dev/null 2>&1); then
 	echo "Flatpak is not installed, Please install it"
 	exit
 fi
