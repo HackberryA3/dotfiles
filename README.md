@@ -1,11 +1,13 @@
-###### TEST
-[![debian](https://github.com/HackberryA3/dotfiles/actions/workflows/debian.yaml/badge.svg)](https://github.com/HackberryA3/dotfiles/actions/workflows/debian.yaml)
-
-###### LINT
-[![lint](https://github.com/HackberryA3/dotfiles/actions/workflows/lint.yaml/badge.svg)](https://github.com/HackberryA3/dotfiles/actions/workflows/lint.yaml)
-
 ###### CURRENTLY SUPPORT
 <img src="https://img.shields.io/badge/-Debian-A81D33.svg?logo=debian&style=flat"> <img src="https://img.shields.io/badge/-Ubuntu-6F52B5.svg?logo=ubuntu&style=flat"> <img src="https://img.shields.io/badge/-Kali-0087f2.svg?logo=kalilinux&logoColor=ffffff&style=flat">
+
+###### TEST
+[![Ubuntu](https://github.com/HackberryA3/dotfiles/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/HackberryA3/dotfiles/actions/workflows/ubuntu.yaml)
+
+###### LINT
+[![Checkshell](https://github.com/HackberryA3/dotfiles/actions/workflows/checkshell.yaml/badge.svg)](https://github.com/HackberryA3/dotfiles/actions/workflows/checkshell.yaml)
+
+---
 
 # dotfiles
 
