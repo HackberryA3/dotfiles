@@ -1,0 +1,21 @@
+name: lint
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install shellcheck
+      run: apt-get install shellcheck -y
+
+    # Lint check
+    - name: Check bin/init.sh
+      run: find ${GITHUB_WORKSPACE} \( -name "*.sh" -o -name "*.bash" -o -name ".bashrc" -o -name ".profile" -o -name ".bash_profile" \) -print0 | xargs -0 shellcheck

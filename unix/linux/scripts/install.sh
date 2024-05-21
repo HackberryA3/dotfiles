@@ -11,6 +11,7 @@ for dotfile in .??*; do
     [ "$dotfile" = ".gitconfig.local.template" ] && continue
     [ "$dotfile" = ".gitmodules" ] && continue
     [ "$dotfile" = ".DS_Store" ] && continue
+	[ "$dotfile" = ".github" ] && continue
 
 	if [ -L ~/$dotfile ]; then
 		echo "Removing existing symlink: ~/$dotfile"
