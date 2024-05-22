@@ -1,11 +1,17 @@
 #!/bin/bash -e
 
+echo "########################"
+echo "# Lazygit installation #"
+echo "########################"
+
 if ! (which "curl" > /dev/null 2>&1); then
 	echo "curl is not installed, Please install it."
+	echo "########################"
 	exit
 fi
 if ! (which "tar" > /dev/null 2>&1); then
 	echo "tar is not installed, Please install it."
+	echo "########################"
 	exit
 fi
 
@@ -14,3 +20,6 @@ curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/lates
 tar xf lazygit.tar.gz lazygit
 install lazygit /usr/local/bin
 rm lazygit.tar.gz
+
+echo "Lazygit has been installed successfully."
+echo "########################"

@@ -25,9 +25,9 @@ git clone https://github.com/HackberryA3/dotfiles
 
 ```sh
 sudo ./dotfiles/unix/linux/debian/scripts/install.sh # install all
-sudo ./dotfiles/unix/linux/debian/scripts/install_cui.sh # install only CUI tools
-sudo ./dotfiles/unix/linux/debian/scripts/install_gui.sh # install only GUI tools
-sudo ./dotfiles/unix/linux/debian/scripts/dotfiles.sh # install only dotfiles
+sudo ./dotfiles/unix/linux/debian/scripts/install.sh --cui # install only CUI tools
+sudo ./dotfiles/unix/linux/debian/scripts/install.sh --gui # install only GUI tools
+sudo ./dotfiles/unix/linux/debian/scripts/install.sh --dotfiles # install only dotfiles
 ```
 
 > Don't need `sudo` if you are already as root
@@ -39,9 +39,9 @@ sudo ./dotfiles/unix/linux/debian/scripts/dotfiles.sh # install only dotfiles
 install_cui.sh for kali additionaly installs cracking tools. If you don't want them, You can run debian/scripts/install.sh instead.
 ```sh
 sudo ./dotfiles/unix/linux/debian/kali/scripts/install.sh # install all
-sudo ./dotfiles/unix/linux/debian/kali/scripts/install_cui.sh # install only CUI tools
-sudo ./dotfiles/unix/linux/debian/kali/scripts/install_gui.sh # install only GUI tools
-sudo ./dotfiles/unix/linux/debian/kali/scripts/dotfiles.sh # install only dotfiles
+sudo ./dotfiles/unix/linux/debian/kali/scripts/install.sh --cui # install only CUI tools
+sudo ./dotfiles/unix/linux/debian/kali/scripts/install.sh --gui # install only GUI tools
+sudo ./dotfiles/unix/linux/debian/kali/scripts/install.sh --dotfiles # install only dotfiles
 ```
 
 > Don't need `sudo` if you are already as root

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "########################"
+echo "# Node.js installation #"
+echo "########################"
+
 if which "nvm" > /dev/null 2>&1; then
 	echo "nvm is already installed."
 
@@ -10,14 +14,17 @@ if which "nvm" > /dev/null 2>&1; then
 		echo "You can update nvm by running 'cd ${NVM_DIR} && git pull'"
 	fi
 
+	echo "########################"
 	exit
 fi
 if ! (which "curl" > /dev/null 2>&1); then
 	echo "curl is not installed, Please install it."
+	echo "########################"
 	exit
 fi
 if ! (which "jq" > /dev/null 2>&1); then
 	echo "jq is not installed, Please install it."
+	echo "########################"
 	exit
 fi
 
@@ -32,3 +39,4 @@ curl -fsSL -o- "$INSTALL_URL" | bash
 echo ""
 echo "nvm is installed, Please run 'source ~/.bashrc' to use nvm."
 echo "You can install nodejs using 'nvm install <version>' command."
+echo "########################"
