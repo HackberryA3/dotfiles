@@ -41,12 +41,12 @@ fi
 
 if [ $CUI -eq 1 ]; then
 	if [ -d "./cui/" ]; then
-		find ./cui/ -type f -name "*.sh" -exec bash {} +
+		find ./cui/ -type f -name "*.sh" -exec bash {} \;
 	fi
 fi
 if [ $GUI -eq 1 ]; then
 	if [ -d "./gui/" ]; then
-		find ./gui/ -type f -name "*.sh" -exec bash {} +
+		find ./gui/ -type f -name "*.sh" -exec bash {} \;
 	fi
 fi
 if [ $DOTFILES -eq 1 ]; then
