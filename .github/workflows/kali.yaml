@@ -1,0 +1,22 @@
+name: Kali
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  kali-test:
+    runs-on: ubuntu-latest
+    container:
+      image: "kalilinux/kali-rolling:latest"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # Error Check
+    - name: Run install.sh
+      run: |
+        apt-get update
+        ./unix/linux/debian/kali/scripts/install.sh
