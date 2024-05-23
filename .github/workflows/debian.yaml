@@ -17,4 +17,7 @@ jobs:
 
     # Error Check
     - name: Run install.sh
-      run: ./dotfiles/unix/linux/debian/scripts/install.sh
+      run: |
+        cat /etc/os-release
+        ls -la
+        ./dotfiles/unix/linux/debian/scripts/install.sh
