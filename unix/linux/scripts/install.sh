@@ -1,4 +1,6 @@
-#!/bin/bash -eu
+#!/bin/bash
+set -e
+set -u
 
 PWD=$(pwd)
 cd "$(dirname "$0")" || (echo "Failed run script" && exit 1)

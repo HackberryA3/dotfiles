@@ -1,4 +1,6 @@
-#!/bin/bash -e
+#!/bin/bash
+set -e
+set -u
 
 echo "###############################"
 echo "# Japanese input installation #"
