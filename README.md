@@ -4,7 +4,7 @@
 ###### TEST
 [![Debian](https://github.com/HackberryA3/dotfiles/actions/workflows/debian.yaml/badge.svg)](https://github.com/HackberryA3/dotfiles/actions/workflows/debian.yaml)
 [![Ubuntu](https://github.com/HackberryA3/dotfiles/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/HackberryA3/dotfiles/actions/workflows/ubuntu.yaml)
-[![Kali](https://github.com/HackberryA3/dotfiles/actions/workflows/kali.yaml/badge.svg)](https://github.com/HackberryA3/dotfiles/actions/workflows/kali.yaml)
+[![Kali](https://github.com/HackberryA3/dotfiles/workflows/Kali/badge.svg)](https://github.com/HackberryA3/dotfiles/actions/workflows/kali.yaml)
 
 ###### LINT
 [![Checkshell](https://github.com/HackberryA3/dotfiles/actions/workflows/checkshell.yaml/badge.svg)](https://github.com/HackberryA3/dotfiles/actions/workflows/checkshell.yaml)
