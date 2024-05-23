@@ -18,4 +18,5 @@ jobs:
     # Error Check
     - name: Run install.sh
       run: |
+        apt update
         ./unix/linux/debian/scripts/install.sh
