@@ -20,4 +20,4 @@ jobs:
       run: |
         cat /etc/os-release
         ls -la
-        ./dotfiles/unix/linux/debian/scripts/install.sh
+        ./unix/linux/debian/scripts/install.sh
