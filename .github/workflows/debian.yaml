@@ -18,6 +18,4 @@ jobs:
     # Error Check
     - name: Run install.sh
       run: |
-        cat /etc/os-release
-        ls -la
         ./unix/linux/debian/scripts/install.sh

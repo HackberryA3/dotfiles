@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 echo "#######################"
 echo "# Neovim installation #"
@@ -7,7 +7,7 @@ echo "#######################"
 if ! (which "curl" > /dev/null 2>&1); then
 	echo "curl is not installed, Please install it."
 	echo "#######################"
-	exit
+	exit 1
 fi
 
 if [ -f ~/.local/bin/nvim ]; then

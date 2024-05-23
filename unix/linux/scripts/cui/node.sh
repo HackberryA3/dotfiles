@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 echo "########################"
 echo "# Node.js installation #"
@@ -20,12 +20,12 @@ fi
 if ! (which "curl" > /dev/null 2>&1); then
 	echo "curl is not installed, Please install it."
 	echo "########################"
-	exit
+	exit 1
 fi
 if ! (which "jq" > /dev/null 2>&1); then
 	echo "jq is not installed, Please install it."
 	echo "########################"
-	exit
+	exit 1
 fi
 
 # rcに書き込まないようにする

@@ -7,12 +7,12 @@ echo "########################"
 if ! (which "curl" > /dev/null 2>&1); then
 	echo "curl is not installed, Please install it."
 	echo "########################"
-	exit
+	exit 1
 fi
 if ! (which "tar" > /dev/null 2>&1); then
 	echo "tar is not installed, Please install it."
 	echo "########################"
-	exit
+	exit 1
 fi
 
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')

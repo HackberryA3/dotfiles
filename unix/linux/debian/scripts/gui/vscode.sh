@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 echo "#######################"
 echo "# VSCode installation #"
@@ -7,7 +7,7 @@ echo "#######################"
 if ! (which "wget" > /dev/null 2>&1); then
 	echo "wget is not installed, Please install it."
 	echo "#######################"
-	exit
+	exit 1
 fi
 
 VSCODE="./vscode.deb"
