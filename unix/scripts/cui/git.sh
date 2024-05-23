@@ -14,7 +14,7 @@ fi
 
 git config --global init.defaultBranch main
 
-if [ -z "$PS1" ]; then
+if [ -z "${PS1-}" ]; then
 	echo "Git configuration is done (non-interactive)."
 	echo "#####################"
 	exit
