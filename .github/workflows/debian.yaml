@@ -1,0 +1,20 @@
+name: Debian
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  debian-test:
+    runs-on: ubuntu-latest
+    container:
+      image: "debian:latest"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # Error Check
+    - name: Run install.sh
+      run: ./dotfiles/unix/linux/debian/scripts/install.sh

@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  debian-test:
+  ubuntu-test:
     runs-on: ubuntu-latest
 
     steps:
