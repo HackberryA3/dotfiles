@@ -1,6 +1,5 @@
 #!/bin/bash
-set -e
-set -u
+set -euo pipefail
 
 echo "#######################"
 echo "# Neovim installation #"
@@ -18,7 +17,7 @@ if [ -f ~/.local/bin/nvim ]; then
 	rm ~/.local/bin/nvim
 fi
 
-curl -L https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o ~/.local/bin/nvim --create-dirs
+curl -Lf https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o ~/.local/bin/nvim --create-dirs
 
 chmod u+x ~/.local/bin/nvim
 

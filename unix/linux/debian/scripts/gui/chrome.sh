@@ -1,6 +1,5 @@
 #!/bin/bash
-set -e
-set -u
+set -eu
 
 echo "#######################"
 echo "# Chrome installation #"
