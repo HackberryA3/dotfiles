@@ -1,0 +1,21 @@
+BasedOnStyle: LLVM
+
+IndentWidth: 4
+
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AllowShortFunctionsOnASingleLine: InlineOnly
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortBlocksOnASingleLine: Always
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterControlStatement: Never
+  AfterEnum: true
+  AfterNamespace: true
+  AfterClass: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterExternBlock: true
+  AfterFunction: false
+  BeforeCatch: true
+  BeforeElse: true
