@@ -1,6 +1,6 @@
 ---
 tags:
-  - Attack
+  - Scanning
 ---
 # Port Scanning
 

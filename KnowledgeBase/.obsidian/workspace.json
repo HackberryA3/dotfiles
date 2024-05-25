@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SMB.md",
+                "file": "Enumeration.md",
                 "mode": "source",
                 "source": true
               }
@@ -32,7 +32,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SMB.md",
+                "file": "Enumeration.md",
                 "mode": "preview",
                 "source": true
               }
@@ -68,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#Windows",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -84,8 +84,28 @@
               "type": "bookmarks",
               "state": {}
             }
+          },
+          {
+            "id": "142fb97ecb589b90",
+            "type": "leaf",
+            "state": {
+              "type": "tagfolder-view",
+              "state": {}
+            }
+          },
+          {
+            "id": "2568ad4f74aed316",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -105,7 +125,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SMB.md",
+                "file": "Enumeration.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,20 +142,9 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SMB.md",
+                "file": "Enumeration.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
-            "id": "2568ad4f74aed316",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true
               }
             }
           },
@@ -145,11 +154,20 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SMB.md"
+                "file": "Enumeration.md"
               }
             }
+          },
+          {
+            "id": "c08a039d432473c1",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -158,31 +176,35 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "table-editor-obsidian:Advanced Tables Toolbar": false,
       "switcher:クイックスイッチャーを開く": false,
       "graph:グラフビューを開く": false,
       "canvas:新規キャンバスを作成": false,
       "daily-notes:今日のデイリーノートを開く": false,
       "templates:テンプレートを挿入": false,
-      "command-palette:コマンドパレットを開く": false
+      "command-palette:コマンドパレットを開く": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
   "active": "596b07398de52390",
   "lastOpenFiles": [
-    "CrackWithNmap.md",
-    "ScanSNMP.md",
-    "SNMP.md",
-    "BannerGrabbing.md",
+    "Metaexploit.md",
+    "Whatweb.md",
+    "ExploitDB.md",
+    "SSH issue when using VPN with UDP.md",
     "DefaultPort CheatSheet.md",
-    "NTFS.md",
+    "Enumeration.md",
+    "ScanningWithNmap.md",
+    "BannerGrabbing.md",
+    "ScanSNMP.md",
     "PortScanning.md",
-    "RDP.md",
     "SDDL.md",
     "SetupSSH.md",
+    "RDP.md",
     "SMB.md",
+    "SNMP.md",
+    "NTFS.md",
     "WMI.md",
     "WinServices.md",
-    "SSH issue when using VPN with UDP.md",
     "Memo_WMI.md",
     "Memo_WinServices.md",
     "Memo_SDDL.md",

@@ -1,6 +1,6 @@
 ---
 tags:
-  - Attack
+  - Scanning
 ---
 
 # Scan SNMP

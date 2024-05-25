@@ -1,9 +1,9 @@
 ---
 tags:
-  - Attack
+  - Scanning
 ---
 
-# Crack with nmap
+# Scanning with nmap
 
 nmapのスクリプトを実行することで、OSやバージョン等、色々な情報を取得できる。それをもとに、次の攻撃につなげることができる。ただし、自分の管理下にないコンピューターに行うのは犯罪。
 
