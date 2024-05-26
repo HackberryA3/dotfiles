@@ -10,11 +10,25 @@ Webサーバーの404ページや、curl、whatweb、nmap、Netcat、上位版�
 
 ## やり方
 
-> `netcat <IP> <Port>`
-> `nmap -sV --script=banner -p<Port> <IP>`
-> `curl -IL <IP>` HTTPレスポンスのヘッド部分のみ表示
-> `whatweb <URLs> または whatweb -i <ファイル|/dev/stdin>` Webの情報を取得
-> `whatweb -v -a <LEVEL=1|3|4> <URLs>` Webの情報を詳細取得
+```bash
+netcat <IP> <Port>
+```
+```bash
+nmap -sV --script=banner -p<Port> <IP>
+```
+- HTTPレスポンスのヘッド部分のみ表示
+```bash
+curl -IL <IP>
+```
+- Webの情報を取得
+```bash
+whatweb <URLs>
+whatweb -i <ファイル|/dev/stdin>
+```
+- Webの情報を詳細取得
+```bash
+whatweb -v -a <LEVEL=1|3|4> <URLs>
+```
 
 ## 参照
 

@@ -10,21 +10,32 @@ Gobusterというツールを使って、色々なものを列挙したり、ブ
 
 ## Directory
 
-> `gobuster dir -u <IP> -w /usr/share/dirb/wordlists/common.txt`
+```bash
+gobuster dir -u <IP> -w /usr/share/dirb/wordlists/common.txt
+```
 
 このようなコマンドで、Webサイト上にあるファイルを列挙できる。もし、機密にしなければいけないファイルが開ける状態なら、なんらかの攻撃の足がかりになるかもしれない。
 
 ## DNS
 
-> `gobuster dns -d <domain> -w /usr/share/seclists/Discovery/DNS/namelist.txt`
+```bash
+gobuster dns -d <domain> -w /usr/share/seclists/Discovery/DNS/namelist.txt
+```
 
 このようなコマンドで、指定したドメインのサブドメインを列挙することができる。サブドメインをさらに調べることで脆弱性が見つかるかもしれない。
 
 ## Web
 
-> `eyewitness -f <IPのファイル>`
-> `eyewitness -x <XML>` Nmapのxmlから読み取ることができる？
-> `eyewitness --single <IP>`
+```bash
+eyewitness -f <IPのファイル>
+```
+```bash
+eyewitness -x <XML>
+```
+Nmapのxmlから読み取ることができる？
+```bash
+eyewitness --single <IP>
+```
 
 このようなコマンドで、Webサイトのデータ、画面のスクリーンショット等のデータを取得できる。
 

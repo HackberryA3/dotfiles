@@ -1,10 +1,10 @@
 ---
 tags:
   - Tool
-  - Offense
+  - Offensive
 ---
 
-# Metaexploit
+# Metasploit
 
 エクスプロイトを検索して、実行することができるツール。
 
