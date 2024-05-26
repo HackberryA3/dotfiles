@@ -39,6 +39,8 @@ export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
 alias ls='ls --color=auto'
 alias la='ls -FAClhg --color=auto'
 alias grep='grep --color=auto'
+alias ip='ip --color=auto'
+alias tree='tree -C'
 alias path='echo -e ${PATH//:/\\n}'
 alias rm='rm -i'
 alias cp='cp -i'
