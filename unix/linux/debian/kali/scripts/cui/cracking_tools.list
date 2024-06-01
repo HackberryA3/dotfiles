@@ -8,6 +8,15 @@ freerdp2-x11
 # scanning ----------
 nmap
 gobuster
+whatweb
+eyewitness
 
-# util --------------
+# exploit -----------
+exploitdb
+
+# table -------------
 seclists
+cewl
+
+# bruteforce --------
+hashcat
