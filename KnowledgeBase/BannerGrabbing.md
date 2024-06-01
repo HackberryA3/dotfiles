@@ -11,7 +11,7 @@ Webサーバーの404ページや、curl、whatweb、nmap、Netcat、上位版�
 ## やり方
 
 ```bash
-netcat <IP> <Port>
+nc -nv <IP> <Port>
 ```
 ```bash
 nmap -sV --script=banner -p<Port> <IP>

