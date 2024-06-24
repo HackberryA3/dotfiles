@@ -5,8 +5,8 @@ clang
 clangd
 
 # C# --------------
-dotnet-sdk-7.0
-dotnet-sdk-8.0
+dotnet7
+dotnet8
 
 # Python3 ---------
 python3
