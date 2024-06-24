@@ -41,6 +41,8 @@ alias la='ls -FAClhg --color=auto'
 alias grep='grep --color=auto'
 alias ip='ip --color=auto'
 alias tree='tree -C'
+alias diff='diff --color=auto'
+
 alias path='echo -e ${PATH//:/\\n}'
 alias rm='rm -i'
 alias cp='cp -i'
