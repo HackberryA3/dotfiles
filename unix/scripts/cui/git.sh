@@ -13,6 +13,17 @@ fi
 
 
 git config --global init.defaultBranch main
+git config --global pull.ff only
+
+git config --global core.autocrlf false
+git config --global core.quotepath false
+git config --global core.ignorecase false
+git config --global core.editor nvim
+
+git config --global color.ui true
+git config --global grep.lineNumber true
+
+git config --global alias.graph "log --pretty=format:'%Cgreen[%cd] %Cblue%h %Cred<%cn> %Creset%s' --date=short  --decorate --graph --branches --tags --remotes"
 
 if [ -z "${PS1-}" ]; then
 	echo "Git configuration is done (non-interactive)."
