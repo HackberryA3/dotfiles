@@ -48,6 +48,13 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+# 関数の読み込み
+if [ -f ~/.bash/func_common.bash ]; then
+	source ~/.bash/func_common.bash
+fi
+if [ -f ~/.bash/func_competitive_programming.bash ]; then
+	source ~/.bash/func_competitive_programming.bash
+fi
 
 # 追加アプリの設定ファイル
 if [ -f ~/.bash/prompt.bash ]; then
