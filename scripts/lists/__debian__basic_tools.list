@@ -20,3 +20,7 @@ vim
 # terminal ----
 fzf
 tmux
+
+# shell -------
+ssh
+gpg
