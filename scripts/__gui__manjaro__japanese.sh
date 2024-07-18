@@ -9,5 +9,4 @@ echo "##########################"
 pacman -S noto-fonts-cjk -y
 pacman -S fcitx5-mozc -y
 
-echo "After reboot, add Mozc to Input Method"
-echo "##########################"
+echo -e "\e[33mAfter reboot, add Mozc to Input Method\e[0m" >&2

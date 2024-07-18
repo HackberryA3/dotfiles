@@ -6,8 +6,7 @@ echo "# VSCode installation #"
 echo "#######################"
 
 if ! (which "wget" > /dev/null 2>&1); then
-	echo "wget is not installed, Please install it."
-	echo "#######################"
+	echo -e "\e[31mwget is not installed, Please install it.\e[0m" >&2
 	exit 1
 fi
 
@@ -16,5 +15,4 @@ wget -O $VSCODE "https://code.visualstudio.com/sha/download?build=stable&os=linu
 apt-get install $VSCODE -y
 rm $VSCODE
 
-echo "VSCode has been installed successfully."
-echo "#######################"
+echo -e "\e[31mVSCode has been installed successfully.\e[0m"

@@ -11,5 +11,5 @@ else
 	sudo apt-get install -y fcitx5-mozc
 fi
 
-echo "このあと、再起動して、Input MethodにMozcを追加する"
-echo "###############################"
+echo -e "\e[33mまだ設定は終わっていません！\e[0m" >&2
+echo -e "\e[33mこのあと、再起動して、Input MethodにMozcを追加する\e[0m" >&2

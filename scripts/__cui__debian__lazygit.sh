@@ -6,13 +6,11 @@ echo "# Lazygit installation #"
 echo "########################"
 
 if ! (which "curl" > /dev/null 2>&1); then
-	echo "curl is not installed, Please install it."
-	echo "########################"
+	echo -e "\e[31mcurl is not installed, Please install it.\e[0m" >&2
 	exit 1
 fi
 if ! (which "tar" > /dev/null 2>&1); then
-	echo "tar is not installed, Please install it."
-	echo "########################"
+	echo -e "\e[31mtar is not installed, Please install it.\e[0m" >&2
 	exit 1
 fi
 
@@ -28,5 +26,4 @@ else
 fi
 rm lazygit.tar.gz
 
-echo "Lazygit has been installed successfully."
-echo "########################"
+echo -e "\e[32mLazygit has been installed successfully.\e[0m"

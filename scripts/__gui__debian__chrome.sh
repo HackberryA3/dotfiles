@@ -6,8 +6,7 @@ echo "# Chrome installation #"
 echo "#######################"
 
 if ! (which "wget" > /dev/null 2>&1); then
-	echo "wget is not installed, Please install it."
-	echo "#######################"
+	echo -e "\e[31mwget is not installed, Please install it.\e[0m" >&2
 	exit 1
 fi
 
@@ -16,5 +15,4 @@ wget -O $CHROME https://dl.google.com/linux/direct/google-chrome-stable_current_
 apt-get install $CHROME -y
 rm $CHROME
 
-echo "Chrome has been installed successfully."
-echo "#######################"
+echo -e "\e[32mChrome has been installed successfully.\e[0m"

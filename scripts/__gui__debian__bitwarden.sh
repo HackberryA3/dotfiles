@@ -6,8 +6,7 @@ echo "# Bitwarden installation #"
 echo "##########################"
 
 if ! (which "wget" > /dev/null 2>&1); then
-	echo "wget is not installed, Please install it."
-	echo "##########################"
+	echo -e "\e[31mwget is not installed, Please install it.\e[0m" >&2
 	exit 1
 fi
 
@@ -16,5 +15,4 @@ wget -O $BITWARDEN "https://vault.bitwarden.com/download/?app=desktop&platform=l
 apt-get install $BITWARDEN -y
 rm $BITWARDEN
 
-echo "Bitwarden has been installed successfully."
-echo "##########################"
+echo -e "\e[32mBitwarden has been installed successfully.\e[0m"

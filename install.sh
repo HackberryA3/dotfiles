@@ -2,7 +2,7 @@
 set -euo pipefail 
 
 PWD=$(pwd)
-cd "$(dirname "$0")" || (echo "Faild run script" && exit 1)
+cd "$(dirname "$0")" || (echo -e "\e[31mFaild run script\e[0m" >&2 && exit 1)
 
 # 使用可能なOSサフィックスと種類サフィックスのリスト
 OS_SUFFIXES=("linux" "debian" "kali" "ubuntu" "arch" "manjaro" "mac" "win")
@@ -147,6 +147,8 @@ if [[ "$CUI" == false && "$GUI" == false && "$INSTALL_DOTFILES" == false ]]; the
 	INSTALL_DOTFILES=true
 fi
 
+# OSを自動で取得し、指定されたOSと一致するか確認
+# OSが指定されていない場合、取得したOSを使用するか確認
 detected_os=$(get_os)
 if [[ -z "$OS" ]]; then
 	if [[ -z "$detected_os" ]]; then
@@ -176,6 +178,7 @@ if [[ "$OS" != "$detected_os" ]]; then
 	fi
 fi
 
+# スプラッシュを表示
 splash
 sleep 2
 
@@ -183,7 +186,7 @@ sleep 2
 valid_suffixes=()
 IFS=" " read -r -a valid_suffixes < <(get_valid_suffixes "$OS")
 
-# スクリプトの実行
+# スクリプトのフィルター
 FILTER=""
 if [[ "$CUI" == true && "$GUI" == true ]]; then
 	FILTER="(cui|gui)"
@@ -192,18 +195,26 @@ elif [[ "$CUI" == true ]]; then
 elif [[ "$GUI" == true ]]; then
 	FILTER="gui"
 fi
+
+# スクリプトを取得
 scripts=()
 mapfile -t scripts < <(find_files_with_suffixes "./scripts" "sh" "${valid_suffixes[@]}" | grep -E "__${FILTER}__")
 
+# スクリプトを実行、statusが0以外の場合はエラーとして処理、STDERRがあればWarningとして表示
+# 最後にまとめてRESULTを表示
+# エラーがあれば最後に1を返すためにHAS_ERRORをtrueにする
 RESULT=""
 HAS_ERROR=false
 for script in "${scripts[@]}"; do
 	tempfile=$(mktemp)
 	# エラーが発生したら、RESULTにエラーメッセージを追加して最後にまとめて表示
-	if ! bash "$script" 2> "$tempfile" || [[ -n $(cat "$tempfile") ]] ; then
+	if ! bash "$script" 2> "$tempfile"; then
 		RESULT+="[\e[0;31mError\e[0m] $script\n"
 		RESULT+="$(echo -n "$(cat "$tempfile")" | sed 's/^/	/g')\n"
 		HAS_ERROR=true
+	elif [[ -n $(cat "$tempfile") ]]; then
+		RESULT+="[\e[0;33mWarning\e[0m] $script\n"
+		RESULT+="$(echo -n "$(cat "$tempfile")" | sed 's/^/	/g')\n"
 	else
 		RESULT+="[\e[0;32mSuccess\e[0m] $script\n"
 	fi
