@@ -15,4 +15,4 @@ wget -O $VSCODE "https://code.visualstudio.com/sha/download?build=stable&os=linu
 apt-get install $VSCODE -y
 rm $VSCODE
 
-echo -e "\e[31mVSCode has been installed successfully.\e[0m"
+echo -e "\e[32mVSCode has been installed successfully.\e[0m"
