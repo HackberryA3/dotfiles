@@ -12,7 +12,7 @@ if ! (which "wget" > /dev/null 2>&1); then
 fi
 
 BITWARDEN="./bitwarden.deb"
-wget -O $BITWARDEN "https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=deb"
+wget -O $BITWARDEN "https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=deb" -o /dev/stdout
 apt-get install $BITWARDEN
 rm $BITWARDEN
 
