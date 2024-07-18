@@ -184,8 +184,16 @@ valid_suffixes=()
 IFS=" " read -r -a valid_suffixes < <(get_valid_suffixes "$OS")
 
 # スクリプトの実行
+FILTER=""
+if [[ "$CUI" == true && "$GUI" == true ]]; then
+	FILTER="(cui|gui)"
+elif [[ "$CUI" == true ]]; then
+	FILTER="cui"
+elif [[ "$GUI" == true ]]; then
+	FILTER="gui"
+fi
 scripts=()
-mapfile -t scripts < <(find_files_with_suffixes "./scripts" "sh" "${valid_suffixes[@]}" | grep -E "__$(if [[ "$CUI" == true ]]; then echo "cui"; else echo ".*"; fi)__" | grep -E "__$(if [[ "$GUI" == true ]]; then echo "gui"; else echo ".*"; fi)__")
+mapfile -t scripts < <(find_files_with_suffixes "./scripts" "sh" "${valid_suffixes[@]}" | grep -E "__${FILTER}__")
 
 RESULT=""
 HAS_ERROR=false
