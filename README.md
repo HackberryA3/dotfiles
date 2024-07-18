@@ -29,8 +29,7 @@ git clone https://github.com/HackberryA3/dotfiles
 - linux
 - debian
 - ubuntu
-- kali
-    Includes cracking tools
+- kali: Includes cracking tools
 
 ### OPTIONS
 
