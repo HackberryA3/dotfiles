@@ -5,6 +5,7 @@ clang
 clangd
 
 # C# --------------
+dotnet7
 dotnet8
 
 # Python3 ---------

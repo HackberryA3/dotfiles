@@ -13,7 +13,7 @@ fi
 
 VSCODE="./vscode.deb"
 wget -O $VSCODE "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" -o /dev/stdout
-apt-get install $VSCODE
+apt-get install $VSCODE -y
 rm $VSCODE
 
 echo "VSCode has been installed successfully."

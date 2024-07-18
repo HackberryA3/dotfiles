@@ -13,7 +13,7 @@ fi
 
 BITWARDEN="./bitwarden.deb"
 wget -O $BITWARDEN "https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=deb" -o /dev/stdout
-apt-get install $BITWARDEN
+apt-get install $BITWARDEN -y
 rm $BITWARDEN
 
 echo "Bitwarden has been installed successfully."

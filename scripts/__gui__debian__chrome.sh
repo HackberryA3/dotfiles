@@ -13,7 +13,7 @@ fi
 
 CHROME="./chrome.deb"
 wget -O $CHROME https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /dev/stdout
-apt-get install $CHROME
+apt-get install $CHROME -y
 rm $CHROME
 
 echo "Chrome has been installed successfully."
