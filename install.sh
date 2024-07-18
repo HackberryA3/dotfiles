@@ -198,14 +198,16 @@ mapfile -t scripts < <(find_files_with_suffixes "./scripts" "sh" "${valid_suffix
 RESULT=""
 HAS_ERROR=false
 for script in "${scripts[@]}"; do
+	tempfile=$(mktemp)
 	# エラーが発生したら、RESULTにエラーメッセージを追加して最後にまとめて表示
-	if ! STDERR=$(bash "$script" 2>&1 1>/dev/tty) || [[ -n $STDERR ]] ; then
+	if ! bash "$script" 2> "$tempfile" || [[ -n $(cat "$tempfile") ]] ; then
 		RESULT+="[\e[0;31mError\e[0m] $script\n"
-		RESULT+="$(echo -n "$STDERR" | sed 's/^/	/g')\n"
+		RESULT+="$(echo -n "$(cat "$tempfile")" | sed 's/^/	/g')\n"
 		HAS_ERROR=true
 	else
 		RESULT+="[\e[0;32mSuccess\e[0m] $script\n"
 	fi
+	rm "$tempfile"
 done
 echo -e "$RESULT"
 
