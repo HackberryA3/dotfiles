@@ -9,13 +9,13 @@ mapfile -t apps < <(grep -vE '^\s*$|^\s*#' -- "$LIST" | sed 's/#.*$//')
 FAIL_COUNT=0
 for app in "${apps[@]}"; do
 	if [[ $(id -u) -eq 0 ]]; then
-		apt-get install "$app" -y
+		if ! apt-get install "$app" -y; then
+			FAIL_COUNT=$((FAIL_COUNT + 1))
+		fi
 	else
-		sudo apt-get install "$app" -y
-	fi
-
-	if [ $? -ne 0 ]; then
-		FAIL_COUNT=$((FAIL_COUNT + 1))
+		if ! sudo apt-get install "$app" -y; then
+			FAIL_COUNT=$((FAIL_COUNT + 1))
+		fi
 	fi
 done
 
