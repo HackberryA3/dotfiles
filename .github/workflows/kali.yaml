@@ -13,10 +13,10 @@ jobs:
       image: "kalilinux/kali-rolling:latest"
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     # Error Check
     - name: Run install.sh
       run: |
         apt-get update
-        ./unix/linux/debian/kali/scripts/install.sh
+        ./install.sh kali --all

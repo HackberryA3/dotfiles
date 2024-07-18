@@ -32,10 +32,10 @@ fi
 # rcに書き込まないようにする
 export PROFILE="/dev/null"
 
-LATEST=$(curl  "https://api.github.com/repos/nvm-sh/nvm/tags" | jq -r '.[0].name')
+LATEST=$(curl -s "https://api.github.com/repos/nvm-sh/nvm/tags" | jq -r '.[0].name')
 INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$LATEST/install.sh"
 echo "Installing nvm from $INSTALL_URL"
-curl -fsSL -o- "$INSTALL_URL" | bash 
+curl -fsSL -o- "$INSTALL_URL" | bash 2>/dev/null
 
 echo ""
 echo "nvm is installed, Please run 'source ~/.bashrc' to use nvm."

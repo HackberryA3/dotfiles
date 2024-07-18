@@ -13,10 +13,10 @@ jobs:
       image: "debian:latest"
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     # Error Check
     - name: Run install.sh
       run: |
         apt-get update
-        ./unix/linux/debian/scripts/install.sh
+        ./install.sh debian --all

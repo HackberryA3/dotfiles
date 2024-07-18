@@ -20,51 +20,22 @@ This is my personal dotfiles for any platforms
 ```sh
 cd ~
 git clone https://github.com/HackberryA3/dotfiles
+
+./dotfiles/install.sh OS [OPTIONS]
 ```
 
-<details>
-	<summary>Debian</summary>
+### OS
 
-```sh
-sudo ./dotfiles/unix/linux/debian/scripts/install.sh # install all
-sudo ./dotfiles/unix/linux/debian/scripts/install.sh --cui # install only CUI tools
-sudo ./dotfiles/unix/linux/debian/scripts/install.sh --gui # install only GUI tools
-sudo ./dotfiles/unix/linux/debian/scripts/install.sh --dotfiles # install only dotfiles
-```
+- linux
+- debian
+- ubuntu
+- kali
+    Includes cracking tools
 
-> Don't need `sudo` if you are already as root
-</details>
+### OPTIONS
 
-<details>
-	<summary>Kali</summary>
-
-install_cui.sh for kali additionaly installs cracking tools. If you don't want them, You can run debian/scripts/install.sh instead.
-```sh
-sudo ./dotfiles/unix/linux/debian/kali/scripts/install.sh # install all
-sudo ./dotfiles/unix/linux/debian/kali/scripts/install.sh --cui # install only CUI tools
-sudo ./dotfiles/unix/linux/debian/kali/scripts/install.sh --gui # install only GUI tools
-sudo ./dotfiles/unix/linux/debian/kali/scripts/install.sh --dotfiles # install only dotfiles
-```
-
-> Don't need `sudo` if you are already as root
-</details>
-
-<details>
-	<summary>Arch</summary>
-Coming soon...
-</details>
-
-<details>
-	<summary>Manjaro</summary>
-Coming soon...
-</details>
-
-<details>
-	<summary>Mac</summary>
-Coming soon...
-</details>
-
-<details>
-	<summary>Windows</summary>
-Coming soon...
-</details>
+- default: --all
+- --all: Install dotfiles, CUI, GUI
+- --dotfiles: Install dotfiles
+- --cui: Install cui
+- --gui: Install gui

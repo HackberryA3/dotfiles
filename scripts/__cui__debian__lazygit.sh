@@ -17,9 +17,15 @@ if ! (which "tar" > /dev/null 2>&1); then
 fi
 
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+curl -Lso lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
 tar xf lazygit.tar.gz lazygit
-install lazygit /usr/local/bin
+if [[ $(id -u) -eq 0 ]]; then
+	mv lazygit /usr/local/bin/lazygit
+	chmod +x /usr/local/bin/lazygit
+else
+	sudo mv lazygit /usr/local/bin
+	sudo chmod +x /usr/local/bin/lazygit
+fi
 rm lazygit.tar.gz
 
 echo "Lazygit has been installed successfully."

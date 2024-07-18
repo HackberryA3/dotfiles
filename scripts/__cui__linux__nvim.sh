@@ -17,9 +17,14 @@ if [ -f ~/.local/bin/nvim ]; then
 	rm ~/.local/bin/nvim
 fi
 
-curl -Lf https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o ~/.local/bin/nvim --create-dirs
-
-chmod u+x ~/.local/bin/nvim
+INSTALL_PATH="/usr/local/bin/nvim"
+if [[ $(id -u) -eq 0 ]]; then
+	curl -Lsf https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o $INSTALL_PATH --create-dirs
+	chmod +x $INSTALL_PATH
+else 
+	sudo curl -Lsf https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o $INSTALL_PATH --create-dirs
+	sudo chmod +x $INSTALL_PATH
+fi
 
 echo "nvim has been installed successfully."
 echo "#######################"
