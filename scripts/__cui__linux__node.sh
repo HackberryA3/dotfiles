@@ -29,7 +29,7 @@ fi
 # rcに書き込まないようにする
 export PROFILE="/dev/null"
 
-LATEST=$(curl -s "https://api.github.com/repos/nvm-sh/nvm/tags" | jq -r '.[0].name')
+LATEST=$(curl -sS "https://api.github.com/repos/nvm-sh/nvm/tags" | jq -r '.[0].name')
 INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$LATEST/install.sh"
 echo "Installing nvm from $INSTALL_URL"
 curl -fsSL -o- "$INSTALL_URL" | bash 2>/dev/null

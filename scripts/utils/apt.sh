@@ -8,12 +8,13 @@ mapfile -t apps < <(grep -vE '^\s*$|^\s*#' -- "$LIST" | sed 's/#.*$//')
 
 FAIL_COUNT=0
 for app in "${apps[@]}"; do
+	echo -e "[\e[34mINFO\e[0m] Installing $app"
 	if [[ $(id -u) -eq 0 ]]; then
-		if ! apt-get install "$app" -y; then
+		if ! apt-get -qq install "$app" -y; then
 			FAIL_COUNT=$((FAIL_COUNT + 1))
 		fi
 	else
-		if ! sudo apt-get install "$app" -y; then
+		if ! sudo apt-get -qq install "$app" -y; then
 			FAIL_COUNT=$((FAIL_COUNT + 1))
 		fi
 	fi

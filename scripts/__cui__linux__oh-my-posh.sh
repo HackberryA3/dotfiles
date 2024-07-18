@@ -11,9 +11,9 @@ if ! (which "curl" > /dev/null 2>&1); then
 fi
 
 if [[ $(id -u) -eq 0 ]]; then
-	curl -fs https://ohmyposh.dev/install.sh | bash -s -- -d /usr/local/bin
+	curl -fsS https://ohmyposh.dev/install.sh | bash -s -- -d /usr/local/bin
 else
-	curl -fs https://ohmyposh.dev/install.sh | sudo bash -s -- -d /usr/local/bin
+	curl -fsS https://ohmyposh.dev/install.sh | sudo bash -s -- -d /usr/local/bin
 fi
 
 echo -e "\e[32mOh My Posh has been installed successfully.\e[0m"

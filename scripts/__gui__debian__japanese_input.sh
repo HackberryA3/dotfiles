@@ -6,9 +6,9 @@ echo "# Japanese input installation #"
 echo "###############################"
 
 if [[ $(id -u) -eq 0 ]]; then
-	apt-get install -y fcitx5-mozc
+	apt-get -qq install -y fcitx5-mozc
 else
-	sudo apt-get install -y fcitx5-mozc
+	sudo apt-get -qq install -y fcitx5-mozc
 fi
 
 echo -e "\e[33mまだ設定は終わっていません！\e[0m" >&2

@@ -11,8 +11,8 @@ if ! (which "wget" > /dev/null 2>&1); then
 fi
 
 CHROME="./chrome.deb"
-wget -O $CHROME https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /dev/stdout
-apt-get install $CHROME -y
+wget --no-verbose -O $CHROME https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /dev/stdout
+apt-get -qq install $CHROME -y
 rm $CHROME
 
 echo -e "\e[32mChrome has been installed successfully.\e[0m"

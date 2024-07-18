@@ -11,8 +11,8 @@ if ! (which "wget" > /dev/null 2>&1); then
 fi
 
 VSCODE="./vscode.deb"
-wget -O $VSCODE "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" -o /dev/stdout
-apt-get install $VSCODE -y
+wget --no-verbose -O $VSCODE "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" -o /dev/stdout
+apt-get -qq install $VSCODE -y
 rm $VSCODE
 
 echo -e "\e[32mVSCode has been installed successfully.\e[0m"

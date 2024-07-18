@@ -7,7 +7,7 @@ echo "#####################"
 
 if ! (which "git" > /dev/null 2>&1); then
 	echo -e "\e[31mgit is not installed, Please install it.\e[0m" >&2
-	exit 1
+	exit
 fi
 
 

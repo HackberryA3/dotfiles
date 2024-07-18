@@ -23,10 +23,10 @@ if [ -f ~/.local/bin/nvim ]; then
 fi
 
 if [[ $(id -u) -eq 0 ]]; then
-	curl -Lsf https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o $INSTALL_PATH --create-dirs
+	curl -LsSf https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o $INSTALL_PATH --create-dirs
 	chmod +x $INSTALL_PATH
 else 
-	sudo curl -Lsf https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o $INSTALL_PATH --create-dirs
+	sudo curl -LsSf https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o $INSTALL_PATH --create-dirs
 	sudo chmod +x $INSTALL_PATH
 fi
 
