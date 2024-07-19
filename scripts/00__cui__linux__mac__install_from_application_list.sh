@@ -82,6 +82,7 @@ for list in "${lists[@]}"; do
 			fi
 			COMMENT=""
 			if [[ $line =~ \# ]]; then
+				# shellcheck disable=SC2001
 				COMMENT=" - $(echo "$line" | sed 's/[^#]*#\s*//')"
 			fi
 			APP_NAME=${line//\s*#.*/}
