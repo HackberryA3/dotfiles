@@ -5,7 +5,7 @@ echo "# Programming Languages installation #"
 echo "######################################"
 
 PWD=$(pwd)
-cd "$(dirname "$0")" || (echo "Faild run script" && exit 1)
+cd "$(dirname "$0")" || (echo -e "\e[31mFaild run script\e[0m" >&2 && exit 1)
 
 bash utils/apt.sh lists/__debian__pg_lang.list
 STATUS=$?
