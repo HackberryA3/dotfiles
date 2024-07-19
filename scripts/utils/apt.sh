@@ -1,14 +1,19 @@
 #! /bin/bash
 set -euo pipefail
 
-LIST=$1
-
 apps=()
-mapfile -t apps < <(grep -vE '^\s*$|^\s*#' -- "$LIST" | sed 's/#.*$//')
+while [[ $# -gt 0 ]]; do
+	apps+=("$1")
+	shift
+done
+
+if [[ ${#apps[@]} -eq 0 ]]; then
+	exit 0
+fi
 
 FAIL_COUNT=0
 for app in "${apps[@]}"; do
-	echo -e "[\e[34mINFO\e[0m] Installing $app"
+	echo -e "\e[1;44;30m INFO \e[1;40;34m Installing $app \e[0m"
 	if [[ $(id -u) -eq 0 ]]; then
 		if ! apt-get -qq install "$app" -y; then
 			FAIL_COUNT=$((FAIL_COUNT + 1))

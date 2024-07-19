@@ -27,20 +27,20 @@ function usage {
 	echo "Usage: $0 [OPTIONS] OS" >&2
 	echo "Options:" >&2
 	echo "  -h, --help: Show this help message and exit" >&2
-	echo "	--choice(default): Choose the installation script interactively" >&2
+	echo "  --choice(default): Choose the installation script interactively" >&2
 	echo "  --dotfiles: Install dotfiles" >&2
 	echo "  --cui: Install CUI applications" >&2
 	echo "  --gui: Install GUI applications" >&2
 	echo "  --all: Install all applications" >&2
 	echo "OS:" >&2
-	echo "	linux" >&2
-	echo "	├─debian" >&2
-	echo "	| ├─kali" >&2
-	echo "	| └─ubuntu" >&2
-	echo "	└─arch" >&2
-	echo "	  └─manjaro" >&2
-	echo "	mac" >&2
-	echo "	win" >&2
+	echo "  linux" >&2
+	echo "  ├─debian" >&2
+	echo "  | ├─kali" >&2
+	echo "  | └─ubuntu" >&2
+	echo "  └─arch" >&2
+echo "    └─manjaro" >&2
+	echo "  mac" >&2
+	echo "  win" >&2
 }
 
 # 関数: スプラッシュを表示
@@ -225,7 +225,7 @@ if [[ "$CHOICE" == true ]]; then
 	for script in "${scripts[@]}"; do
 		[[ "$script" =~ __cui__ ]] && tag+=("[\e[33mCUI\e[0m]")
 		[[ "$script" =~ __gui__ ]] && tag+=("[\e[34mGUI\e[0m]")
-		aka+=("$(basename "$script" | sed 's/__.*__//' | sed 's/\.sh//' | sed 's/^[0-9]*//')")
+		aka+=("$(basename "$script" | sed 's/__.*__//' | sed 's/\.sh//' | sed 's/^[0-9]*//' | sed -r 's/(\b|_)(.)/\u\2/g')")
 	done
 	mapfile -t scripts < <(choose --title "Choose the installation scripts" "${scripts[@]}" --aka "${aka[@]}" --tag "${tag[@]}")
 fi
@@ -239,7 +239,7 @@ for script in "${scripts[@]}"; do
 	tempfile=$(mktemp)
 	# エラーが発生したら、RESULTにエラーメッセージを追加して最後にまとめて表示
 	# チョイスモードでは、--choiceオプションを追加
-	if ! bash "$script" "$([[ "$CHOICE" == true ]] && echo "--choice")" 2> "$tempfile"; then
+	if ! bash "$script" "${valid_suffixes[@]}" "$([[ "$CHOICE" == true ]] && echo "--choice")" 2> "$tempfile"; then
 		RESULT+="\e[1;46;30m SCRIPTS \e[1;41;30m ERROR \e[1;40;34m $script \e[0m\n"
 		RESULT+="$(echo -n "$(cat "$tempfile")" | sed 's/^/	/g')\n"
 		HAS_ERROR=true
