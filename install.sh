@@ -223,8 +223,8 @@ if [[ "$CHOICE" == true ]]; then
 	tag=()
 	aka=()
 	for script in "${scripts[@]}"; do
-		[[ "$script" =~ __cui__ ]] && tag+=("[\e[33mCUI\e[0m]")
-		[[ "$script" =~ __gui__ ]] && tag+=("[\e[34mGUI\e[0m]")
+		[[ "$script" =~ __cui__ ]] && tag+=("\e[1;43;30m CUI \e[0m")
+		[[ "$script" =~ __gui__ ]] && tag+=("\e[1;44;30m GUI \e[0m")
 		aka+=("$(basename "$script" | sed 's/__.*__//' | sed 's/\.sh//' | sed 's/^[0-9]*//' | sed -r 's/(\b|_)(.)/\u\2/g')")
 	done
 	mapfile -t scripts < <(choose --title "Choose the installation scripts" "${scripts[@]}" --aka "${aka[@]}" --tag "${tag[@]}")
