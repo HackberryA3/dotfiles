@@ -11,7 +11,7 @@ if ! (which "curl" > /dev/null 2>&1); then
 fi
 
 INSTALL_PATH="/usr/local/bin/nvim"
-if [ -f ~/.local/bin/nvim ]; then
+if [ -f $INSTALL_PATH ]; then
 	echo "nvim is already installed."
 	echo "So this script will update nvim."
 
