@@ -33,7 +33,7 @@ git clone https://github.com/HackberryA3/dotfiles
 
 ### OPTIONS
 
-- default: --all
+- --choice(default): choose what to install interactively
 - --all: Install dotfiles, CUI, GUI
 - --dotfiles: Install dotfiles
 - --cui: Install cui

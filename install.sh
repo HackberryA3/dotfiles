@@ -16,13 +16,18 @@ ARCH_SUFFIXES=("linux")
 OS=""
 CUI=false
 GUI=false
+CHOICE=false
 INSTALL_DOTFILES=false
+
+source lib/choose.sh
 
 # Usage
 # 関数: 使用方法を表示
 function usage {
 	echo "Usage: $0 [OPTIONS] OS" >&2
 	echo "Options:" >&2
+	echo "  -h, --help: Show this help message and exit" >&2
+	echo "	--choice(default): Choose the installation script interactively" >&2
 	echo "  --dotfiles: Install dotfiles" >&2
 	echo "  --cui: Install CUI applications" >&2
 	echo "  --gui: Install GUI applications" >&2
@@ -40,13 +45,19 @@ function usage {
 
 # 関数: スプラッシュを表示
 function splash {
-	echo -e "\e[35m\n" \
+	echo -e "\e[32m\n" \
 			" _   _            _    _                             _    _____  \n" \
 			"| | | | __ _  ___| | _| |__   ___ _ __ _ __ _   _   / \  |___ /  \n" \
 			"| |_| |/ _\` |/ __| |/ / '_ \ / _ \ '__| '__| | | | / _ \   |_ \  \n" \
 			"|  _  | (_| | (__|   <| |_) |  __/ |  | |  | |_| |/ ___ \ ___) | \n" \
 			"|_| |_|\__,_|\___|_|\_\_.__/ \___|_|  |_|   \__, /_/   \_\____/  \n" \
-			"                                            |___/                \e[0m\n"
+			"                                            |___/                \e[0m"
+	echo -e "\e[35m" \
+			"                    _       _    __ _ _\n" \
+			"                  _| | ___ | |_ / _(_) | ___  ___\n" \
+			"                / _\` |/ _ \| __| |_| | |/ _ \/ __|\n" \
+			"               | (_| | (_) | |_|  _| | |  __/\__ \\n" \
+			"              (_)__,_|\___/ \__|_| |_|_|\___||___/\e[0m\n"
 }
 
 # 関数: OSを自動で取得する
@@ -116,6 +127,12 @@ function find_files_with_suffixes {
 # 引数の解析
 while [[ $# -gt 0 ]]; do
     case $1 in
+		--choice)
+			CHOICE=true
+			CUI=true
+			GUI=true
+			INSTALL_DOTFILES=true
+			;;
         --dotfiles)
             INSTALL_DOTFILES=true
             ;;
@@ -140,8 +157,9 @@ while [[ $# -gt 0 ]]; do
     esac
     shift
 done
-# もし何もオプションが指定されていない場合、allにする
+# もし何もオプションが指定されていない場合、choiceにする
 if [[ "$CUI" == false && "$GUI" == false && "$INSTALL_DOTFILES" == false ]]; then
+	CHOICE=true
 	CUI=true
 	GUI=true
 	INSTALL_DOTFILES=true
@@ -160,13 +178,12 @@ if [[ -z "$OS" ]]; then
 	echo -e "\e[33mOS is not specified. detected: \e[34m$detected_os\e[0m"
 	read -r -n 1 -p "$(echo -e "Do you want to continue as \e[34m$detected_os\e[0m? [Y/n]: ")" to_continue
 	echo
-	if [[ "$to_continue" =~ ^[Yy]$ ]]; then
-		OS="$detected_os"
-	else
+	if [[ ! "$to_continue" =~ ^[Yy]$ ]]; then
 		echo -e "\e[31mPlease specify the OS.\e[0m" >&2
 		usage
 		exit 1
 	fi
+	OS="$detected_os"
 fi
 if [[ "$OS" != "$detected_os" ]]; then
 	echo -e "\e[33mThe specified OS is different from the detected OS. detected: \e[34m$detected_os\e[0m"
@@ -200,6 +217,19 @@ fi
 scripts=()
 mapfile -t scripts < <(find_files_with_suffixes "./scripts" "sh" "${valid_suffixes[@]}" | grep -E "__${FILTER}__")
 
+# チョイスモード
+if [[ "$CHOICE" == true ]]; then
+	# チョイス用の別名を作る
+	tag=()
+	aka=()
+	for script in "${scripts[@]}"; do
+		[[ "$script" =~ __cui__ ]] && tag+=("[\e[33mCUI\e[0m]")
+		[[ "$script" =~ __gui__ ]] && tag+=("[\e[34mGUI\e[0m]")
+		aka+=("$(basename "$script" | sed 's/__.*__//' | sed 's/\.sh//' | sed 's/^[0-9]*//')")
+	done
+	mapfile -t scripts < <(choose --title "Choose the installation scripts" "${scripts[@]}" --aka "${aka[@]}" --tag "${tag[@]}")
+fi
+
 # スクリプトを実行、statusが0以外の場合はエラーとして処理、STDERRがあればWarningとして表示
 # 最後にまとめてRESULTを表示
 # エラーがあれば最後に1を返すためにHAS_ERRORをtrueにする
@@ -208,7 +238,8 @@ HAS_ERROR=false
 for script in "${scripts[@]}"; do
 	tempfile=$(mktemp)
 	# エラーが発生したら、RESULTにエラーメッセージを追加して最後にまとめて表示
-	if ! bash "$script" 2> "$tempfile"; then
+	# チョイスモードでは、--choiceオプションを追加
+	if ! bash "$script" "$([[ "$CHOICE" == true ]] && echo "--choice")" 2> "$tempfile"; then
 		RESULT+="[\e[0;31mError\e[0m] $script\n"
 		RESULT+="$(echo -n "$(cat "$tempfile")" | sed 's/^/	/g')\n"
 		HAS_ERROR=true
@@ -220,12 +251,24 @@ for script in "${scripts[@]}"; do
 	fi
 	rm "$tempfile"
 done
+echo
+echo
+echo
 echo -e "$RESULT"
 
 # ドットファイルの処理
 if [[ "$INSTALL_DOTFILES" == true ]]; then
 	dotfiles=()
 	mapfile -t dotfiles < <(find_files_with_suffixes "dotfiles" "*" "${valid_suffixes[@]}")
+	# チョイスモード
+	if [[ "$CHOICE" == true ]]; then
+		# チョイス用の別名を作る
+		aka=()
+		for dotfile in "${dotfiles[@]}"; do
+			aka+=("$(basename "$dotfile" | sed 's/__.*__//')")
+		done
+		mapfile -t dotfiles < <(choose --title "Choose the dotfiles" "${dotfiles[@]}" --aka "${aka[@]}")
+	fi
 
     for dotfile in "${dotfiles[@]}"; do
 		if [[ -z $dotfile ]]; then
