@@ -240,14 +240,14 @@ for script in "${scripts[@]}"; do
 	# エラーが発生したら、RESULTにエラーメッセージを追加して最後にまとめて表示
 	# チョイスモードでは、--choiceオプションを追加
 	if ! bash "$script" "$([[ "$CHOICE" == true ]] && echo "--choice")" 2> "$tempfile"; then
-		RESULT+="[\e[0;31mError\e[0m] $script\n"
+		RESULT+="\e[1;46;30m SCRIPTS \e[1;41;30m ERROR \e[1;40;34m $script \e[0m\n"
 		RESULT+="$(echo -n "$(cat "$tempfile")" | sed 's/^/	/g')\n"
 		HAS_ERROR=true
 	elif [[ -n $(cat "$tempfile") ]]; then
-		RESULT+="[\e[0;33mWarning\e[0m] $script\n"
+		RESULT+="\e[1;46;30m SCRIPTS \e[1;43;30m WARNING \e[1;40;34m $script \e[0m\n"
 		RESULT+="$(echo -n "$(cat "$tempfile")" | sed 's/^/	/g')\n"
 	else
-		RESULT+="[\e[0;32mSuccess\e[0m] $script\n"
+		RESULT+="\e[1;46;30m SCRIPTS \e[1;42;30m SUCCESS \e[1;40;34m $script \e[0m\n"
 	fi
 	rm "$tempfile"
 done
@@ -279,21 +279,22 @@ if [[ "$INSTALL_DOTFILES" == true ]]; then
 
 		if [ -L "$link_name" ]; then
 			unlink "$link_name"
-			echo -e "[\e[33mSymlink: Unlink\e[0m] $link_name is already symlink, unlinking..."
+			echo -e "\e[1;46;30m DOTFILES \e[1;43;30m UNLINK \e[1;40;34m $link_name is already symlink, unlinking... \e[0m"
 		fi
 		if [[ -e "$link_name" ]]; then
 			if [[ ! -d ~/.dotbackup ]]; then
 				mkdir ~/.dotbackup
 			fi
 			mv "$link_name" ~/.dotbackup/"$base_name.bak"
-			echo -e "[\e[33mSymlink: Backup\e[0m] $link_name is already exists, backup to ~/.dotbackup/$base_name.bak"
+			echo -e "\e[1;46;30m DOTFILES \e[1;44;30m BACKUP \e[1;40;34m $link_name is already exists, backup to ~/.dotbackup/$base_name.bak \e[0m"
 		fi
 		ln -snf "$(pwd)/$dotfile" "$link_name"
-		echo -e "[\e[32mSymlink: Create\e[0m] $link_name -> $(pwd)/$dotfile"
+		echo -e "\e[1;46;30m DOTFILES \e[1;42;30m SUCCESS \e[1;40;34m $link_name -> $(pwd)/$dotfile \e[0m"
     done
 fi
 
-echo -e "\e[0;34mAll process has been completed!\e[0m"
+echo
+echo -e "\e[1;44m \e[1;40;34m All process has been completed! \e[1;44m \e[0m"
 cd "$PWD" || exit
 if [[ "$HAS_ERROR" == true ]]; then
 	exit 1
