@@ -39,6 +39,9 @@ INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$LATEST/install.sh"
 log_info "Installing nvm from $INSTALL_URL" "NVM"
 curl -fsSL -o- "$INSTALL_URL" | bash 2>/dev/null
 
+log_success "nvm is installed successfully." "NVM"
+log_info "Please run 'source ~/.bashrc' to use nvm." "NVM"
+log_info "You can install nodejs using 'nvm install <version>' command." "NVM"
 log_success "nvm is installed successfully." "NVM" >&2
 log_info "Please run 'source ~/.bashrc' to use nvm." "NVM" >&2
 log_info "You can install nodejs using 'nvm install <version>' command." "NVM" >&2
