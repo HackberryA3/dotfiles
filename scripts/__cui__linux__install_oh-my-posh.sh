@@ -1,12 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
-echo "###########################"
-echo "# Oh My Posh installation #"
-echo "###########################"
+cd "$(dirname "$0")" || exit 1
+[[ ! -f ../lib/ui/log.sh ]] && echo -e "\e[31m../lib/ui/log.sh not found\e[0m" >&2 && exit 1
+. ../lib/ui/log.sh
+log_info "Installing Oh My Posh..." "OH MY POSH"
 
 if ! (which "curl" > /dev/null 2>&1); then
-	echo -e "\e[31mcurl is not installed, Please install it.\e[0m" >&2
+	log_error "curl is not installed, Please install it." "OH MY POSH" >&2
 	exit 1
 fi
 
@@ -16,4 +17,4 @@ else
 	curl -fsS https://ohmyposh.dev/install.sh | sudo bash -s -- -d /usr/local/bin
 fi
 
-echo -e "\e[32mOh My Posh has been installed successfully.\e[0m"
+log_success "Oh My Posh has been installed successfully." "OH MY POSH"

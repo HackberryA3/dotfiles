@@ -1,16 +1,17 @@
 #!/bin/bash
 set -eu
 
-echo "########################"
-echo "# Lazygit installation #"
-echo "########################"
+cd "$(dirname "$0")" || exit 1
+[[ ! -f ../lib/ui/log.sh ]] && echo -e "\e[31m../lib/ui/log.sh not found\e[0m" >&2 && exit 1
+. ../lib/ui/log.sh
+log_info "Installing lazygit..." "LAZYGIT"
 
 if ! (which "curl" > /dev/null 2>&1); then
-	echo -e "\e[31mcurl is not installed, Please install it.\e[0m" >&2
+	log_error "curl is not installed, Please install it." "LAZYGIT" >&2
 	exit 1
 fi
 if ! (which "tar" > /dev/null 2>&1); then
-	echo -e "\e[31mtar is not installed, Please install it.\e[0m" >&2
+	log_error "tar is not installed, Please install it." "LAZYGIT" >&2
 	exit 1
 fi
 
@@ -26,4 +27,4 @@ else
 fi
 rm lazygit.tar.gz
 
-echo -e "\e[32mLazygit has been installed successfully.\e[0m"
+log_success "Lazygit has been installed successfully." "LAZYGIT"

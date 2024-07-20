@@ -1,16 +1,8 @@
 #!/bin/bash
 set -euo pipefail 
 
-PWD=$(pwd)
+pushd "$(pwd)" >/dev/null || (echo -e "\e[31mFailed pushd\e[0m" >&2 && exit 1)
 cd "$(dirname "$0")" || (echo -e "\e[31mFaild run script\e[0m" >&2 && exit 1)
-
-# 使用可能なOSサフィックスと種類サフィックスのリスト
-OS_SUFFIXES=("linux" "debian" "kali" "ubuntu" "arch" "manjaro" "mac" "win")
-KALI_SUFFIXES=("debian" "linux")
-UBUNTU_SUFFIXES=("debian" "linux")
-DEBIAN_SUFFIXES=("linux")
-MANJARO_SUFFIXES=("arch" "linux")
-ARCH_SUFFIXES=("linux")
 
 # デフォルト値
 OS=""
@@ -19,7 +11,9 @@ GUI=false
 CHOICE=false
 INSTALL_DOTFILES=false
 
-source lib/choose.sh
+. lib/utility.sh
+. lib/ui/choose.sh
+. lib/ui/log.sh
 
 # Usage
 # 関数: 使用方法を表示
@@ -38,91 +32,29 @@ function usage {
 	echo "  | ├─kali" >&2
 	echo "  | └─ubuntu" >&2
 	echo "  └─arch" >&2
-echo "    └─manjaro" >&2
+	echo "    └─manjaro" >&2
 	echo "  mac" >&2
 	echo "  win" >&2
 }
 
 # 関数: スプラッシュを表示
 function splash {
-	echo -e "\e[32m\n" \
+	echo -e "$(fgreen)\n" \
 			" _   _            _    _                             _    _____  \n" \
 			"| | | | __ _  ___| | _| |__   ___ _ __ _ __ _   _   / \  |___ /  \n" \
 			"| |_| |/ _\` |/ __| |/ / '_ \ / _ \ '__| '__| | | | / _ \   |_ \  \n" \
 			"|  _  | (_| | (__|   <| |_) |  __/ |  | |  | |_| |/ ___ \ ___) | \n" \
 			"|_| |_|\__,_|\___|_|\_\_.__/ \___|_|  |_|   \__, /_/   \_\____/  \n" \
-			"                                            |___/                \e[0m"
-	echo -e "\e[35m" \
+			"                                            |___/                $(normal)"
+	echo -e "$(fmagenta)" \
 			"                    _       _    __ _ _\n" \
 			"                  _| | ___ | |_ / _(_) | ___  ___\n" \
 			"                / _\` |/ _ \| __| |_| | |/ _ \/ __|\n" \
-			"               | (_| | (_) | |_|  _| | |  __/\__ \\n" \
-			"              (_)__,_|\___/ \__|_| |_|_|\___||___/\e[0m\n"
+			"               | (_| | (_) | |_|  _| | |  __/\__ \ \n" \
+			"              (_)__,_|\___/ \__|_| |_|_|\___||___/$(normal)\n"
 }
 
-# 関数: OSを自動で取得する
-function get_os {
-	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-		if [[ -f /etc/os-release ]]; then
-			. /etc/os-release
-			echo "$ID"
-		elif [[ -f /etc/redhat-release ]]; then
-			echo "redhat"
-		else
-			echo "linux"
-		fi
-	elif [[ "$OSTYPE" == "darwin"* ]]; then
-		echo "mac"
-	elif [[ "$OSTYPE" == "msys" ]]; then
-		echo "win"
-	fi
-}
 
-# 関数: 指定したOSサフィックスに基づいて有効なサフィックスを返す
-function get_valid_suffixes {
-    local os="$1"
-    local valid_suffixes=()
-    
-    for suffix in "${OS_SUFFIXES[@]}"; do
-        if [[ "$suffix" == "$os" ]]; then
-            valid_suffixes+=("$suffix")
-			break
-        fi
-    done
-
-	if [[ "${#valid_suffixes[@]}" -eq 0 ]]; then
-		echo -e "\e[31mUnsupported OS: $os\e[0m" >&2
-		exit 1
-	fi
-
-	case "$os" in
-		"kali") valid_suffixes+=("${KALI_SUFFIXES[@]}") ;;
-		"ubuntu") valid_suffixes+=("${UBUNTU_SUFFIXES[@]}") ;;
-		"debian") valid_suffixes+=("${DEBIAN_SUFFIXES[@]}") ;;
-		"manjaro") valid_suffixes+=("${MANJARO_SUFFIXES[@]}") ;;
-		"arch") valid_suffixes+=("${ARCH_SUFFIXES[@]}") ;;
-	esac
-
-    valid_suffixes+=("all")
-    echo "${valid_suffixes[@]}"
-}
-
-# 関数: 指定されたサフィックスに一致するファイルを見つける
-function find_files_with_suffixes {
-    local dir="$1"
-	local extension="$2"
-    shift 2
-    local suffixes=("$@")
-    local files=()
-
-    for suffix in "${suffixes[@]}"; do
-		founds=()
-		mapfile -t founds < <(find "$dir" -name "*__${suffix}__*.${extension}")
-		files+=("${founds[@]}")
-	done
-
-	printf '%s\n' "${files[@]}" | sort -Vu
-}
 
 # 引数の解析
 while [[ $# -gt 0 ]]; do
@@ -152,7 +84,7 @@ while [[ $# -gt 0 ]]; do
 			exit 0
 			;;
         *)
-            OS="$1"
+			OS="$(to_lower "$1")"
             ;;
     esac
     shift
@@ -167,14 +99,15 @@ fi
 
 # OSを自動で取得し、指定されたOSと一致するか確認
 # OSが指定されていない場合、取得したOSを使用するか確認
-detected_os=$(get_os)
+detected_os=$(get_os | to_lower)
 if [[ -z "$OS" ]]; then
 	if [[ -z "$detected_os" ]]; then
-		echo -e "\e[31mOS is not specified.\e[0m" >&2
+		log_error "OS is not specified." >&2
 		usage
 		exit 1
 	fi
 
+	# TODO: Yes/Noプロンプトを実装する
 	echo -e "\e[33mOS is not specified. detected: \e[34m$detected_os\e[0m"
 	read -r -n 1 -p "$(echo -e "Do you want to continue as \e[34m$detected_os\e[0m? [Y/n]: ")" to_continue
 	echo
@@ -201,7 +134,7 @@ sleep 2
 
 # 有効なサフィックスを取得
 valid_suffixes=()
-IFS=" " read -r -a valid_suffixes < <(get_valid_suffixes "$OS")
+IFS=" " read -r -a valid_suffixes < <(get_os_hierarchy "$OS" || (log_error "The specified OS is invalid." >&2 && exit 1))
 
 # スクリプトのフィルター
 FILTER=""
@@ -225,9 +158,10 @@ if [[ "$CHOICE" == true ]]; then
 	for script in "${scripts[@]}"; do
 		[[ "$script" =~ __cui__ ]] && tag+=("\e[1;43;30m CUI \e[0m")
 		[[ "$script" =~ __gui__ ]] && tag+=("\e[1;44;30m GUI \e[0m")
-		aka+=("$(basename "$script" | sed 's/__.*__//' | sed 's/\.sh//' | sed 's/^[0-9]*//' | sed -r 's/(\b|_)(.)/\u\2/g')")
+		# shellcheck disable=SC2119
+		aka+=("$(basename "$script" | remove_suffix | remove_extension | remove_front_number | snake2pascal)")
 	done
-	mapfile -t scripts < <(choose --title "Choose the installation scripts" "${scripts[@]}" --aka "${aka[@]}" --tag "${tag[@]}")
+	mapfile -t scripts < <(choose --title "Choose the installation scripts." "${scripts[@]}" --aka "${aka[@]}" --tag "${tag[@]}")
 fi
 
 # スクリプトを実行、statusが0以外の場合はエラーとして処理、STDERRがあればWarningとして表示
@@ -240,14 +174,14 @@ for script in "${scripts[@]}"; do
 	# エラーが発生したら、RESULTにエラーメッセージを追加して最後にまとめて表示
 	# チョイスモードでは、--choiceオプションを追加
 	if ! bash "$script" "${valid_suffixes[@]}" "$([[ "$CHOICE" == true ]] && echo "--choice")" 2> "$tempfile"; then
-		RESULT+="\e[1;46;30m SCRIPTS \e[1;41;30m ERROR \e[1;40;34m $script \e[0m\n"
+		RESULT+="$(log_error "$script" "SCRIPT")\n"
 		RESULT+="$(echo -n "$(cat "$tempfile")" | sed 's/^/	/g')\n"
 		HAS_ERROR=true
 	elif [[ -n $(cat "$tempfile") ]]; then
-		RESULT+="\e[1;46;30m SCRIPTS \e[1;43;30m WARNING \e[1;40;34m $script \e[0m\n"
+		RESULT+="$(log_warning "$script" "SCRIPT")\n"
 		RESULT+="$(echo -n "$(cat "$tempfile")" | sed 's/^/	/g')\n"
 	else
-		RESULT+="\e[1;46;30m SCRIPTS \e[1;42;30m SUCCESS \e[1;40;34m $script \e[0m\n"
+		RESULT+="$(log_success "$script" "SCRIPT")\n"
 	fi
 	rm "$tempfile"
 done
@@ -259,43 +193,44 @@ echo -e "$RESULT"
 # ドットファイルの処理
 if [[ "$INSTALL_DOTFILES" == true ]]; then
 	dotfiles=()
-	mapfile -t dotfiles < <(find_files_with_suffixes "dotfiles" "*" "${valid_suffixes[@]}")
+	mapfile -t dotfiles < <(find_files_or_dirs_with_suffixes "dotfiles" "*" "${valid_suffixes[@]}")
 	# チョイスモード
 	if [[ "$CHOICE" == true ]]; then
 		# チョイス用の別名を作る
 		aka=()
 		for dotfile in "${dotfiles[@]}"; do
-			aka+=("$(basename "$dotfile" | sed 's/__.*__//')")
+			# shellcheck disable=SC2119
+			aka+=("$(echo "$dotfile" | sed 's/dotfiles\///' | remove_suffix)")
 		done
 		mapfile -t dotfiles < <(choose --title "Choose the dotfiles" "${dotfiles[@]}" --aka "${aka[@]}")
 	fi
 
     for dotfile in "${dotfiles[@]}"; do
-		if [[ -z $dotfile ]]; then
-			continue
-		fi
-        base_name=$(basename "$dotfile" | sed 's/__.*__//')
+		[[ -z $dotfile ]] && continue
+
+		# shellcheck disable=SC2119
+        base_name="$(basename "$dotfile" | remove_suffix)"
 		link_name=~/$base_name
 
 		if [ -L "$link_name" ]; then
 			unlink "$link_name"
-			echo -e "\e[1;46;30m DOTFILES \e[1;43;30m UNLINK \e[1;40;34m $link_name is already symlink, unlinking... \e[0m"
+			log "$link_name is already symlink, unlink..." "$(blightyellow)UNLINK" "DOTFILES"
 		fi
 		if [[ -e "$link_name" ]]; then
-			if [[ ! -d ~/.dotbackup ]]; then
-				mkdir ~/.dotbackup
-			fi
+			[[ ! -d ~/.dotbackup ]] && mkdir ~/.dotbackup
 			mv "$link_name" ~/.dotbackup/"$base_name.bak"
-			echo -e "\e[1;46;30m DOTFILES \e[1;44;30m BACKUP \e[1;40;34m $link_name is already exists, backup to ~/.dotbackup/$base_name.bak \e[0m"
+			log "$link_name is already exists, backup to ~/.dotbackup/$base_name.bak" "BACKUP" "DOTFILES"
 		fi
+
+		[[ ! -d $(dirname "$link_name") ]] && mkdir -p "$(dirname "$link_name")"
 		ln -snf "$(pwd)/$dotfile" "$link_name"
-		echo -e "\e[1;46;30m DOTFILES \e[1;42;30m SUCCESS \e[1;40;34m $link_name -> $(pwd)/$dotfile \e[0m"
+		log_success "$link_name -> $(pwd)/$dotfile" "DOTFILES"
     done
 fi
 
 echo
-echo -e "\e[1;44m \e[1;40;34m All process has been completed! \e[1;44m \e[0m"
-cd "$PWD" || exit
+echo -e "$(blightblue) $(bgray | flightblue) All process has been completed! $(blightblue) $(normal)"
+popd >/dev/null || (echo -e "$(fred)Failed to popd$(normal)" >&2 && exit 1)
 if [[ "$HAS_ERROR" == true ]]; then
 	exit 1
 fi

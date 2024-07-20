@@ -1,12 +1,13 @@
 #!/bin/bash
 set -eu
 
-echo "#####################"
-echo "# Git configuration #"
-echo "#####################"
+cd "$(dirname "$0")" || exit 1
+[[ ! -f ../lib/ui/log.sh ]] && echo -e "\e[31m../lib/ui/log.sh not found\e[0m" >&2 && exit 1
+. ../lib/ui/log.sh
+log_info "Setting up git..." "GIT"
 
 if ! (which "git" > /dev/null 2>&1); then
-	echo -e "\e[31mgit is not installed, Please install it.\e[0m" >&2
+	log_warning "git is not installed, Please install it." "GIT" >&2
 	exit
 fi
 
@@ -25,7 +26,7 @@ git config --global grep.lineNumber true
 git config --global alias.graph "log --pretty=format:'%Cgreen[%cd] %Cblue%h %Cred<%cn> %Creset%s' --date=short  --decorate --graph --branches --tags --remotes"
 
 if [ -z "${PS1-}" ]; then
-	echo -e "\e[32mGit configuration is done (non-interactive).\e[0m"
+	log_success "Git configuration is done (non-interactive)." "GIT"
 	exit
 fi
 
@@ -39,4 +40,4 @@ git config --global user.name "$name"
 
 
 
-echo -e "\e[32mGit configuration is done.\e[0m"
+log_success "Git configuration is done." "GIT"

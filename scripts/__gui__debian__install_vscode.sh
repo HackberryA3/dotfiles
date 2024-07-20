@@ -1,12 +1,13 @@
 #!/bin/bash
 set -eu
 
-echo "#######################"
-echo "# VSCode installation #"
-echo "#######################"
+cd "$(dirname "$0")" || exit 1
+[[ ! -f ../lib/ui/log.sh ]] && echo -e "\e[31m../lib/ui/log.sh not found\e[0m" >&2 && exit 1
+. ../lib/ui/log.sh
+log_info "Installing VSCode..." "VSCode"
 
 if ! (which "wget" > /dev/null 2>&1); then
-	echo -e "\e[31mwget is not installed, Please install it.\e[0m" >&2
+	log_error "wget is not installed, Please install it." "VSCode" >&2
 	exit 1
 fi
 
@@ -15,4 +16,4 @@ wget --no-verbose -O $VSCODE "https://code.visualstudio.com/sha/download?build=s
 apt-get -qq install $VSCODE -y
 rm $VSCODE
 
-echo -e "\e[32mVSCode has been installed successfully.\e[0m"
+log_success "VSCode has been installed successfully." "VSCode"

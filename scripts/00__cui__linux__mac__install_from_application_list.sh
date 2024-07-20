@@ -1,12 +1,16 @@
 #! /bin/bash
 set -euo pipefail
 
-PWD=$(pwd)
-cd "$(dirname "$0")" || (echo -e "\e[31mFaild run script\e[0m" >&2 && exit 1)
+cd "$(dirname "$0")" || (echo -e "\e[31mFaild cd to sh dir\e[0m" >&2 && exit 1)
 
 HAS_ERROR=false
 
 
+
+. ../lib/utility.sh
+. ../lib/ui/log.sh
+. ../lib/ui/choose.sh
+. ../lib/ui/prompt.sh
 
 OS="$1"
 # --choiceがあれば、使用可能なサフィックスを引数で受け取る
@@ -16,7 +20,6 @@ while [[ $# -gt 0 ]]; do
 	case $1 in
 		--choice)
 			CHOICE=true
-			source ../lib/choose.sh
 			;;
 		*)
 			suffixes+=("$1")
@@ -38,46 +41,48 @@ case $OS in
 		;;
 esac
 if [[ -z $install_script ]]; then
-	echo -e "\e[31mUnsupported OS. OS : $OS\e[0m" >&2
+	log_error "Unsupported OS. OS : $OS" "INSTALL FROM APP LIST" >&2
 	exit 1
 fi
 
 
 
 lists=()
-for suffix in "${suffixes[@]}"; do
-	founds=()
-	mapfile -t founds < <(find "lists" -type f -name "*__${suffix}__*.list")
-	lists+=("${founds[@]}")
-done
-mapfile -t lists < <(echo "${lists[@]}" | tr ' ' '\n' | sort -Vu)
-
+mapfile -t lists < <(find_files_with_suffixes "./lists" "list" "${suffixes[@]}")
 
 if [[ $CHOICE == true ]]; then
 	aka=()
 	for list in "${lists[@]}"; do
-		aka+=("$(basename "$list" | sed 's/__.*__//' | sed 's/\.list.*//' | sed 's/^[0-9]*//' | sed -r 's/(\b|_)(.)/\u\2/g')")
+		# shellcheck disable=SC2119
+		aka+=("$(basename "$list" | remove_suffix | remove_extension | remove_front_number | snake2pascal)")
 	done
 	tag=()
 	for list in "${lists[@]}"; do
-		tag+=("\e[1;44;30m $(basename "$list" | sed 's/.*\(__.*__\).*/\1/' | sed 's/^__\|__$//g' | tr '__' ', ' | sed 's/\(.*\)/\U\1/') \e[0m")
+		# shellcheck disable=SC2119
+		script_os=$(basename "$list" | get_suffix | sed 's/^__\|__$//g' | to_upper)
+		tag+=("$(special_color "$script_os") $script_os $(normal)")
 	done
 	mapfile -t lists < <(choose --title "Choose the application list" "${lists[@]}" --aka "${aka[@]}" --tag "${tag[@]}" 2>/dev/tty)
 fi
 
 
 
+declare -A each_apps=()
 for list in "${lists[@]}"; do
 	[[ ! -f $list ]] && continue
 
 	apps=()
 	if [[ $CHOICE == true ]]; then
+		lines=()
+		mapfile -t lines < <(grep -vE '^\s*$' -- "$list" | sed 's/\(#[^\-]*\)-*$/\1/')
+
 		aka=()
 		tag=()
-		CURRENT_TAG=" "
-		while read -r line; do
+		CURRENT_TAG=""
+		for line in "${lines[@]}"; do
 			if [[ $line =~ ^\s*# ]]; then
-				CURRENT_TAG=$(echo "$line" | sed 's/[^#]*#\s*//' | sed 's/\(.*\)/\U\1/')
+				# shellcheck disable=SC2119
+				CURRENT_TAG=" $(echo "$line" | sed 's/[^#]*#\s*//' | to_upper | trim) "
 				continue
 			fi
 			COMMENT=""
@@ -88,23 +93,27 @@ for list in "${lists[@]}"; do
 			APP_NAME=${line//\s*#.*/}
 			apps+=("$APP_NAME")
 			aka+=("$APP_NAME$COMMENT")
-			tag+=("\e[1;44;30m $CURRENT_TAG \e[0m")
-		done < <(grep -vE '^\s*$' -- "$list" | sed 's/\(#[^\-]*\)-*$/\1/')
+			tag+=("$(special_color "$CURRENT_TAG")$CURRENT_TAG$(normal)")
+		done
 
 		mapfile -t apps < <(choose --title "Choose the applications" "${apps[@]}" --aka "${aka[@]}" --tag "${tag[@]}" 2>/dev/tty)
 	else
 		mapfile -t apps < <(grep -vE '^\s*$|^\s*#' -- "$list" | sed 's/\s*#.*//')
 	fi
-	echo -e "\e[1;44;30m INFO \e[1;40;34m Installing from $list \e[0m"
 
-	if ! bash "$install_script" "${apps[@]}"; then
-		HAS_ERROR=true
-	fi
+	each_apps["$list"]="${apps[*]}"
 done
 
-cd "$PWD" || (echo -e "\e[31mFaild run script\e[0m" >&2 && exit 1)
-if [[ $HAS_ERROR == true ]]; then
-	exit 1
-else
-	exit 0
-fi
+for list in "${!each_apps[@]}"; do
+	log_info "Installing from $list" "INSTALL FROM APP LIST"
+
+	for app in ${each_apps["$list"]}; do
+		if ! bash "$install_script" "$app"; then
+			HAS_ERROR=true
+		fi
+	done
+done
+
+
+
+[[ $HAS_ERROR == true ]] && exit 1 || exit 0
