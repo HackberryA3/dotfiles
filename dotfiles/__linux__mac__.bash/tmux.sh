@@ -1,3 +1,9 @@
+#!/bin/bash
+
+if (! which "tmux" > /dev/null 2>&1); then
+	return 0
+fi
+
 if [[ ! -e ~/.tmux/plugins/tpm ]]; then
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 httpserver() {
 	local port="${1:-8000}"
 	if (which "python" > /dev/null 2>&1); then

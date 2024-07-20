@@ -1,3 +1,5 @@
+#!/bin/bash
+
 mkcontest() {
     local name=$1
     local problemCnt=$2

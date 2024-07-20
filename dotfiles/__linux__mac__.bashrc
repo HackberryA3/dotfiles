@@ -48,26 +48,9 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-# 関数の読み込み
-if [ -f ~/.bash/func_common.bash ]; then
-	source ~/.bash/func_common.bash
-fi
-if [ -f ~/.bash/func_competitive_programming.bash ]; then
-	source ~/.bash/func_competitive_programming.bash
-fi
-
-# 追加アプリの設定ファイル
-if [ -f ~/.bash/prompt.bash ]; then
-	source ~/.bash/prompt.bash
-fi
-if [ -f ~/.bash/oh-my-posh.bash ]; then
-	source ~/.bash/oh-my-posh.bash
-fi
-if [ -f ~/.bash/nvm.bash ]; then
-	source ~/.bash/nvm.bash
-fi
-if (which "tmux" > /dev/null 2>&1); then
-	if [ -f ~/.bash/tmux.bash ]; then
-		source ~/.bash/tmux.bash
-	fi
-fi
+# 追加設定の読み込み
+extends=()
+mapfile -t extends < <(find ~/.bash/ -type f \( -name '*.sh' -o -name '*.bash' \))
+for extend in "${extends[@]}"; do
+	. "$extend"
+done
