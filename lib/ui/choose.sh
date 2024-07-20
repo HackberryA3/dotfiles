@@ -1,5 +1,12 @@
 #!/bin/bash
 
+pushd "$(pwd)" >/dev/null || (echo -e "\e[31mFailed pushd\e[0m" >&2 && exit 1)
+cd "$(dirname "${BASH_SOURCE:-$0}")" || exit 1
+. cursor.sh
+. prompt.sh
+. log.sh
+popd >/dev/null || (echo -e "\e[31mFailed popd\e[0m" >&2 && exit 1)
+
 # choose 関数の定義
 choose() {
 	local title="Choose"
@@ -11,7 +18,6 @@ choose() {
 	local -a selected=()
     local -i cursor=0
     local -i selected_count=0
-    local INPUT
 
 	local HAS_ARGS=false
     # 引数処理
@@ -31,13 +37,13 @@ choose() {
 				;;
 			--aka)
 				if [[ $HAS_ARGS = false ]]; then
-					echo -e "\e[31mError: aka must be after args.\e[0m" >&2
+					log_error "aka must be after args." "choose" >&2
 					return 1
 				fi
 				for (( i = 0; i < ${#options[@]}; i++ )); do
 					shift
 					if [[ -z "$1" ]]; then
-						echo -e "\e[31mError: The number of aka must be the same as the number of options\e[0m" >&2
+						log_error "The number of aka must be the same as the number of options." "choose" >&2
 						return 1
 					fi
 					aka[i]="$1"
@@ -45,13 +51,13 @@ choose() {
 				;;
 			--tag)
 				if [[ $HAS_ARGS = false ]]; then
-					echo -e "\e[31mError: tag must be after args.\e[0m" >&2
+					log_error "tag must be after args." "choose" >&2
 					return 1
 				fi
 				for (( i = 0; i < ${#options[@]}; i++ )); do
 					shift
 					if [[ -z "$1" ]]; then
-						echo -e "\e[31mError: The number of tag must be the same as the number of options\e[0m" >&2
+						log_error "The number of tag must be the same as the number of options." "choose" >&2
 						return 1
 					fi
 					tags[i]="$1"
@@ -68,7 +74,7 @@ choose() {
 	# 引数がない場合はパイプを見て、あればエラーを出力して終了
 	if [[ $HAS_ARGS = false ]]; then
 		if [[ -p /dev/stdin ]]; then
-			echo -e "\e[31mError: choose is not supported with pipe\e[0m" >&2
+			log_error "choose is not supported with pipe." "choose" >&2
 			return 1
 		fi
 	fi
@@ -81,15 +87,15 @@ choose() {
 	# min が 0 未満の場合はエラーを出力して終了
 	# limit が 0 未満の場合はエラーを出力して終了
 	if [[ $min -gt $limit ]]; then
-		echo -e "\e[31mError: min must be less than or equal to limit\e[0m" >&2
+		log_error "min must be less than or equal to limit." "choose" >&2
 		return 1
 	fi
 	if [[ $min -lt 0 ]]; then
-		echo -e "\e[31mError: min must be greater than or equal to 0\e[0m" >&2
+		log_error "min must be greater than or equal to 0." "choose" >&2
 		return 1
 	fi
 	if [[ $limit -lt 0 ]]; then
-		echo -e "\e[31mError: limit must be greater than or equal to 0\e[0m" >&2
+		log_error "limit must be greater than or equal to 0." "choose" >&2
 		return 1
 	fi
 	# akaがなければ、akaを選択肢と同じにする
@@ -98,10 +104,10 @@ choose() {
 	fi
 	# akaが指定されている場合、選択肢の数と一致するか確認
 	if [[ ${#aka[@]} -ne ${#options[@]} ]]; then
-		echo -e "\e[31mError: The number of aka must be the same as the number of options\e[0m" >&2
-		echo -e "\e[31maka: ${#aka[@]}, options: ${#options[@]}\e[0m" >&2
-		echo -e "\e[31maka: ${aka[*]}\e[0m" >&2
-		echo -e "\e[31moptions: ${options[*]}\e[0m" >&2
+		log_error "The number of aka must be the same as the number of options." "choose" >&2
+		echo -e "$(fred)	aka: ${#aka[@]}, options: ${#options[@]}.$(normal)" >&2
+		echo -e "$(fred)	aka: ${aka[*]}.$(normal)" >&2
+		echo -e "$(fred)	options: ${options[*]}.$(normal)" >&2
 		return 1
 	fi
 	# tagを空文字で埋める
@@ -123,68 +129,66 @@ choose() {
 
 	# プロンプトをリセット
 	reset_prompt() {
-		echo -en "\r" >&2 # カーソルを行頭に移動
-		echo -en "\e[1A\e[K" >&2 # ステータス行をクリア
+		cursor_begin >&2 # カーソルを行頭に移動
+		# ステータス行をクリア
+		cursor_up 1 >&2
+		clear_line >&2
 		for ((i = 0; i < ${#options[@]}; i++)); do
-			echo -en "\e[1A\e[K" >&2 # カーソルを一つ上に移動して行をクリア
+			# カーソルを一つ上に移動して行をクリア
+			cursor_up 1 >&2
+			clear_line >&2
 		done
-		echo -en "\e[1A\e[K" >&2 # タイトル行をクリア
+		# タイトル行をクリア
+		cursor_up 1 >&2
+		clear_line >&2
 	}
 
     # 描画関数
     draw() {
 		reset_prompt
 
-		echo -e "\e[38;05;135m$title\e[0m" >&2
+		echo -en "$(fcolor 135)$title$(normal) " >&2
+		echo -e "$(disable)$(fgray)↑/k: Up, ↓/j: Down, Space: Select, a: SelectAll, Enter: Confirm, q: Quit$(normal)" >&2
 
         for ((i = 0; i < ${#options[@]}; i++)); do
-			echo -en "\e[38;05;077m" >&2
+			flightgreen >&2
             if [[ $i -eq $cursor ]]; then
                 echo -n "▶ " >&2
             else
                 echo -n "  " >&2
             fi
 
-			echo -en "\e[0m" >&2  # 色をリセット
+			normal >&2  # 色をリセット
 			echo -en "${tags[i]}" >&2
 
-			[[ $i -eq $cursor ]] && echo -en "\e[4m" >&2
+			[[ $i -eq $cursor ]] && underline >&2
 
             if [[ ${selected[i]} -eq 1 ]]; then
-				echo -en "\e[38;05;077m" >&2
+				flightgreen >&2
 				echo -e " ${aka[i]} " >&2
             else
-				echo -en "\e[38;05;246m" >&2
+				disable >&2; fgray >&2
 				echo -e " ${aka[i]} " >&2
             fi
-            echo -en "\e[0m" >&2  # 色をリセット
+            normal >&2  # 色をリセット
         done
 
-		echo -e "$selected_count $(if [[ $limit -lt 999 ]]; then echo "/ $limit "; fi)Selected$(if [[ $selected_count -lt $min ]]; then echo -e ", \e[31m$((min - selected_count))\e[0m more."; fi)" >&2
-    }
-
-    # キー入力処理
-    read_input() {
-        IFS= read -r -s -n1 INPUT 
-        if [[ "$INPUT" == $'\x1b' ]]; then
-            read -r -s -n2 INPUT  # 矢印キー読み取り
-        fi
+		echo -e "$selected_count $(if [[ $limit -lt 999 ]]; then echo "/ $limit "; fi)Selected$(if [[ $selected_count -lt $min ]]; then echo -e ", $(fred)$((min - selected_count))$(normal) more."; fi)" >&2
     }
 
     # メインループ
     while true; do
         draw
 
-        read_input
-
+		INPUT=$(read_key)
         case "$INPUT" in
-            '[A' | 'k')  # 上キーまたはk
+            'Up' | 'k')  # 上キーまたはk
                 cursor=$(( (cursor - 1 + ${#options[@]}) % ${#options[@]} ))
                 ;;
-            '[B' | 'j')  # 下キーまたはj
+            'Down' | 'j')  # 下キーまたはj
                 cursor=$(( (cursor + 1) % ${#options[@]} ))
                 ;;
-            ' ')  # スペースキー
+            'Space')  # スペースキー
                 if [[ ${selected[cursor]} -eq 0 && $selected_count -lt $limit ]]; then
                     selected[cursor]=1
                     selected_count=$((selected_count + 1))
@@ -193,7 +197,20 @@ choose() {
 					selected_count=$((selected_count - 1))
                 fi
                 ;;
-            '')  # エンターキー
+			'a')  # aキー
+				if [[ $selected_count -ne 0 ]]; then
+					for ((i = 0; i < ${#options[@]}; i++)); do
+						selected[i]=0
+					done
+					selected_count=0
+				else
+					for ((i = 0; i < ${#options[@]}; i++)); do
+						selected[i]=1
+					done
+					selected_count=${#options[@]}
+				fi
+				;;
+            'CR')  # エンターキー
 				if [[ $selected_count -ge $min ]]; then
                 	break
 				fi
