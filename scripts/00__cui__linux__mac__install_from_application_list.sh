@@ -65,6 +65,9 @@ if [[ $CHOICE == true ]]; then
 	mapfile -t lists < <(choose --title "Choose the application list" "${lists[@]}" --aka "${aka[@]}" --tag "${tag[@]}" 2>/dev/tty)
 fi
 
+# 連想配列のキーの取り出し順が逆なので、listsを逆順にする
+mapfile -t lists < <(echo "${lists[@]}" | tr ' ' '\n' | tac)
+
 
 
 declare -A each_apps=()
@@ -107,11 +110,12 @@ done
 for list in "${!each_apps[@]}"; do
 	log_info "Installing from $list" "INSTALL FROM APP LIST"
 
-	for app in ${each_apps["$list"]}; do
-		if ! bash "$install_script" "$app"; then
-			HAS_ERROR=true
-		fi
-	done
+	# 配列が1つの引数とみなされるので、配列を展開して渡す
+	apps=()
+	mapfile -t apps < <(echo "${each_apps[$list]}" | tr ' ' '\n')
+	if ! bash "$install_script" "${apps[@]}"; then
+		HAS_ERROR=true
+	fi
 done
 
 
