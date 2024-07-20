@@ -114,26 +114,42 @@ function find_files_or_dirs_with_suffixes {
 # 関数: __.*__形式のサフィックスを削除
 function remove_suffix {
 	local filename=""
-	[[ $# -ne 0 ]] && filename="$1" || [[ -p /dev/stdin ]] && filename=$(cat -)
+	if [[ $# -ne 0 ]]; then
+		filename="$1"
+	elif [[ -p /dev/stdin ]]; then
+		filename=$(cat -)
+	fi
 	echo "${filename//__*__/}"
 }
 # 関数: __.*__形式のサフィックスを取得
 function get_suffix {
 	local filename=""
-	[[ $# -ne 0 ]] && filename="$1" || [[ -p /dev/stdin ]] && filename=$(cat -)
+	if [[ $# -ne 0 ]]; then
+		filename="$1"
+	elif [[ -p /dev/stdin ]]; then
+		filename=$(cat -)
+	fi
 	# shellcheck disable=SC2001
 	echo "$filename" | sed 's/.*__\(.*\)__.*/\1/'
 }
 # 関数: 拡張子を削除
 function remove_extension {
 	local filename=""
-	[[ $# -ne 0 ]] && filename="$1" || [[ -p /dev/stdin ]] && filename=$(cat -)
+	if [[ $# -ne 0 ]]; then
+		filename="$1"
+	elif [[ -p /dev/stdin ]]; then
+		filename=$(cat -)
+	fi
 	echo "${filename%.*}"
 }
 # 関数: 先頭の数字を削除
 function remove_front_number {
 	local filename=""
-	[[ $# -ne 0 ]] && filename="$1" || [[ -p /dev/stdin ]] && filename=$(cat -)
+	if [[ $# -ne 0 ]]; then
+		filename="$1"
+	elif [[ -p /dev/stdin ]]; then
+		filename=$(cat -)
+	fi
 	# shellcheck disable=SC2001
 	echo "$filename" | sed 's/^[0-9]*//'
 }
@@ -141,19 +157,31 @@ function remove_front_number {
 # 関数: スネークケースをパスカルケースに変換
 function snake2pascal {
 	local str=""
-	[[ $# -ne 0 ]] && str="$1" || [[ -p /dev/stdin ]] && str=$(cat -)
+	if [[ $# -ne 0 ]]; then
+		str="$1"
+	elif [[ -p /dev/stdin ]]; then
+		str=$(cat -)
+	fi
 	echo "$str" | sed -r 's/(\b|_)(.)/\u\2/g'
 }
 # 関数: すべて大文字に変換
 function to_upper {
 	local str=""
-	[[ $# -ne 0 ]] && str="$1" || [[ -p /dev/stdin ]] && str=$(cat -)
+	if [[ $# -ne 0 ]]; then
+		str="$1"
+	elif [[ -p /dev/stdin ]]; then
+		str=$(cat -)
+	fi
 	echo "$str" | tr '[:lower:]' '[:upper:]'
 }
 # 関数: すべて小文字に変換
 function to_lower {
 	local str=""
-	[[ $# -ne 0 ]] && str="$1" || [[ -p /dev/stdin ]] && str=$(cat -)
+	if [[ $# -ne 0 ]]; then
+		str="$1"
+	elif [[ -p /dev/stdin ]]; then
+		str=$(cat -)
+	fi
 	echo "$str" | tr '[:upper:]' '[:lower:]'
 }
 # 関数: 先頭と末尾の空白を削除

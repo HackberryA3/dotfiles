@@ -31,7 +31,7 @@ if [ -d ".config/nvim" ]; then
 	# TODO: 質問プロンプトを実装する
 	log_warning "nvim config is already set up. Do you want to overwrite it? [y/N]" "NVIM CONFIG"
 	read -r -n1 answer
-	if [[ ! "$answer" =~ ^[^Yy]$ ]]; then
+	if [[ ! "$answer" =~ ^[Yy]$ ]]; then
 		log_info "nvim config setup is canceled." "NVIM CONFIG"
 		exit
 	fi
