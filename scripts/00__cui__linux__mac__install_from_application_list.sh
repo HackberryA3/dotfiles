@@ -65,8 +65,6 @@ if [[ $CHOICE == true ]]; then
 	mapfile -t lists < <(choose --title "Choose the application list" "${lists[@]}" --aka "${aka[@]}" --tag "${tag[@]}" 2>/dev/tty)
 fi
 
-# 連想配列のキーの取り出し順が逆なので、listsを逆順にする
-mapfile -t lists < <(echo "${lists[@]}" | tr ' ' '\n' | tac)
 
 
 
