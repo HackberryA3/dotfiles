@@ -50,7 +50,7 @@ alias mv='mv -i'
 
 # 追加設定の読み込み
 extends=()
-mapfile -t extends < <(find ~/.bash/ -type f \( -name '*.sh' -o -name '*.bash' \))
+mapfile -t extends < <(find ~/.bash/ -type f \( -name '*.sh' -o -name '*.bash' \) | sort -V)
 for extend in "${extends[@]}"; do
 	. "$extend"
 done
