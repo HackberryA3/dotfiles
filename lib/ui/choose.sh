@@ -205,9 +205,12 @@ choose() {
 					selected_count=0
 				else
 					for ((i = 0; i < ${#options[@]}; i++)); do
+						if [[ $selected_count -ge $limit ]]; then
+							break
+						fi
 						selected[i]=1
+						selected_count=$((selected_count + 1))
 					done
-					selected_count=${#options[@]}
 				fi
 				;;
             'CR')  # エンターキー
