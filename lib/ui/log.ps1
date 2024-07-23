@@ -9,10 +9,10 @@ function Log {
 		[string]$Message,
 		[Paramater(Mandatory=$true)]
 		[string]$Head,
-		[string]$Messanger
+		[string]$Messanger=""
 	)
 	process {
-		if ($Messanger -ne $null) {
+		if ($Messanger.Length -ne 0) {
 			BCyan; Fblack
 			Write-Host -NoNewline " $Messanger "
 			Normal
@@ -22,11 +22,11 @@ function Log {
 		Write-Host -NoNewline " $Head "
 		Normal
 
-		BGray; Fblue
+		Bdarkgray; Fblue
 		Write-Host " $Message "
 		Normal
 
-		return "${Messanger}: [$Head] $Message"
+		return "${Messanger}: [$Head] $Message "
 	}
 }
 
@@ -34,10 +34,10 @@ function LogInfo {
 	param(
 		[Parameter(Mandatory=$true)]
 		[string]$Message,
-		[string]$Messanger
+		[string]$Messanger=""
 	)
 	process {
-		if ($Messanger -ne $null) {
+		if ($Messanger.Length -ne 0) {
 			BCyan; Fblack
 			Write-Host -NoNewline " $Messanger "
 			Normal
@@ -47,11 +47,11 @@ function LogInfo {
 		Write-Host -NoNewline " INFO "
 		Normal
 
-		BGray; Fblue
+		Bdarkgray; Fblue
 		Write-Host " $Message "
 		Normal
 
-		return "${Messanger}: [INFO] $Message"
+		return "${Messanger}: [INFO] $Message "
 	}
 }
 
@@ -59,10 +59,10 @@ function LogSuccess {
 	param(
 		[Parameter(Mandatory=$true)]
 		[string]$Message,
-		[string]$Messanger
+		[string]$Messanger=""
 	)
 	process {
-		if ($Messanger -ne $null) {
+		if ($Messanger.Length -ne 0) {
 			BCyan; Fblack
 			Write-Host -NoNewline " $Messanger "
 			Normal
@@ -72,11 +72,11 @@ function LogSuccess {
 		Write-Host -NoNewline " SUCCESS "
 		Normal
 
-		BGray; Fgreen
+		Bdarkgray; Fgreen
 		Write-Host " $Message "
 		Normal
 
-		return "${Messanger}: [SUCCESS] $Message"
+		return "${Messanger}: [SUCCESS] $Message "
 	}
 }
 
@@ -84,10 +84,10 @@ function LogWarning {
 	param(
 		[Parameter(Mandatory=$true)]
 		[string]$Message,
-		[string]$Messanger
+		[string]$Messanger=""
 	)
 	process {
-		if ($Messanger -ne $null) {
+		if ($Messanger.Length -ne 0) {
 			BCyan; Fblack
 			Write-Host -NoNewline " $Messanger "
 			Normal
@@ -97,11 +97,11 @@ function LogWarning {
 		Write-Host -NoNewline " WARNING "
 		Normal
 
-		BGray; Fyellow
+		Bdarkgray; Fyellow
 		Write-Host " $Message "
 		Normal
 
-		return "${Messanger}: [WARNING] $Message"
+		return "${Messanger}: [WARNING] $Message "
 	}
 }
 
@@ -109,10 +109,10 @@ function LogError {
 	param(
 		[Parameter(Mandatory=$true)]
 		[string]$Message,
-		[string]$Messanger
+		[string]$Messanger=""
 	)
 	process {
-		if ($Messanger -ne $null) {
+		if ($Messanger.Length -ne 0) {
 			BCyan; Fblack
 			Write-Host -NoNewline " $Messanger "
 			Normal
@@ -122,10 +122,10 @@ function LogError {
 		Write-Host -NoNewline " ERROR "
 		Normal
 
-		BGray; Fred
+		Bdarkgray; Fred
 		Write-Host " $Message "
 		Normal
 
-		return "${Messanger}: [ERROR] $Message"
+		return "${Messanger}: [ERROR] $Message "
 	}
 }

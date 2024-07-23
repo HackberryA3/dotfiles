@@ -129,6 +129,7 @@ choose() {
 
 	# プロンプトをリセット
 	reset_prompt() {
+		# FIXME: ちらつきが発生するので、文字列をまとめて生成してから出力するようにする
 		cursor_begin >&2 # カーソルを行頭に移動
 		# ステータス行をクリア
 		cursor_up 1 >&2
@@ -147,6 +148,8 @@ choose() {
     draw() {
 		reset_prompt
 
+		# FIXME: ちらつきが発生するので、文字列をまとめて生成してから出力するようにする
+		# FIXME: 画面サイズに合わせて横を切る、選択肢を数ページに分ける
 		echo -en "$(fcolor 135)$title$(normal) " >&2
 		echo -e "$(disable)$(fgray)↑/k: Up, ↓/j: Down, Space: Select, a: SelectAll, Enter: Confirm, q: Quit$(normal)" >&2
 
