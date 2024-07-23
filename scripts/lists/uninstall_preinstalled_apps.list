@@ -1,0 +1,44 @@
+# Entertainments -----------
+Disney.37853FC22B2CE
+Microsoft.MicrosoftSolitaireCollection
+SpotifyAB.SpotifyMusic
+Microsoft.ZuneVideo
+
+# Multimedia ---------------
+Clipchamp.Clipchamp
+Microsoft.Paint
+Microsoft.Windows.Photos
+Microsoft.ZuneMusic
+
+# Office -------------------
+MicrosoftTeams
+Microsoft.MicrosoftOfficeHub
+
+# Utilities ----------------
+Microsoft.549981C3F5F10                   # Cortana
+Microsoft.Todos                           # Microsoft To Do
+Microsoft.WindowsCamera                   # カメラ
+Microsoft.WindowsAlarms                   # クロック
+Microsoft.YourPhone                       # スマホ同期
+Microsoft.BingNews                        # ニュース
+Microsoft.BingWeather                     # 天気
+Microsoft.Getstarted                      # ヒント
+Microsoft.GetHelp                         # ヘルプ
+MicrosoftCorporationII.QuickAssist        # クイックアシスト
+Microsoft.WindowsFeedbackHub              # フィードバック Hub
+Microsoft.MicrosoftStickyNotes            # 付箋
+Microsoft.WindowsSoundRecorder            # ボイス レコーダー
+Microsoft.WindowsMaps                     # マップ
+Microsoft.People                          # ピープル
+Microsoft.OutlookForWindows               # Outlook
+Microsoft.ScreenSketch                    # スクリーン スケッチ
+Microsoft.PowerAutomateDesktop            # オートメーション
+microsoft.windowscommunicationsapps       # メール、カレンダー
+
+# Xbox ---------------------
+Microsoft.GamingApp                       # Xbox ストア画面
+Microsoft.XboxGamingOverlay               # Xbox Game Bar
+Microsoft.Xbox.TCUI                       # Xbox その他
+Microsoft.XboxGameOverlay                 # Xbox その他
+Microsoft.XboxIdentityProvider            # Xbox その他
+Microsoft.XboxSpeechToTextOverlay         # Xbox その他
