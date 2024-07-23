@@ -15,7 +15,7 @@ INSTALL_DOTFILES=false
 . lib/ui/choose.sh
 . lib/ui/log.sh
 
-# Usage
+#Usage
 # 関数: 使用方法を表示
 function usage {
 	echo "Usage: $0 [OPTIONS] OS" >&2
@@ -39,7 +39,7 @@ function usage {
 
 # 関数: スプラッシュを表示
 function splash {
-	echo -e "$(fgreen)\n" \
+	echo -e "$(fgreen)" \
 			" _   _            _    _                             _    _____  \n" \
 			"| | | | __ _  ___| | _| |__   ___ _ __ _ __ _   _   / \  |___ /  \n" \
 			"| |_| |/ _\` |/ __| |/ / '_ \ / _ \ '__| '__| | | | / _ \   |_ \  \n" \
@@ -67,7 +67,7 @@ while [[ $# -gt 0 ]]; do
 			;;
         --dotfiles)
             INSTALL_DOTFILES=true
-            ;;
+;;
         --cui)
 			CUI=true
             ;;
