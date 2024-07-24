@@ -21,7 +21,7 @@ class InstallElement {
 [List[List[InstallElement]]]$Options = [List[List[InstallElement]]]::new()
 
 # ファイルを検索
-$Lists = Get-ChildItem -Path ".\lists" -Filter "*.list" | Where-Object { $_.Name -match "__windows__" }
+$Lists = Get-ChildItem -Path ".\lists" -Filter "*.list" | Where-Object { $_.Name -match "__windows__" } | ForEach-Object { $_.FullName }
 
 foreach($list in $Lists) {
 # ファイルを一行ずつ読み込んで処理する
@@ -82,6 +82,10 @@ if ($Choice) {
 
 for ($i = 0; $i -lt $Options.Count; $i++) {
 	$Option = $Options[$i]
+	if ($Option.Count -eq 0) {
+		continue
+	}
+
 	LogInfo "Installing apps from $($Lists[$i])..." "INSTALL FROM APP LIST"
 	foreach ($app in $Option) {
 		$Name = $app.Name

@@ -79,7 +79,7 @@ if ($CUI -eq $true -and $GUI -eq $true) {
 }
 
 # スクリプトを検索
-[string[]]$SCRIPTS=Get-ChildItem -Path .\scripts -Filter "*.ps1" | Where-Object { $_.Name -match $FILTER -and $_.Name -match "__windows__" } | Select-Object $_.FullName | Sort-Object
+[string[]]$SCRIPTS=Get-ChildItem -Path .\scripts -Filter "*.ps1" | Where-Object { $_.Name -match $FILTER -and $_.Name -match "__windows__" } | ForEach-Object { $_.FullName } | Sort-Object
 
 if ($CHOICE -eq $true) {
 	[List[string]]$Aka=[List[string]]::new()
