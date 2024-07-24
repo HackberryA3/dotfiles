@@ -1,0 +1,12 @@
+# Editor -----------------
+Microsoft.VisualStudioCode
+Microsoft.VisualStudio.2022.Community
+Vim.Vim
+NeoVim.NeoVim
+
+# Virtual ----------------
+Oracle.VirtualBox
+Docker.DockerDesktop
+
+# Other ------------------
+DevToys-app.DevToys

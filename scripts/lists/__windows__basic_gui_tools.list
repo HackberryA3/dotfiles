@@ -8,31 +8,10 @@ Microsoft.OneDrive
 Dropbox.Dropbox
 Google.GoogleDrive
 
-# Programming ------------
-Microsoft.VisualStudioCode
-Microsoft.VisualStudio.2022.Community
-
-# Virtual ----------------
-Oracle.VirtualBox
-Docker.DockerDesktop
-
 # Office -----------------
 Microsoft.Teams
 Zoom.Zoom
 Notion.Notion
-
-# Creative ---------------
-Adobe.CreativeCloud
-BlenderFoundation.Blender
-Unity.UnityHub
-EpicGames.EpicGamesLauncher
-
-# Game -------------------
-Valve.Steam
-EpicGames.EpicGamesLauncher
-Mojang.MinecraftLauncher
-RiotGames.LeagueOfLegends.JP
-Blitz.Blitz
 
 # Communication ----------
 LINE.LINE
@@ -40,3 +19,4 @@ Discord.Discord
 
 # Other ------------------
 Spotify.Spotify
+Microsoft.PowerToys
