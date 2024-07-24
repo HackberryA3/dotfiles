@@ -209,6 +209,7 @@ function Choose
 			}
 		} elseif ($Key -cmatch "^q$")
 		{
+			ClearPrompt
 			[string[]]$Result = @()
 			return $Result
 		}

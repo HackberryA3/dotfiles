@@ -4,7 +4,7 @@ function SetCursor {
 		[int]$Y
 	)
 	process{
-		[Console]::SetCursorPosition([Math]::Clamp($X, 0, [Console]::WindowWidth), [Math]::Clamp($Y, 0, [Console]::WindowHeight))
+		[Console]::SetCursorPosition([Math]::Min($X, [Math]::Max(0, [Console]::WindowWidth)), [Math]::Min($Y, [Math]::Max(0, [Console]::WindowHeight)))
 	}
 }
 
