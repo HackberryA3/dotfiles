@@ -79,14 +79,14 @@ if ($CUI -eq $true -and $GUI -eq $true) {
 }
 
 # スクリプトを検索
-[string[]]$SCRIPTS=Get-ChildItem -Path .\scripts -Filter "*.ps1" | Where-Object { $_.Name -match $FILTER -and $_.Name -match "__windows__" } | ForEach-Object { $_.FullName } | Sort-Object
+[string[]]$SCRIPTS=Get-ChildItem -Path .\scripts -Filter "*.ps1" | Where-Object { $_.Name -match $FILTER -and $_.Name -match "__windows__" } | ForEach-Object { $_.FullName } | Sort-Object -Descending
 
 if ($CHOICE -eq $true) {
 	[List[string]]$Aka=[List[string]]::new()
 	[List[string]]$Tags=[List[string]]::new()
 	foreach ($SCRIPT in $SCRIPTS) {
 		$BASENAME=[System.IO.Path]::GetFileNameWithoutExtension($SCRIPT)
-		$Aka.Add($($BASENAME -creplace "__.*__", "" | Snake2Pascal))
+		$Aka.Add($($BASENAME -creplace "__.*__", "" -creplace "^\d*", "" | Snake2Pascal))
 		if ($BASENAME -match "__CUI__") {
 			$Tags.Add("CUI")
 		} elseif ($BASENAME -match "__GUI__") {

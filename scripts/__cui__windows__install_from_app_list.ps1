@@ -23,6 +23,16 @@ class InstallElement {
 # ファイルを検索
 $Lists = Get-ChildItem -Path ".\lists" -Filter "*.list" | Where-Object { $_.Name -match "__windows__" } | ForEach-Object { $_.FullName }
 
+if ($CHOICE -eq $true) {
+	[List[string]]$Aka=[List[string]]::new()
+	foreach ($list in $Lists) {
+		$BASENAME=[System.IO.Path]::GetFileNameWithoutExtension($list)
+		$Aka.Add($($BASENAME -creplace "__.*__", "" | Snake2Pascal))
+	}
+
+	$Lists=Choose -Title "Choose installation lists" -Options $Lists -Aka $Aka.ToArray()
+}
+
 foreach($list in $Lists) {
 # ファイルを一行ずつ読み込んで処理する
 	[string]$Current_Tag = ""
