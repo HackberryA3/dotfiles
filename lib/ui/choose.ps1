@@ -103,6 +103,8 @@ function Choose
 	function Draw
 	{
 		ClearPrompt
+		$OLD_ENCODING = [Console]::OutputEncoding
+		[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
 
 		# FIXME: ちらつきが発生するので、文字列をまとめて生成してから出力するようにする
 		# FIXME: 画面サイズに合わせて横を切る、選択肢を数ページに分ける
@@ -151,6 +153,8 @@ function Choose
 			Write-Host -NoNewline " more."
 		}
 		Write-Host ""
+
+		[Console]::OutputEncoding = $OLD_ENCODING
 	}
 
 
