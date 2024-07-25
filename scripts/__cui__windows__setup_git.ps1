@@ -40,11 +40,14 @@ if (-not $Choice) {
 Read-Host "Your email address for git" | git config --global user.email
 Read-Host "Your name for git" | git config --global user.name
 
-Get-Command gh -ea SilentlyContinue | Out-Null
-if ($? -eq $true)
-{
-	gh auth login
-	gh auth setup-git
+$ToSetupCLI = Read-Host "Do you want to setup GitHub CLI? (Y/n)"
+if ($ToSetupCLI -eq "Y" -or $ToSetupCLI -eq "y") {
+	Get-Command gh -ea SilentlyContinue | Out-Null
+	if ($? -eq $true)
+	{
+		gh auth login
+		gh auth setup-git
+	}
 }
 
 LogSuccess "Git configuration is done." "GIT"
