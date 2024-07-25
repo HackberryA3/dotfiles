@@ -15,13 +15,13 @@ if (-not $Installing) {
 	Get-Command powershell -ea SilentlyContinue | Out-Null
 	if ($? -eq $true)
 	{
-		powershell -ExecutionPolicy RemoteSigned -File Install_PSModule.ps1 -Installing
+		powershell -ExecutionPolicy RemoteSigned -File .\__cui__windows__install_ps_modules.ps1 -Installing
 		LogSuccess "PowerShell modules is installed." "PS MODULES"
 	}
 	Get-Command pwsh -ea SilentlyContinue | Out-Null
 	if ($? -eq $true)
 	{
-		pwsh -ExecutionPolicy RemoteSigned -File Install_PSModule.ps1 -Installing
+		pwsh -ExecutionPolicy RemoteSigned -File .\__cui__windows__install_ps_modules.ps1 -Installing
 		LogSuccess "Pwsh modules is installed." "PS MODULES"
 	}
 
@@ -45,6 +45,11 @@ function SetTrustedPSGalleryPolicy {
 }
 $PSGalleryPolicy = GetPSGalleryPolicy
 $PolicyChanged = $false
+
+if ($(Get-PackageProvider | Where-Object { $_.Name -eq "NuGet" }).Length -eq 0) {
+	LogInfo "NuGet Provider is not installed. Installing..." "PS MODULES"
+	Install-PackageProvider -Name NuGet -MinimumVersion 2.5.8.201 -Force -Scope CurrentUser
+}
 
 if (!(Get-Module -ListAvailable -Name PSReadLine)) {
 	$PolicyChanged = (SetTrustedPSGalleryPolicy)[-1]
