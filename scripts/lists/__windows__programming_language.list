@@ -1,0 +1,18 @@
+# C/C++ ---------
+MSYS2.MSYS2
+LLVM.LLVM
+
+# C# ------------
+Microsoft.DotNet.SDK.6
+Microsoft.DotNet.SDK.7
+Microsoft.DotNet.SDK.8
+
+# Java ----------
+Oracle.JDK.18
+Oracle.JDK.21
+
+# Python --------
+Python.Python.3.12
+
+# Node.js -------
+CoreyButler.NVMforWindows

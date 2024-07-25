@@ -2,6 +2,7 @@
 Google.Chrome
 Mozilla.Firefox
 TheBrowserCompany.Arc
+Vivaldi.Vivaldi
 
 # Cloud ------------------
 Microsoft.OneDrive
@@ -20,3 +21,4 @@ Discord.Discord
 # Other ------------------
 Spotify.Spotify
 Microsoft.PowerToys
+Microsoft.WindowsTerminal
