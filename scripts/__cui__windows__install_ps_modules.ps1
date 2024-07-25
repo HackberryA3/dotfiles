@@ -55,19 +55,19 @@ if (!(Get-Module -ListAvailable -Name PSReadLine)) {
 	$PolicyChanged = (SetTrustedPSGalleryPolicy)[-1]
 
 	LogInfo "PSReadLine does not exist. Installing..." "PS MODULES"
-	Install-Module -Name PSReadLine -Scope CurrentUser
+	Install-Module -Name PSReadLine -Force -Scope CurrentUser
 }
 if (!(Get-Module -ListAvailable -Name Terminal-Icons)) {
 	$PolicyChanged = (SetTrustedPSGalleryPolicy)[-1]
 
 	LogInfo "Terminal-Icons does not exist. Installing..." "PS MODULES"
-	Install-Module -Name Terminal-Icons -Scope CurrentUser
+	Install-Module -Name Terminal-Icons -Force -Scope CurrentUser
 }
 if ($LaterThan7_2 -And !(Get-Module -ListAvailable -Name CompletionPredictor)) {
 	$PolicyChanged = (SetTrustedPSGalleryPolicy)[-1]
 
 	LogInfo "CompletionPredictor does not exist. Installing..." "PS MODULES"
-	Install-Module -Name CompletionPredictor -Scope CurrentUser
+	Install-Module -Name CompletionPredictor -Force -Scope CurrentUser
 }
 
 if ($PolicyChanged) { Set-PSRepository -Name PSGallery -InstallationPolicy $PSGalleryPolicy }
