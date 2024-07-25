@@ -109,13 +109,13 @@ function Choose
 		# FIXME: ちらつきが発生するので、文字列をまとめて生成してから出力するようにする
 		# FIXME: 画面サイズに合わせて横を切る、選択肢を数ページに分ける
 		Fmagenta; Write-Host -NoNewline $Title; Normal
-		Fdarkgray; Write-Host " ↑/k: Up, ↓/j: Down, Space: Select, a: SelectAll, Enter: Confirm, q: Quit"; Normal
+		Fdarkgray; Write-Host " Up/k: Up, Down/j: Down, Space: Select, a: SelectAll, Enter: Confirm, q: Quit"; Normal
 		for ($i = 0; $i -lt $Options.Length; $i++)
 		{
 			if ($CursorIndex -eq $i)
 			{
 				FGreen
-				Write-Host -NoNewline "▶ "
+				Write-Host -NoNewline "> "
 				Normal
 			} else
 			{
