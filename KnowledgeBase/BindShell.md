@@ -13,7 +13,7 @@ tags:
 
 ## 攻撃対象のマシンで実行するコマンド例
 
-[チートシート PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet.md)
+[PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Bind%20Shell%20Cheatsheet.md)
 
 IPアドレス`0.0.0.0`をリッスンすることで任意のIPからの接続を受け付ける。
 

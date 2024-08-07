@@ -6,6 +6,7 @@ tags:
 # Hashcat
 
 パスワードクラッキングツール。
+ハッシュ関数の種類が分からない場合は[[Hash-Identifier]]が使える。
 
 ## 使い方
 
@@ -13,7 +14,7 @@ tags:
 hashcat -m ハッシュ関数 -a モード ハッシュが書かれたファイル 辞書
 ```
 
-- 通常
+- 辞書
 ```sh
 hashcat -m ハッシュ関数 -a 0 hash.txt /usr/share/wordlists/rockyou.txt
 ```

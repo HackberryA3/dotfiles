@@ -12,17 +12,17 @@ tags:
 
 # Default Ports
 
-| Port  | Transport | Protocol  |
-|:-----:|:---------:|:---------:|
-| 20,21 |    TCP    |    FTP    |
-|  22   |    TCP    |    SSH    |
-|  23   |    TCP    |  Telnet   |
-|  25   |    TCP    |   SMTP    |
-|  80   |    TCP    |   HTTP    |
-|  161  |    UDP    |   SNMP    |
-|  162  |    UDP    | SNMP Trap |
-|  389  |  TCP/UDP  |   LDAP    |
-|  443  |    TCP    | TLS/HTTPS |
-|  445  |    TCP    |  [[SMB]]  |
-| 3389  |    TCP    |  [[RDP]]  |
+| Port  | Transport |     Protocol      |
+| :---: | :-------: | :---------------: |
+| 20,21 |    TCP    |      [[FTP]]      |
+|  22   |    TCP    |      [[SSH]]      |
+|  23   |    TCP    |    [[Telnet]]     |
+|  25   |    TCP    |     [[SMTP]]      |
+|  80   |    TCP    |     [[HTTP]]      |
+|  161  |    UDP    |     [[SNMP]]      |
+|  162  |    UDP    |   [[SNMP]] Trap   |
+|  389  |  TCP/UDP  |     [[LDAP]]      |
+|  443  |    TCP    | [[TLS]]/[[HTTPS]] |
+|  445  |    TCP    |      [[SMB]]      |
+| 3389  |    TCP    |      [[RDP]]      |
 
