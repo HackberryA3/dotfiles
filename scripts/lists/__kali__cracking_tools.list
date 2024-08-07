@@ -1,4 +1,5 @@
-# protocol ----------
+# Basic ----------
+ncat
 telnet
 ssh
 ftp
@@ -11,6 +12,10 @@ gobuster
 whatweb
 eyewitness
 
+# Web ---------------
+burpsuite
+sqlmap
+
 # exploit -----------
 exploitdb
 
@@ -19,4 +24,5 @@ seclists
 cewl
 
 # bruteforce --------
+hash-identifier
 hashcat
