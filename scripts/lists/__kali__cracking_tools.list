@@ -14,7 +14,6 @@ eyewitness
 
 # Web ---------------
 burpsuite
-sqlmap
 
 # exploit -----------
 exploitdb
@@ -26,3 +25,9 @@ cewl
 # bruteforce --------
 hash-identifier
 hashcat
+sqlmap
+
+# reverse -----------
+gdb
+apktool
+jadx
