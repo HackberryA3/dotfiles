@@ -12,6 +12,11 @@ LogInfo "Setup Windows Terminal..." "WINDOWS TERMINAL"
 $PackagePath = "${env:LOCALAPPDATA}\Packages"
 $WindowsTerminalPath = $(Get-ChildItem -Path $PackagePath -Filter "Microsoft.WindowsTerminal*" | Select-Object -First 1).FullName
 $SettingsPath = "${WindowsTerminalPath}\LocalState\settings.json"
+if (!Test-Path $SettingsPath) {
+	LogError "Windows Terminal is not installed." "WINDOWS TERMINAL"
+	Pop-Location
+	return 1
+}
 
 if (IsAdmin) {
 	New-Item -ItemType SymbolicLink -Path $SettingsPath -Target "..\dotfiles\WindowsTerminal_profile.json" -Force
