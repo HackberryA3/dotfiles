@@ -20,4 +20,4 @@ jobs:
     # Error Check
     - name: Run install.ps1
       shell: powershell
-      run: ${GITHUB_WORKSPACE}\\install.ps1 --all
+      run: ${GITHUB_WORKSPACE}\install.ps1 --all
