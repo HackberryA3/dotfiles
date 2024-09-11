@@ -1,0 +1,23 @@
+name: Windows
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - "**.md"
+      - "LICENSE"
+      - ".gitignore"
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  windows-test:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # Error Check
+    - name: Run install.ps1
+      shell: powershell
+      run: ${GITHUB_WORKSPACE}\\install.sh --all

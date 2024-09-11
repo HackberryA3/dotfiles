@@ -12,3 +12,22 @@ function Snake2Pascal {
 function RefreshEnv {
 	$env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
 }
+
+function IsAdmin {
+  $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+  return $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+function ExecAdmin {
+	param(
+	  [Parameter(Mandatory = $true)][string]$Script,
+	  [string]$Param
+	)
+	Get-Command pwsh -ea SilentlyContinue | Out-Null
+	if ($?) {
+		Start-Process pwsh $Script, $Param -Verb RunAs -Wait
+	}
+	else {
+		Start-Process powershell $Script, $Param -Verb RunAs -Wait
+	}
+}
