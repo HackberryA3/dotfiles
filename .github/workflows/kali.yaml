@@ -3,8 +3,20 @@ name: Kali
 on:
   push:
     branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+      - "**linux**"
+      - "**debian**"
+      - "**kali**"
   pull_request:
     branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+      - "**linux**"
+      - "**debian**"
+      - "**kali**"
 
 jobs:
   kali-test:

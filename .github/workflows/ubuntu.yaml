@@ -3,8 +3,20 @@ name: Ubuntu
 on:
   push:
     branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+      - "**linux**"
+      - "**debian**"
+      - "**ubuntu**"
   pull_request:
     branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+      - "**linux**"
+      - "**debian**"
+      - "**ubuntu**"
 
 jobs:
   ubuntu-test:

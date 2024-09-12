@@ -3,8 +3,18 @@ name: Debian
 on:
   push:
     branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+      - "**linux**"
+      - "**debian**"
   pull_request:
     branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+      - "**linux**"
+      - "**debian**"
 
 jobs:
   debian-test:

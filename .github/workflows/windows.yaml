@@ -3,12 +3,14 @@ name: Windows
 on:
   push:
     branches: [ main ]
-    paths-ignore:
-      - "**.md"
-      - "LICENSE"
-      - ".gitignore"
+    paths:
+      - "**.ps1"
+      - "**windows**"
   pull_request:
     branches: [ main ]
+    paths:
+      - "**.ps1"
+      - "**windows**"
 
 jobs:
   windows-test:
