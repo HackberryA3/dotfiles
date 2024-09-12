@@ -22,7 +22,7 @@ LogInfo "Setup Powershell Profile..." "PS PROFILE"
 )
 
 if ($Choice) {
-	$Choices= Choose -Choices $Choices -Aka $Aka -Title "Choose profile to setup"
+	$Choices= Choose -Options $Choices -Aka $Aka -Title "Choose profile to setup"
 }
 
 foreach ($c in $Choices) {
@@ -30,7 +30,7 @@ foreach ($c in $Choices) {
 		New-Item -ItemType SymbolicLink -Path $c -Target "..\dotfiles\Microsoft.Powershell_profile.ps1" -Force
 	}
 	else {
-		ExecAdmin "-Command New-Item" "-ItemType SymbolicLink -Path $c -Target `"$(Get-Location)..\dotfiles\Microsoft.Powershell_profile.ps1`" -Force"
+		ExecAdmin "-Command New-Item" "-ItemType SymbolicLink -Path $c -Target `"$(Get-Location)\..\dotfiles\Microsoft.Powershell_profile.ps1`" -Force"
 	}
 }
 

@@ -40,7 +40,7 @@ LogInfo "Install Microsoft Office..." "OFFICE"
 
 [string[]]$Selected=$Products
 if ($Choice) {
-	$Selected = Choose -Title "Choose Office Apps" -Message "Please choose the apps you want to install." -Choices $Aka
+	$Selected = Choose -Title "Choose Office Apps to exclude" -Options $Products -Aka $Aka
 }
 
 [string]$TemplateBegin = @"

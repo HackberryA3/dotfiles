@@ -12,10 +12,18 @@ LogInfo "Install Netcat..." "NETCAT"
 $InstallationPath = "C:\Program Files\Netcat"
 curl -o netcat.zip https://github.com/diegocr/netcat/archive/refs/heads/master.zip
 Expand-Archive -Path netcat.zip -DestinationPath netcat
-if (Test-Path $InstallationPath) {
-	ExecAdmin "-Command Remove-Item" "-Path $InstallationPath -Recurse -Force"
+if (IsAdmin) {
+	if (Test-Path $InstallationPath) {
+		Remove-Item -Path $InstallationPath -Recurse -Force
+	}
+	Move-Item -Path $(Get-Location)\netcat -Destination $InstallationPath
 }
-ExecAdmin "-Command Move-Item" "-Path netcat -Destination $InstallationPath"
+else {
+	if (Test-Path $InstallationPath) {
+		ExecAdmin "-Command Remove-Item" "-Path `"$InstallationPath`" -Recurse -Force"
+	}
+	ExecAdmin "-Command Move-Item" "-Path $(Get-Location)\netcat -Destination `"$InstallationPath`""
+}
 
 Remove-Item netcat.zip -Force
 Remove-Item netcat -Recurse -Force
