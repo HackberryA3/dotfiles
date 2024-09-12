@@ -11,7 +11,7 @@ Pop-Location
 
 LogInfo "Install Microsoft Office..." "OFFICE"
 
-$Products = @(
+[string[]]$Products = @(
 	"<ExcludeApp ID=`"Access`" />",
 	"<ExcludeApp ID=`"Outlook`" />",
 	"<ExcludeApp ID=`"Groove`" />",
@@ -24,7 +24,7 @@ $Products = @(
 	"<ExcludeApp ID=`"OneNote`" />",
 	"<ExcludeApp ID=`"OneDrive`" />"
 )
-$Aka = @(
+[string[]]$Aka = @(
 	"Access",
 	"Outlook",
 	"Groove",
@@ -38,7 +38,10 @@ $Aka = @(
 	"OneDrive"
 )
 
-[string[]]$Choice= Choose -Options $Products -Aka $Aka -Title "Choose products to exclude"
+[string[]]$Selected=$Products
+if ($Choice) {
+	$Selected = Choose -Title "Choose Office Apps" -Message "Please choose the apps you want to install." -Choices $Aka
+}
 
 [string]$TemplateBegin = @"
 <Configuration>
@@ -56,8 +59,8 @@ $Aka = @(
 </Configuration>
 "@
 [string]$Exclution = ""
-foreach ($c in $Choice) {
-	$Exclution += "`t`t`t" + $c + "`n"
+foreach ($product in $Selected) {
+	$Exclution += "`t`t`t" + $product + "`n"
 }
 [string]$Config = $TemplateBegin + $Exclution + $TemplateEnd
 
