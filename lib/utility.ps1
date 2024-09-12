@@ -25,9 +25,9 @@ function ExecAdmin {
 	)
 	Get-Command pwsh -ea SilentlyContinue | Out-Null
 	if ($?) {
-		Start-Process pwsh $Script, $Param -Verb RunAs -Wait
+		Start-Process pwsh -NoProfile $Script, $Param -Verb RunAs -Wait
 	}
 	else {
-		Start-Process powershell $Script, $Param -Verb RunAs -Wait
+		Start-Process powershell -NoProfile $Script, $Param -Verb RunAs -Wait
 	}
 }
