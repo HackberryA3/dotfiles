@@ -16,13 +16,13 @@ if (IsAdmin) {
 	if (Test-Path $InstallationPath) {
 		Remove-Item -Path $InstallationPath -Recurse -Force
 	}
-	Move-Item -Path "$(Get-Location)\netcat" -Destination $InstallationPath
+	Move-Item -Path "$(Get-Location)\netcat\netcat-master" -Destination $InstallationPath
 }
 else {
 	if (Test-Path $InstallationPath) {
 		ExecAdmin "-Command Remove-Item" "-Path `"$InstallationPath`" -Recurse -Force"
 	}
-	ExecAdmin "-Command Move-Item" "-Path `"$(Get-Location)\netcat`" -Destination `"$InstallationPath`""
+	ExecAdmin "-Command Move-Item" "-Path `"$(Get-Location)\netcat\netcat-master`" -Destination `"$InstallationPath`""
 }
 
 Remove-Item netcat.zip -Force
