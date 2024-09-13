@@ -100,7 +100,15 @@ for ($i = 0; $i -lt $Options.Count; $i++) {
 	foreach ($app in $Option) {
 		$Name = $app.Name
 		LogInfo "Installing $Name..." "INSTALL FROM APP LIST"
-		winget install $Name --accept-package-agreements --accept-source-agreements
+
+		$TempPath = New-TemporaryFile
+		winget install $Name --accept-package-agreements --accept-source-agreements 2> $TempPath
+		$ERR = Get-Content $TempPath
+		if ($null -ne $ERR) {
+			LogError "Failed to install $Name" "INSTALL FROM APP LIST"
+			LogError $ERR "INSTALL FROM APP LIST"
+		}
+		Remove-Item $TempPath
 	}
 }
 
