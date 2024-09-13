@@ -1,0 +1,23 @@
+name: PSScriptAnalyzer
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "**.ps1"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "**.ps1"
+
+jobs:
+  lint-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: PSScriptAnalyzer
+      shell: pwsh
+      run: |
+        Invoke-ScriptAnalyzer -Path . -Recurse -Severity Error -EnableExit

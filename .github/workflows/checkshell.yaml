@@ -3,8 +3,26 @@ name: Checkshell
 on:
   push:
     branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+      - "**.zsh"
+      - "**.bashrc"
+      - "**.profile"
+      - "**.bash_profile"
+      - "**.zshrc"
+      - "**.zprofile"
   pull_request:
     branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+      - "**.zsh"
+      - "**.bashrc"
+      - "**.profile"
+      - "**.bash_profile"
+      - "**.zshrc"
+      - "**.zprofile"
 
 jobs:
   lint-check:

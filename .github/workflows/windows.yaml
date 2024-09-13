@@ -28,3 +28,13 @@ jobs:
     - name: Run install.ps1
       shell: powershell
       run: .\install.ps1 --all
+
+    - name: Check properly installed
+      shell: pwsh
+      run: |
+          if (!(Test-Path "C:\Program Files\Netcat")) { exit 1 }
+          if (!(Get-Module -ListAvailable -Name PSReadLine)) { exit 1 }
+          if (!(Get-Module -ListAvailable -Name Terminal-Icons)) { exit 1 }
+          if (!(Test-Path "${env:USERPROFILE}\Documents\Powershell\Microsoft.Powershell_profile.ps1")) { exit 1 }
+          if (!(Test-Path "${env:USERPROFILE}\Documents\WindowsPowershell\Microsoft.Powershell_profile.ps1")) { exit 1 }
+          if (!(Test-Path "${env:USERPROFILE}\Documents\Powershell\Microsoft.VSCode_profile.ps1")) { exit 1 }
