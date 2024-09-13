@@ -32,9 +32,9 @@ jobs:
     - name: Check properly installed
       shell: pwsh
       run: |
-          if (!(Test-Path "C:\Program Files\Netcat")) { exit 1 }
-          if (!(Get-Module -ListAvailable -Name PSReadLine)) { exit 1 }
-          if (!(Get-Module -ListAvailable -Name Terminal-Icons)) { exit 1 }
-          if (!(Test-Path "${env:USERPROFILE}\Documents\Powershell\Microsoft.Powershell_profile.ps1")) { exit 1 }
-          if (!(Test-Path "${env:USERPROFILE}\Documents\WindowsPowershell\Microsoft.Powershell_profile.ps1")) { exit 1 }
-          if (!(Test-Path "${env:USERPROFILE}\Documents\Powershell\Microsoft.VSCode_profile.ps1")) { exit 1 }
+          if (!(Test-Path "C:\Program Files\Netcat")) { Write-Error "Netcat not found."; exit 1 }
+          if (!(Get-Module -ListAvailable -Name PSReadLine)) { Write-Error "PSReadLine not found."; exit 1 }
+          if (!(Get-Module -ListAvailable -Name Terminal-Icons)) { Write-Error "Terminal-Icons not found."; exit 1 }
+          if (!(Test-Path "${env:USERPROFILE}\Documents\Powershell\Microsoft.Powershell_profile.ps1")) { Write-Error "PWSH Profile not found."; exit 1 }
+          if (!(Test-Path "${env:USERPROFILE}\Documents\WindowsPowershell\Microsoft.Powershell_profile.ps1")) { Write-Error "Powershell Profile not found."; exit 1 }
+          if (!(Test-Path "${env:USERPROFILE}\Documents\Powershell\Microsoft.VSCode_profile.ps1")) { Write-Error "VSCode Profile not found."; exit 1 }
