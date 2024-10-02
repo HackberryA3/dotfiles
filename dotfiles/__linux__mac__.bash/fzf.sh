@@ -1,6 +1,6 @@
 #!/bin/bash
 
-eval "$(fzf --bash)"
+eval "$(fzf --bash 2> /dev/null)"
 
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
