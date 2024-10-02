@@ -11,9 +11,13 @@ if ! (which "wget" > /dev/null 2>&1); then
 	exit 1
 fi
 
-BITWARDEN="./bitwarden.deb"
-wget --no-verbose -O $BITWARDEN "https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=deb" -o /dev/stdout
-apt-get -qq install $BITWARDEN -y
-rm $BITWARDEN
+BITWARDEN="/usr/local/bin/bitwarden"
+if [[ $(id -u) -ne 0 ]]; then
+	sudo wget --no-verbose -O $BITWARDEN "https://vault.bitwarden.com/download/?app=desktop&platform=linux" -o /dev/stdout
+	sudo chmod +x $BITWARDEN
+else
+	wget --no-verbose -O $BITWARDEN "https://vault.bitwarden.com/download/?app=desktop&platform=linux" -o /dev/stdout
+	chmod +x $BITWARDEN
+fi
 
 log_success "Bitwarden has been installed successfully." "BITWARDEN"
