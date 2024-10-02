@@ -1,4 +1,5 @@
 " 文字コードをUTF-8に設定
+set enc=utf-8
 set fenc=utf-8
 " バックアップファイルを作成しない
 set nobackup
