@@ -11,6 +11,9 @@ nmap
 gobuster
 whatweb
 eyewitness
+enum4linux
+enum4linux-ng
+netexec
 
 # Web ---------------
 burpsuite
