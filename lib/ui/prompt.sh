@@ -378,6 +378,9 @@ function special_color {
 		'centos')
 			echo -en "\e[48;2;240;244;248m\e[38;2;169;43;140m"
 			;;
+		'almalinux')
+			echo -en "\e[38;2;255;255;255m\e[48;2;8;48;96m"
+			;;
 		'fedora')
 			echo -en "\e[48;2;44;75;116m\e[38;2;255;255;255m"
 			;;

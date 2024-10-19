@@ -44,6 +44,7 @@ function get_os_hierarchy {
 
 		["rhel"]="linux"
 		["centos"]="rhel"
+		["almalinux"]="rhel"
 		["fedora"]="rhel"
 		["nobara"]="fedora"
 
