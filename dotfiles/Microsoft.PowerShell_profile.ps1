@@ -14,7 +14,7 @@ catch { Write-Host "Your PSReadLine version does not support the list view and t
 
 
 # Set up the prompt
-try { oh-my-posh init pwsh --config https://gist.githubusercontent.com/HackberryA3/23c7b1c51d868de235eb8d39ea556ba9/raw/ReactiveMonokai.omp.yaml | Invoke-Expression }catch {}
+try { oh-my-posh init pwsh --config https://gist.githubusercontent.com/HackberryA3/d0d7597c58b14e6397362ec5af05eec7/raw/ReactiveCatppuccin.omp.yaml | Invoke-Expression }catch {}
 
 # Set Aliases
 Set-Alias touch New-Item
