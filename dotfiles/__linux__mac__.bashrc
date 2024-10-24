@@ -48,6 +48,10 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+if (which "ffuf" > /dev/null 2>&1); then
+	alias ffuf='ffuf -c'
+fi
+
 # 追加設定の読み込み
 extends=()
 mapfile -t extends < <(find ~/.bash/ -type f \( -name '*.sh' -o -name '*.bash' \) | sort -V)
