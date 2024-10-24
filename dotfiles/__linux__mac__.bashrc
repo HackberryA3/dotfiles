@@ -27,7 +27,7 @@ export LESS="-i -g -M -R -S -x4 -F -X -W"
 alias lessh='LESSOPEN="| src-hilite-lesspipe.sh %s" less'
 alias lessp='eval "$(lesspipe)" && less'
 ## manページに色を付ける
-export LESS_TERMCAP_mb=$'\E[01;31m'      # Begins blinking.
+export LESS_TERMCAP_mb=$'\E[01;34m'      # Begins blinking.
 export LESS_TERMCAP_md=$'\E[01;31m'      # Begins bold.
 export LESS_TERMCAP_me=$'\E[0m'          # Ends mode.
 export LESS_TERMCAP_se=$'\E[0m'          # Ends standout-mode.
