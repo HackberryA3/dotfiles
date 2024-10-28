@@ -8,6 +8,7 @@ curl
 wget
 
 # util --------
+findutils
 jq
 fd-find
 ripgrep
