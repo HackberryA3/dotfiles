@@ -52,9 +52,46 @@ if (command -v "ffuf" > /dev/null 2>&1); then
 	alias ffuf='ffuf -c'
 fi
 
+
+
 # 追加設定の読み込み
+# findコマンドの代替関数を定義
+search_files() {
+    local search_dir="${1:-.}"  # 検索開始ディレクトリ（デフォルトはカレントディレクトリ）
+    shift  # 最初の引数（ディレクトリ）を取り除く
+    local patterns=("$@")  # 残りの引数は検索パターンとして配列に格納
+
+    # 再帰的にディレクトリを探索する内部関数
+    recursive_search() {
+        local dir="$1"
+
+        # ディレクトリ内のファイルとサブディレクトリを一覧表示（隠しファイルも含む）
+        for item in "$dir"/{*,.*}; do
+            # 存在するファイルまたはディレクトリのみ処理
+            if [ -e "$item" ]; then
+                # 各パターンに一致するファイルを出力
+                for pattern in "${patterns[@]}"; do
+					# shellcheck disable=SC2053
+                    if [[ "$(basename "$item")" == $pattern ]]; then
+                        echo "$item"
+                    fi
+                done
+
+                # ディレクトリであれば再帰的に探索
+                if [ -d "$item" ] && [ "$item" != "$dir/." ] && [ "$item" != "$dir/.." ]; then
+                    recursive_search "$item"
+                fi
+            fi
+        done
+    }
+
+    # 探索を開始
+    recursive_search "$search_dir"
+}
 extends=()
-mapfile -t extends < <(find ~/.bash/ -type f \( -name '*.sh' -o -name '*.bash' \) | sort -V)
+mapfile -t extends < <(search_files ~/.bash '*.sh' '*.bash' | sort -V)
 for extend in "${extends[@]}"; do
 	. "$extend"
 done
+
+unset -f search_files

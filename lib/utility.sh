@@ -77,6 +77,41 @@ function get_os_hierarchy {
 	return 0
 }
 
+# 関数: ファイルを再帰的に検索 findコマンドの代替
+# 引数: 1.検索開始ディレクトリ, 2.検索パターン（複数指定可能）
+search_files() {
+    local search_dir="${1:-.}"  # 検索開始ディレクトリ（デフォルトはカレントディレクトリ）
+    shift  # 最初の引数（ディレクトリ）を取り除く
+    local patterns=("$@")  # 残りの引数は検索パターンとして配列に格納
+
+    # 再帰的にディレクトリを探索する内部関数
+    recursive_search() {
+        local dir="$1"
+
+        # ディレクトリ内のファイルとサブディレクトリを一覧表示（隠しファイルも含む）
+        for item in "$dir"/{*,.*}; do
+            # 存在するファイルまたはディレクトリのみ処理
+            if [ -e "$item" ]; then
+                # 各パターンに一致するファイルを出力
+                for pattern in "${patterns[@]}"; do
+					# shellcheck disable=SC2053
+                    if [[ "$(basename "$item")" == $pattern ]]; then
+                        echo "$item"
+                    fi
+                done
+
+                # ディレクトリであれば再帰的に探索
+                if [ -d "$item" ] && [ "$item" != "$dir/." ] && [ "$item" != "$dir/.." ]; then
+                    recursive_search "$item"
+                fi
+            fi
+        done
+    }
+
+    # 探索を開始
+    recursive_search "$search_dir"
+}
+
 # 関数: 指定されたサフィックスに一致するファイルを見つける
 # 引数: 1.ディレクトリ, 2.拡張子, 3.サフィックスの配列
 function find_files_with_suffixes {
@@ -88,7 +123,7 @@ function find_files_with_suffixes {
 
     for suffix in "${suffixes[@]}"; do
 		founds=()
-		mapfile -t founds < <(find "$dir" -type f -name "*__${suffix}__*.${extension}")
+		mapfile -t founds < <(search_files "$dir" "*__${suffix}__*.${extension}")
 		files+=("${founds[@]}")
 	done
 
@@ -105,7 +140,7 @@ function find_files_or_dirs_with_suffixes {
 
 	for suffix in "${suffixes[@]}"; do
 		founds=()
-		mapfile -t founds < <(find "$dir" -name "*__${suffix}__*.${extension}")
+		mapfile -t founds < <(search_files "$dir" "*__${suffix}__*.${extension}")
 		files+=("${founds[@]}")
 	done
 
