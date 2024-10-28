@@ -37,6 +37,10 @@ jobs:
       image: "almalinux:minimal"
 
     steps:
+    - name: Install tar
+      run: |
+        microdnf install tar -y
+
     - uses: actions/checkout@v4
 
     # Error Check

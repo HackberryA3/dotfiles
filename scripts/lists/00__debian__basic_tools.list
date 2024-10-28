@@ -24,3 +24,7 @@ tmux
 # shell -------
 ssh
 gpg
+
+# dev ---------
+git
+gh

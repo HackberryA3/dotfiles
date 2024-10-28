@@ -21,3 +21,6 @@ tmux
 # shell -------
 openssh
 gnupg2
+
+# dev ---------
+git
