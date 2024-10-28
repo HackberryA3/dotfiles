@@ -1,0 +1,45 @@
+name: AlmaLinux
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+      - "**linux**"
+      - "**rhel**"
+      - "**almalinux**"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+      - "**linux**"
+      - "**rhel**"
+      - "**almalinux**"
+
+jobs:
+  almalinux-test:
+    runs-on: ubuntu-latest
+    container:
+      image: "almalinux:latest"
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # Error Check
+    - name: Run install.sh
+      run: |
+        ./install.sh almalinux --all
+  almalinux-minimal-test:
+    runs-on: ubuntu-latest
+    container:
+      image: "almalinux:minimal"
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # Error Check
+    - name: Run install.sh
+      run: |
+        ./install.sh almalinux --all

@@ -36,6 +36,9 @@ case $OS in
 	arch | manjaro)
 		install_script="utils/pacman.sh"
 		;;
+	rhel | centos | almalinux | fedora | nobara)
+		install_script="utils/dnf.sh"
+		;;
 	mac)
 		install_script="utils/brew.sh"
 		;;

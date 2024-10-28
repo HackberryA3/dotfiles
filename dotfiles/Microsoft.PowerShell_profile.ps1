@@ -18,7 +18,7 @@ try { oh-my-posh init pwsh --config https://gist.githubusercontent.com/Hackberry
 
 # Set Aliases
 Set-Alias touch New-Item
-Set-Alias which Get-Command
+Set-Alias command -v Get-Command
 function grep {
   $input | out-string -stream | select-string $args
 }

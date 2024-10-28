@@ -6,7 +6,7 @@ cd "$(dirname "$0")" || exit 1
 . ../lib/ui/log.sh
 log_info "Setting up nvim config..." "NVIM CONFIG"
 
-if ! (which "git" > /dev/null 2>&1); then
+if ! (command -v "git" > /dev/null 2>&1); then
 	log_error "git is not installed, Please install it." "NVIM CONFIG" >&2
 	exit 1
 fi

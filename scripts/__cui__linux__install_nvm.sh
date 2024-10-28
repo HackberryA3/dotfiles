@@ -6,11 +6,11 @@ cd "$(dirname "$0")" || exit 1
 . ../lib/ui/log.sh
 log_info "Installing nvm..." "NVM"
 
-if ! (which "git" > /dev/null 2>&1); then
+if ! (command -v "git" > /dev/null 2>&1); then
 	log_error "git is not installed, Please install it." "NVM" >&2
 	exit 1
 fi
-if which "nvm" > /dev/null 2>&1; then
+if command -v "nvm" > /dev/null 2>&1; then
 	log_info "nvm is already installed. so trying to update..." "NVM"
 
 	if [ "${NVM_DIR}" ]; then
@@ -22,11 +22,11 @@ if which "nvm" > /dev/null 2>&1; then
 
 	exit
 fi
-if ! (which "curl" > /dev/null 2>&1); then
+if ! (command -v "curl" > /dev/null 2>&1); then
 	log_error "curl is not installed, Please install it." "NVM" >&2
 	exit 1
 fi
-if ! (which "jq" > /dev/null 2>&1); then
+if ! (command -v "jq" > /dev/null 2>&1); then
 	log_error "jq is not installed, Please install it." "NVM" >&2
 	exit 1
 fi

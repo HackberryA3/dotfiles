@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if (! which "tmux" > /dev/null 2>&1); then
+if (! command -v "tmux" > /dev/null 2>&1); then
 	return 0
 fi
 
@@ -8,13 +8,13 @@ if [[ ! -e ~/.tmux/plugins/tpm ]]; then
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
-if (which fzf > /dev/null 2>&1); then
+if (command -v fzf > /dev/null 2>&1); then
   	PERCOL="fzf"
 fi
-if (which percol > /dev/null 2>&1); then
+if (command -v percol > /dev/null 2>&1); then
   	PERCOL="percol"
 fi
-if (which peco > /dev/null 2>&1); then
+if (command -v peco > /dev/null 2>&1); then
   	PERCOL="peco"
 fi
 

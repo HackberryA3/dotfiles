@@ -6,11 +6,11 @@ cd "$(dirname "$0")" || exit 1
 . ../lib/ui/log.sh
 log_info "Installing lazygit..." "LAZYGIT"
 
-if ! (which "curl" > /dev/null 2>&1); then
+if ! (command -v "curl" > /dev/null 2>&1); then
 	log_error "curl is not installed, Please install it." "LAZYGIT" >&2
 	exit 1
 fi
-if ! (which "tar" > /dev/null 2>&1); then
+if ! (command -v "tar" > /dev/null 2>&1); then
 	log_error "tar is not installed, Please install it." "LAZYGIT" >&2
 	exit 1
 fi

@@ -1,0 +1,23 @@
+# zip ---------
+unzip
+gzip
+tar
+
+# http --------
+curl
+wget
+
+# util --------
+jq
+less
+fuse
+
+# editor ------
+vim
+
+# terminal ----
+tmux
+
+# shell -------
+openssh
+gnupg2

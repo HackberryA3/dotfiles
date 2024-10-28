@@ -6,7 +6,7 @@ cd "$(dirname "$0")" || exit 1
 . ../lib/ui/log.sh
 log_info "Setting up git..." "GIT"
 
-if ! (which "git" > /dev/null 2>&1); then
+if ! (command -v "git" > /dev/null 2>&1); then
 	log_warning "git is not installed, Please install it." "GIT" >&2
 	exit
 fi

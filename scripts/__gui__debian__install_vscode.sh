@@ -6,7 +6,7 @@ cd "$(dirname "$0")" || exit 1
 . ../lib/ui/log.sh
 log_info "Installing VSCode..." "VSCode"
 
-if ! (which "wget" > /dev/null 2>&1); then
+if ! (command -v "wget" > /dev/null 2>&1); then
 	log_error "wget is not installed, Please install it." "VSCode" >&2
 	exit 1
 fi

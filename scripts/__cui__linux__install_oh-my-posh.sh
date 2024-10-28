@@ -6,7 +6,7 @@ cd "$(dirname "$0")" || exit 1
 . ../lib/ui/log.sh
 log_info "Installing Oh My Posh..." "OH MY POSH"
 
-if ! (which "curl" > /dev/null 2>&1); then
+if ! (command -v "curl" > /dev/null 2>&1); then
 	log_error "curl is not installed, Please install it." "OH MY POSH" >&2
 	exit 1
 fi

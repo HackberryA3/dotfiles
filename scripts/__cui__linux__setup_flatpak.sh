@@ -6,7 +6,7 @@ cd "$(dirname "$0")" || exit 1
 . ../lib/ui/log.sh
 log_info "Setting up flatpak..." "FLATPAK"
 
-if ! (which "flatpak" > /dev/null 2>&1); then
+if ! (command -v "flatpak" > /dev/null 2>&1); then
 	log_error "Flatpak is not installed, Please install it." "FLATPAK" >&2
 	exit
 fi
