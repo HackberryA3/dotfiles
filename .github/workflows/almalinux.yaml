@@ -37,9 +37,9 @@ jobs:
       image: "almalinux:minimal"
 
     steps:
-    - name: Install tar
+    - name: Install tar and gzip
       run: |
-        microdnf install tar -y
+        microdnf install tar gzip -y
 
     - uses: actions/checkout@v4
 
