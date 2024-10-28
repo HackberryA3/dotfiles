@@ -38,14 +38,14 @@ for app in "${apps[@]}"; do
 	else
 		if [[ $(id -u) -eq 0 ]]; then
 			err=$(mktemp)
-			if ! microdnf -q install "$app" -y > "$err" 2>&1; then
+			if ! microdnf install "$app" -y > "$err" 2>&1; then
 				FAIL_COUNT=$((FAIL_COUNT + 1))
 				cat "$err" >&2
 			fi
 			rm "$err"
 		else
 			err=$(sudo mktemp)
-			if ! sudo microdnf -q install "$app" -y 2>&1 | sudo tee "$err" > /dev/null; then
+			if ! sudo microdnf install "$app" -y 2>&1 | sudo tee "$err" > /dev/null; then
 				FAIL_COUNT=$((FAIL_COUNT + 1))
 				sudo cat "$err" >&2
 			fi
