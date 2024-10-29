@@ -17,4 +17,5 @@ openjdk-21-jdk
 
 # PHP -------------
 php
+php-xml
 composer
