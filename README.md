@@ -1,5 +1,12 @@
 ###### CURRENTLY SUPPORT
-<img src="https://img.shields.io/badge/-Windows-0883d0.svg?style=flat"> <img src="https://img.shields.io/badge/-Mac-9f9f9f.svg?logo=apple&style=flat"> <img src="https://img.shields.io/badge/-Debian-A81D33.svg?logo=debian&style=flat"> <img src="https://img.shields.io/badge/-Ubuntu-6F52B5.svg?logo=ubuntu&style=flat"> <img src="https://img.shields.io/badge/-Kali-0087f2.svg?logo=kalilinux&logoColor=ffffff&style=flat"> <a href="https://www.AlmaLinux.org/"><img src="https://img.shields.io/badge/-AlmaLinux-0a3768.svg?logo=almalinux&logoColor=ffffff&style=flat"><a/>
+<span>
+  <img src="https://img.shields.io/badge/-Windows-0883d0.svg?style=flat">
+  <img src="https://img.shields.io/badge/-Mac-9f9f9f.svg?logo=apple&style=flat">
+  <img src="https://img.shields.io/badge/-Debian-A81D33.svg?logo=debian&style=flat">
+  <img src="https://img.shields.io/badge/-Ubuntu-6F52B5.svg?logo=ubuntu&style=flat">
+  <img src="https://img.shields.io/badge/-Kali-0087f2.svg?logo=kalilinux&logoColor=ffffff&style=flat">
+  <a href="https://www.AlmaLinux.org/"><img src="https://img.shields.io/badge/-AlmaLinux-0a3768.svg?logo=almalinux&logoColor=ffffff&style=flat"></a>
+</span>
 
 ###### TEST
 [![Windows](https://github.com/HackberryA3/dotfiles/actions/workflows/windows.yaml/badge.svg)](https://github.com/HackberryA3/dotfiles/actions/workflows/windows.yaml)
