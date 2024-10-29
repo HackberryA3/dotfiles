@@ -425,6 +425,9 @@ function special_color {
 		'python' | 'py' | 'python3' | 'python2')
 			echo -en "\e[48;2;8;128;186m\e[38;2;255;190;71m"
 			;;
+		'php')
+			echo -en "\e[48;2;121;130;178m\e[38;2;41;45;54m"
+			;;
 		# TODO: 他の言語も追加する
 		
 

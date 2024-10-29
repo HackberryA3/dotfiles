@@ -14,3 +14,7 @@ python3-venv
 
 # Java ------------
 openjdk-21-jdk
+
+# PHP -------------
+php
+composer
