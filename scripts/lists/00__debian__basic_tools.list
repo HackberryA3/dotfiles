@@ -3,9 +3,10 @@ unzip
 gzip
 tar
 
-# http --------
+# network --------
 curl
 wget
+iproute2
 
 # util --------
 findutils
