@@ -14,7 +14,7 @@ fi
 if [[ $(id -u) -eq 0 ]]; then
 	curl -fsS https://ohmyposh.dev/install.sh | bash -s -- -d /usr/local/bin
 else
-	curl -fsS https://ohmyposh.dev/install.sh | sudo bash -s -- -d /usr/local/bin
+	curl -fsS https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
 fi
 
 log_success "Oh My Posh has been installed successfully." "OH MY POSH"
