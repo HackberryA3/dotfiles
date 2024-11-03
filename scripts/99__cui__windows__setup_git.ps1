@@ -30,7 +30,7 @@ git config --global core.editor nvim
 git config --global color.ui true
 git config --global grep.lineNumber true
 
-git config --global alias.graph "log --pretty=format:'%Cgreen[%cd] %Cblue%h %Cred<%cn> %Creset%s' --date=short  --decorate --graph --branches --tags --remotes"
+git config --global alias.graph "log --pretty=format:'%Cgreen[%cd] %Cblue%h %Cred<%cn> %Creset%s' --date=short  --decorate --graph --branches --tags --remotes --all"
 
 if (-not $Choice) {
 	LogSuccess "Git configuration is done (not choice mode)." "GIT"
