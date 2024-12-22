@@ -20,7 +20,7 @@ mkcontest() {
 		if [[ $name == ABC* ]]; then
 			problemCnt=7
 		elif [[ $name == ARC* || $name == AGC* ]]; then
-			problemCnt=6
+			problemCnt=5
 		else
 			echo "Error: PROBLEM_CNT is not specified." >&2
 			usage
@@ -37,4 +37,6 @@ mkcontest() {
         mkdir -p "$folder"
         touch "$folder/main.cpp"
     done
+
+	cd "$name" || return 1
 }
