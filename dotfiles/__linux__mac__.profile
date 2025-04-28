@@ -3,8 +3,10 @@
 # ローカルのbinディレクトリをPATHに追加する
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/bin" ]] && PATH="$HOME/bin:$PATH"
-[[ -d "$HOME/.asdf/bin" ]] && PATH="$HOME/.asdf/bin:$PATH"
-[[ -d "$HOME/.asdf/shims" ]] && PATH="$HOME/.asdf/shims:$PATH"
+# shellcheck disable=SC1091
+[[ -f "$HOME/.asdf/asdf.sh" ]] && . "$HOME/.asdf/asdf.sh"
+# shellcheck disable=SC1091
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
 if [[ "$(uname)" = "Darwin" ]]; then
 # Java
