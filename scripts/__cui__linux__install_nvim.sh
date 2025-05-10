@@ -20,11 +20,11 @@ if ! (command -v "gzip" > /dev/null 2>&1); then
 fi
 
 BINARY_PATH="/usr/local/bin/nvim"
-TMP_PATH="/usr/local/lib/nvim-linux64.tar.gz"
-INSTALL_PATH="/usr/local/lib/nvim-linux64"
+TMP_PATH="/usr/local/lib/nvim-linux-x86_64.tar.gz"
+INSTALL_PATH="/usr/local/lib/nvim-linux-x86_64"
 LOCAL_BIN_PATH="$HOME/.local/bin/nvim"
-LOCAL_TMP_PATH="$HOME/.local/lib/nvim-linux64.tar.gz"
-LOCAL_INSTALL_PATH="$HOME/.local/lib/nvim-linux64"
+LOCAL_TMP_PATH="$HOME/.local/lib/nvim-linux-x86_64.tar.gz"
+LOCAL_INSTALL_PATH="$HOME/.local/lib/nvim-linux-x86_64"
 if [[ $(id -u) -ne 0 ]]; then
 	BINARY_PATH="$LOCAL_BIN_PATH"
 	TMP_PATH="$LOCAL_TMP_PATH"
@@ -39,7 +39,7 @@ if [[ -e $INSTALL_PATH ]] || [[ -e $BINARY_PATH ]]; then
 	[[ -f $TMP_PATH ]] && rm -f "$TMP_PATH"
 fi
 
-curl -LsSf https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz -o "$TMP_PATH" --create-dirs
+curl -LsSf https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz -o "$TMP_PATH" --create-dirs
 tar -xzf "$TMP_PATH" -C "$(dirname "$INSTALL_PATH")"
 rm -f "$TMP_PATH"
 ln -s "$INSTALL_PATH/bin/nvim" "$BINARY_PATH"
