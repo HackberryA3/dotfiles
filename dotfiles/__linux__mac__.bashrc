@@ -52,6 +52,10 @@ if (command -v "ffuf" > /dev/null 2>&1); then
 	alias ffuf='ffuf -c'
 fi
 
+echo "$TERM"
+if [[ -z "$TERM" ]]; then
+	export TERM=xterm-256color
+fi
 
 
 # 追加設定の読み込み
