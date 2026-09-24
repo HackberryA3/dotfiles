@@ -1,7 +1,7 @@
 # インタラクティブでなければ終了
 case $- in
 	*i*) ;;
-	*) exit 0;;
+	*) return 0;;
 esac
 
 
@@ -50,6 +50,10 @@ alias mv='mv -i'
 
 if (command -v "ffuf" > /dev/null 2>&1); then
 	alias ffuf='ffuf -c'
+fi
+
+if [[ -f '/mnt/c/Windows/explorer.exe' ]]; then
+	alias open='/mnt/c/Windows/explorer.exe'
 fi
 
 echo "$TERM"
