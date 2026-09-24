@@ -117,66 +117,152 @@ choose() {
 		fi
 	done
 
+	local help_text="↑/k: Up, ↓/j: Down, Space: Select, a: SelectAll, Enter: Confirm, q: Quit"
+	local -i rendered_rows=0
+	local -i terminal_columns=80
+	local -i title_width=0
+	local -i title_rows=1
+	local -i status_rows=1
+	local -a option_widths=()
+	local -a option_rows=()
 
+	# ANSI SGR エスケープを除いた端末上の表示幅を返す。
+	# wc -L はロケールに従って全角文字を2列として数える。
+	visible_width() {
+		local text="$1"
+		local width
+
+		while [[ "$text" =~ $'\033'\[[0-9\;]*m ]]; do
+			text="${text/"${BASH_REMATCH[0]}"/}"
+		done
+		width=$(printf '%s\n' "$text" | wc -L 2> /dev/null)
+		printf '%d' "$width" 2> /dev/null || printf '%d' "${#text}"
+	}
+
+	rows_for_width() {
+		local -i width="$1"
+
+		if (( width <= 0 )); then
+			echo 1
+		else
+			echo $(( (width + terminal_columns - 1) / terminal_columns ))
+		fi
+	}
+
+	tag_text() {
+		local -i index="$1"
+		local tag
+
+		# タグは呼び出し側で "\e[...m" の形式で渡されるため、描画前に展開する。
+		printf -v tag '%b' "${tags[index]}"
+		printf '%s' "$tag"
+	}
+
+	option_text() {
+		local -i index="$1"
+
+		printf '▶ %s %s ' "$(tag_text "$index")" "${aka[index]}"
+	}
+
+	status_text() {
+		local text="$selected_count "
+
+		if [[ $limit -lt 999 ]]; then
+			text+="/ $limit "
+		fi
+		text+="Selected"
+		if [[ $selected_count -lt $min ]]; then
+			text+=", $((min - selected_count)) more."
+		fi
+		printf '%s' "$text"
+	}
+
+	update_layout() {
+		local columns
+		local -i index
+
+		columns=$(tput cols 2> /dev/null)
+		if [[ "$columns" =~ ^[0-9]+$ ]] && (( columns > 0 )); then
+			terminal_columns=columns
+		else
+			terminal_columns=80
+		fi
+
+		title_rows=$(rows_for_width "$title_width")
+		for ((index = 0; index < ${#options[@]}; index++)); do
+			option_rows[index]=$(rows_for_width "${option_widths[index]}")
+		done
+		status_rows=$(rows_for_width "$(visible_width "$(status_text)")")
+	}
 
     # 初期化
-    for ((i = 0; i < ${#options[@]}; i++)); do
-        selected[i]=0
-		echo "" >&2 # 選択肢分の改行
-    done
-	echo "" >&2 # タイトル分の改行
-	echo "" >&2 # ステータス分の改行
+	for ((i = 0; i < ${#options[@]}; i++)); do
+		selected[i]=0
+	done
+	title_width=$(visible_width "$title $help_text")
+	for ((i = 0; i < ${#options[@]}; i++)); do
+		option_widths[i]=$(visible_width "$(option_text "$i")")
+	done
+
+	# 前回描画したフレームを消すエスケープシーケンスを作る。
+	clear_rendered_rows() {
+		local -i row
+		local output=$'\r'
+
+		for ((row = 0; row < rendered_rows; row++)); do
+			output+=$'\033[1A\033[2K'
+		done
+		printf '%s' "$output"
+	}
 
 	# プロンプトをリセット
 	reset_prompt() {
-		# FIXME: ちらつきが発生するので、文字列をまとめて生成してから出力するようにする
-		cursor_begin >&2 # カーソルを行頭に移動
-		# ステータス行をクリア
-		cursor_up 1 >&2
-		clear_line >&2
-		for ((i = 0; i < ${#options[@]}; i++)); do
-			# カーソルを一つ上に移動して行をクリア
-			cursor_up 1 >&2
-			clear_line >&2
-		done
-		# タイトル行をクリア
-		cursor_up 1 >&2
-		clear_line >&2
+		printf '%s' "$(clear_rendered_rows)" >&2
 	}
 
     # 描画関数
     draw() {
-		reset_prompt
+		local frame
 
-		# FIXME: ちらつきが発生するので、文字列をまとめて生成してから出力するようにする
-		# FIXME: 画面サイズに合わせて横を切る、選択肢を数ページに分ける
-		echo -en "$(fcolor 135)$title$(normal) " >&2
-		echo -e "$(disable)$(fgray)↑/k: Up, ↓/j: Down, Space: Select, a: SelectAll, Enter: Confirm, q: Quit$(normal)" >&2
+		frame=$(clear_rendered_rows)
+		update_layout
+
+		# 消去と再描画を一度に出力して、途中状態のちらつきを防ぐ。
+		frame+="$(fcolor 135)$title$(normal) "
+		frame+="$(disable)$(fgray)$help_text$(normal)"$'\n'
 
         for ((i = 0; i < ${#options[@]}; i++)); do
-			flightgreen >&2
+			frame+="$(flightgreen)"
             if [[ $i -eq $cursor ]]; then
-                echo -n "▶ " >&2
+				frame+="▶ "
             else
-                echo -n "  " >&2
+				frame+="  "
             fi
 
-			normal >&2  # 色をリセット
-			echo -en "${tags[i]}" >&2
+			frame+="$(normal)$(tag_text "$i")"
 
-			[[ $i -eq $cursor ]] && underline >&2
+			[[ $i -eq $cursor ]] && frame+="$(underline)"
 
             if [[ ${selected[i]} -eq 1 ]]; then
-				flightgreen >&2
-				echo -e " ${aka[i]} " >&2
+				frame+="$(flightgreen) ${aka[i]} "
             else
-				disable >&2; fgray >&2
-				echo -e " ${aka[i]} " >&2
+				frame+="$(disable)$(fgray) ${aka[i]} "
             fi
-            normal >&2  # 色をリセット
+			frame+="$(normal)"$'\n'
         done
 
-		echo -e "$selected_count $(if [[ $limit -lt 999 ]]; then echo "/ $limit "; fi)Selected$(if [[ $selected_count -lt $min ]]; then echo -e ", $(fred)$((min - selected_count))$(normal) more."; fi)" >&2
+		frame+="$selected_count "
+		[[ $limit -lt 999 ]] && frame+="/ $limit "
+		frame+="Selected"
+		[[ $selected_count -lt $min ]] && frame+=", $(fred)$((min - selected_count))$(normal) more."
+		frame+=$'\n'
+
+		rendered_rows=$((title_rows + status_rows))
+		for ((i = 0; i < ${#options[@]}; i++)); do
+			rendered_rows=$((rendered_rows + option_rows[i]))
+		done
+
+		printf '%s' "$frame" >&2
     }
 
     # メインループ
