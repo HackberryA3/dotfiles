@@ -15,6 +15,16 @@ mkcontest() {
 		usage
 		return 1
 	fi
+
+	# problemCntが英小文字であれば、数字に変換
+	if [[ $problemCnt =~ ^[a-z]$ ]]; then
+		problemCnt=$(printf "%d" "'$problemCnt")
+		problemCnt=$((problemCnt - 96)) # 'a' is 97
+	elif [[ $problemCnt =~ ^[A-Z]$ ]]; then
+		problemCnt=$(printf "%d" "'$problemCnt")
+		problemCnt=$((problemCnt - 64)) # 'A' is 65
+	fi
+
     # nameがABC、ARCまたはAGCで始まる場合のproblemCntの自動設定
 	if [[ -z $problemCnt ]]; then
 		if [[ $name == ABC* ]]; then
