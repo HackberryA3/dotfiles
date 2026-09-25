@@ -77,6 +77,17 @@ function get_os_hierarchy {
 	return 0
 }
 
+# 関数: リソース選択に使う OS 接尾辞を取得
+# 引数: OS名
+# 通常の接尾辞は派生 OS に継承し、末尾が ! の接尾辞は指定 OS にのみ一致する
+function get_os_resource_suffixes {
+	local os="$1"
+	local hierarchy_output=""
+
+	hierarchy_output="$(get_os_hierarchy "$os")" || return 1
+	printf '%s %s!\n' "$hierarchy_output" "$os"
+}
+
 # 関数: ファイルを再帰的に検索 findコマンドの代替
 # 引数: 1.検索開始ディレクトリ, 2.検索パターン（複数指定可能）
 search_files() {
