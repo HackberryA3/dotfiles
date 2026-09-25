@@ -54,6 +54,8 @@ git switch -c fix/123-short-description
 
 外部リポジトリの設定や、提供可否が OS ごとに異なる package list には完全一致接尾辞を使う。既存の継承接尾辞の意味を変更しない。
 
+アプリケーション list では、接尾辞・拡張子・先頭番号を除いた名前が同じファイルを1つの論理 list として結合する。たとえば `__debian__pg_lang.list` と `__debian!__pg_lang.list` は選択画面で `PgLang` 1項目となり、その論理 list 内で同じ package は1回だけ導入する。
+
 ## 検証
 
 変更に応じて、少なくとも以下を実行する。

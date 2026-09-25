@@ -55,7 +55,7 @@ for app in "${apps[@]}"; do
 done
 
 if [[ ${#failed_apps[@]} -gt 0 ]]; then
-	printf 'DNF failed to install: %s\n' "${failed_apps[*]}" >&2
+	log_error "Failed to install: ${failed_apps[*]}" "DNF" >&2
 	exit 1
 fi
 

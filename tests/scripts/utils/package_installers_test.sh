@@ -70,8 +70,8 @@ assert_output_contains() {
 
 assert_exit 0 bash "$repo_root/scripts/utils/apt.sh" working-a working-b
 assert_exit 1 bash "$repo_root/scripts/utils/apt.sh" working-a failing-package
-assert_output_contains 'APT failed to install: failing-package'
+assert_output_contains 'Failed to install: failing-package'
 
 assert_exit 0 bash "$repo_root/scripts/utils/dnf.sh" working-a working-b
 assert_exit 1 bash "$repo_root/scripts/utils/dnf.sh" working-a failing-package
-assert_output_contains 'DNF failed to install: failing-package'
+assert_output_contains 'Failed to install: failing-package'

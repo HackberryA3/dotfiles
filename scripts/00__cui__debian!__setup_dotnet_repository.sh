@@ -1,14 +1,18 @@
 #!/bin/bash
 set -euo pipefail
 
+cd "$(dirname "$0")" || (echo -e "\e[31mFaild cd to sh dir\e[0m" >&2 && exit 1)
+[[ ! -f ../lib/ui/log.sh ]] && echo -e "\e[31m../lib/ui/log.sh not found\e[0m" >&2 && exit 1
+. ../lib/ui/log.sh
+
 if [[ ! -r /etc/os-release ]]; then
-	printf 'Cannot identify the Debian version: /etc/os-release is unavailable.\n' >&2
+	log_error "Cannot identify the Debian version: /etc/os-release is unavailable." "DOTNET REPOSITORY" >&2
 	exit 1
 fi
 
 . /etc/os-release
 if [[ "${ID:-}" != "debian" || -z "${VERSION_ID:-}" ]]; then
-	printf 'This script supports Debian only.\n' >&2
+	log_error "This script supports Debian only." "DOTNET REPOSITORY" >&2
 	exit 1
 fi
 

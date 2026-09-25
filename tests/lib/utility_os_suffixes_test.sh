@@ -117,22 +117,22 @@ test_package_list_selection() {
 
 	mapfile -t debian_lists < <(select_files debian "$list_directory")
 	assert_contains "$list_directory/__debian__pg_lang.list" "${debian_lists[@]}"
-	assert_contains "$list_directory/__debian!__dotnet.list" "${debian_lists[@]}"
+	assert_contains "$list_directory/__debian!__pg_lang.list" "${debian_lists[@]}"
 	assert_contains "$list_directory/00__debian!__basic_tools.list" "${debian_lists[@]}"
-	assert_not_contains "$list_directory/__ubuntu!__dotnet.list" "${debian_lists[@]}"
+	assert_not_contains "$list_directory/__ubuntu!__pg_lang.list" "${debian_lists[@]}"
 
 	mapfile -t ubuntu_lists < <(select_files ubuntu "$list_directory")
 	assert_contains "$list_directory/__debian__pg_lang.list" "${ubuntu_lists[@]}"
 	assert_contains "$list_directory/__ubuntu__pg_lang.list" "${ubuntu_lists[@]}"
-	assert_contains "$list_directory/__ubuntu!__dotnet.list" "${ubuntu_lists[@]}"
+	assert_contains "$list_directory/__ubuntu!__pg_lang.list" "${ubuntu_lists[@]}"
 	assert_contains "$list_directory/00__ubuntu!__basic_tools.list" "${ubuntu_lists[@]}"
-	assert_not_contains "$list_directory/__debian!__dotnet.list" "${ubuntu_lists[@]}"
+	assert_not_contains "$list_directory/__debian!__pg_lang.list" "${ubuntu_lists[@]}"
 
 	mapfile -t kali_lists < <(select_files kali "$list_directory")
 	assert_contains "$list_directory/__debian__pg_lang.list" "${kali_lists[@]}"
 	assert_contains "$list_directory/__kali__cracking_tools.list" "${kali_lists[@]}"
-	assert_not_contains "$list_directory/__debian!__dotnet.list" "${kali_lists[@]}"
-	assert_not_contains "$list_directory/__ubuntu!__dotnet.list" "${kali_lists[@]}"
+	assert_not_contains "$list_directory/__debian!__pg_lang.list" "${kali_lists[@]}"
+	assert_not_contains "$list_directory/__ubuntu!__pg_lang.list" "${kali_lists[@]}"
 	assert_not_contains "$list_directory/00__debian!__basic_tools.list" "${kali_lists[@]}"
 	assert_not_contains "$list_directory/00__ubuntu!__basic_tools.list" "${kali_lists[@]}"
 }
