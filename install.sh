@@ -234,9 +234,11 @@ if [[ "$INSTALL_DOTFILES" == true ]]; then
 fi
 
 echo
-echo -e "$(blightblue) $(bgray | flightblue) All process has been completed! $(blightblue) $(normal)"
 popd >/dev/null || (echo -e "$(fred)Failed to popd$(normal)" >&2 && exit 1)
 if [[ "$HAS_ERROR" == true ]]; then
+	log_error "One or more scripts failed. See the results above." "INSTALL" >&2
 	exit 1
 fi
+
+echo -e "$(blightblue) $(bgray | flightblue) All processes completed successfully! $(blightblue) $(normal)"
 exit 0
