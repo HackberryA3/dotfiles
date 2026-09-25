@@ -54,12 +54,13 @@ assert_not_contains() {
 
 select_files() {
 	local os="$1"
+	local directory="${2:-$temp_dir}"
 	local suffixes_output=""
 	local -a suffixes=()
 
 	suffixes_output="$(get_os_resource_suffixes "$os")"
 	IFS=" " read -r -a suffixes <<< "$suffixes_output"
-	find_files_with_suffixes "$temp_dir" "list" "${suffixes[@]}"
+	find_files_with_suffixes "$directory" "list" "${suffixes[@]}"
 }
 
 test_resource_suffixes() {
@@ -108,5 +109,34 @@ test_exact_os_selection() {
 	assert_not_contains "$ubuntu_only_file" "${kali_files[@]}"
 }
 
+test_package_list_selection() {
+	local list_directory="$REPO_ROOT/scripts/lists"
+	local -a debian_lists=()
+	local -a ubuntu_lists=()
+	local -a kali_lists=()
+
+	mapfile -t debian_lists < <(select_files debian "$list_directory")
+	assert_contains "$list_directory/__debian__pg_lang.list" "${debian_lists[@]}"
+	assert_contains "$list_directory/__debian!__dotnet.list" "${debian_lists[@]}"
+	assert_contains "$list_directory/00__debian!__basic_tools.list" "${debian_lists[@]}"
+	assert_not_contains "$list_directory/__ubuntu!__dotnet.list" "${debian_lists[@]}"
+
+	mapfile -t ubuntu_lists < <(select_files ubuntu "$list_directory")
+	assert_contains "$list_directory/__debian__pg_lang.list" "${ubuntu_lists[@]}"
+	assert_contains "$list_directory/__ubuntu__pg_lang.list" "${ubuntu_lists[@]}"
+	assert_contains "$list_directory/__ubuntu!__dotnet.list" "${ubuntu_lists[@]}"
+	assert_contains "$list_directory/00__ubuntu!__basic_tools.list" "${ubuntu_lists[@]}"
+	assert_not_contains "$list_directory/__debian!__dotnet.list" "${ubuntu_lists[@]}"
+
+	mapfile -t kali_lists < <(select_files kali "$list_directory")
+	assert_contains "$list_directory/__debian__pg_lang.list" "${kali_lists[@]}"
+	assert_contains "$list_directory/__kali__cracking_tools.list" "${kali_lists[@]}"
+	assert_not_contains "$list_directory/__debian!__dotnet.list" "${kali_lists[@]}"
+	assert_not_contains "$list_directory/__ubuntu!__dotnet.list" "${kali_lists[@]}"
+	assert_not_contains "$list_directory/00__debian!__basic_tools.list" "${kali_lists[@]}"
+	assert_not_contains "$list_directory/00__ubuntu!__basic_tools.list" "${kali_lists[@]}"
+}
+
 test_resource_suffixes
 test_exact_os_selection
+test_package_list_selection
