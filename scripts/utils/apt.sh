@@ -15,32 +15,30 @@ if [[ ${#apps[@]} -eq 0 ]]; then
 	exit 0
 fi
 
-FAIL_COUNT=0
+failed_apps=()
 for app in "${apps[@]}"; do
 	log_info "Installing $app..." "APT"
 	
 	if [[ $(id -u) -eq 0 ]]; then
 		err=$(mktemp)
 		if ! apt-get -qq install "$app" -y > "$err" 2>&1; then
-			FAIL_COUNT=$((FAIL_COUNT + 1))
+			failed_apps+=("$app")
 			cat "$err" >&2
 		fi
 		rm "$err"
 	else
 		err=$(sudo mktemp)
 		if ! sudo apt-get -qq install "$app" -y 2>&1 | sudo tee "$err" > /dev/null; then
-			FAIL_COUNT=$((FAIL_COUNT + 1))
+			failed_apps+=("$app")
 			sudo cat "$err" >&2
 		fi
 		sudo rm "$err"
 	fi
 done
 
-
-
-# すべて失敗していたらエラー
-if [[ $FAIL_COUNT -eq ${#apps[@]} ]]; then
+if [[ ${#failed_apps[@]} -gt 0 ]]; then
+	printf 'APT failed to install: %s\n' "${failed_apps[*]}" >&2
 	exit 1
-else
-	exit 0
 fi
+
+exit 0

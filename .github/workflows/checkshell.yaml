@@ -40,3 +40,6 @@ jobs:
 
     - name: Check rc
       run: find ${GITHUB_WORKSPACE} \( -name "*.bashrc" -o -name "*.profile" -o -name "*.bash_profile" \) -type f -print0 | xargs -0 shellcheck -x --exclude=SC2148,SC1090
+
+    - name: Test package installer exit statuses
+      run: bash tests/scripts/utils/package_installers_test.sh
