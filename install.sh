@@ -134,7 +134,12 @@ sleep 2
 
 # 有効なサフィックスを取得
 valid_suffixes=()
-IFS=" " read -r -a valid_suffixes < <(get_os_hierarchy "$OS" || (log_error "The specified OS is invalid." >&2 && exit 1))
+os_resource_suffixes=""
+if ! os_resource_suffixes="$(get_os_resource_suffixes "$OS")"; then
+	log_error "The specified OS is invalid." >&2
+	exit 1
+fi
+IFS=" " read -r -a valid_suffixes <<< "$os_resource_suffixes"
 
 # スクリプトのフィルター
 FILTER=""

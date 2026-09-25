@@ -27,7 +27,9 @@ jobs:
 
     # Error Check
     - name: Run install.sh
-      run: sudo ${GITHUB_WORKSPACE}/install.sh ubuntu --all
+      run: |
+        sudo apt-get update
+        sudo ${GITHUB_WORKSPACE}/install.sh ubuntu --all
       env:
         DEBCONF_NOWARNINGS: yes
 

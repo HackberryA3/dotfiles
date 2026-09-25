@@ -28,6 +28,14 @@ while [[ $# -gt 0 ]]; do
 	shift
 done
 
+trim_app_name() {
+	local app_name="${1%%#*}"
+
+	app_name="${app_name#"${app_name%%[![:space:]]*}"}"
+	app_name="${app_name%"${app_name##*[![:space:]]}"}"
+	printf '%s\n' "$app_name"
+}
+
 install_script=""
 case $OS in
 	debian | ubuntu | kali)
@@ -53,35 +61,50 @@ fi
 lists=()
 mapfile -t lists < <(find_files_with_suffixes "./lists" "list" "${suffixes[@]}")
 
+# 接尾辞を除いた論理名ごとに list をまとめる。
+# 例: __debian__pg_lang.list と __debian!__pg_lang.list は同じ pg_lang として扱う。
+logical_lists=()
+declare -A list_files_by_name=()
+for list in "${lists[@]}"; do
+	[[ ! -f $list ]] && continue
+	# shellcheck disable=SC2119
+	logical_name="$(basename "$list" | remove_suffix | remove_extension | remove_front_number)"
+	if [[ -z ${list_files_by_name[$logical_name]+x} ]]; then
+		logical_lists+=("$logical_name")
+		list_files_by_name["$logical_name"]=""
+	fi
+	list_files_by_name["$logical_name"]+="$list"$'\n'
+done
+
 if [[ $CHOICE == true ]]; then
 	aka=()
-	for list in "${lists[@]}"; do
+	for logical_name in "${logical_lists[@]}"; do
 		# shellcheck disable=SC2119
-		aka+=("$(basename "$list" | remove_suffix | remove_extension | remove_front_number | snake2pascal)")
+		aka+=("$(echo "$logical_name" | snake2pascal)")
 	done
 	tag=()
-	for list in "${lists[@]}"; do
-		# shellcheck disable=SC2119
-		script_os=$(basename "$list" | get_suffix | sed 's/^__\|__$//g' | to_upper)
-		tag+=("$(special_color "$script_os") $script_os $(normal)")
+	display_os="$(to_upper "$OS")"
+	for logical_name in "${logical_lists[@]}"; do
+		tag+=("$(special_color "$OS") $display_os $(normal)")
 	done
-	mapfile -t lists < <(choose --title "Choose the application list" "${lists[@]}" --aka "${aka[@]}" --tag "${tag[@]}" 2>/dev/tty)
+	mapfile -t logical_lists < <(choose --title "Choose the application list" "${logical_lists[@]}" --aka "${aka[@]}" --tag "${tag[@]}" 2>/dev/tty)
 fi
 
 
 
 
-declare -A each_apps=()
-for list in "${lists[@]}"; do
-	[[ ! -f $list ]] && continue
-
+for logical_name in "${logical_lists[@]}"; do
 	apps=()
+	declare -A selected_apps=()
+	aka=()
+	tag=()
+	while IFS= read -r list; do
+		[[ -z "$list" || ! -f $list ]] && continue
+
 	if [[ $CHOICE == true ]]; then
 		lines=()
 		mapfile -t lines < <(grep -vE '^\s*$' -- "$list" | sed 's/\(#[^\-]*\)-*$/\1/')
 
-		aka=()
-		tag=()
 		CURRENT_TAG=""
 		for line in "${lines[@]}"; do
 			if [[ $line =~ ^\s*# ]]; then
@@ -94,26 +117,34 @@ for list in "${lists[@]}"; do
 				# shellcheck disable=SC2001
 				COMMENT=" - $(echo "$line" | sed 's/[^#]*#\s*//')"
 			fi
-			APP_NAME=${line//\s*#.*/}
+			APP_NAME="$(trim_app_name "$line")"
+			[[ -z "$APP_NAME" || -n ${selected_apps[$APP_NAME]+x} ]] && continue
+			selected_apps["$APP_NAME"]=true
 			apps+=("$APP_NAME")
 			aka+=("$APP_NAME$COMMENT")
 			tag+=("$(special_color "$CURRENT_TAG")$CURRENT_TAG$(normal)")
 		done
-
-		mapfile -t apps < <(choose --title "Choose the applications" "${apps[@]}" --aka "${aka[@]}" --tag "${tag[@]}" 2>/dev/tty)
 	else
-		mapfile -t apps < <(grep -vE '^\s*$|^\s*#' -- "$list" | sed 's/\s*#.*//')
+		lines=()
+		mapfile -t lines < <(grep -vE '^\s*$|^\s*#' -- "$list")
+		for line in "${lines[@]}"; do
+			APP_NAME="$(trim_app_name "$line")"
+			[[ -z "$APP_NAME" || -n ${selected_apps[$APP_NAME]+x} ]] && continue
+			selected_apps["$APP_NAME"]=true
+			apps+=("$APP_NAME")
+		done
+	fi
+	done <<< "${list_files_by_name[$logical_name]}"
+
+	if [[ $CHOICE == true ]]; then
+		mapfile -t apps < <(choose --title "Choose the applications" "${apps[@]}" --aka "${aka[@]}" --tag "${tag[@]}" 2>/dev/tty)
 	fi
 
-	each_apps["$list"]="${apps[*]}"
-done
+	[[ ${#apps[@]} -eq 0 ]] && continue
+	# shellcheck disable=SC2119
+	logical_name_display="$(echo "$logical_name" | snake2pascal)"
+	log_info "Installing from $logical_name_display" "INSTALL FROM APP LIST"
 
-for list in "${!each_apps[@]}"; do
-	log_info "Installing from $list" "INSTALL FROM APP LIST"
-
-	# 配列が1つの引数とみなされるので、配列を展開して渡す
-	apps=()
-	mapfile -t apps < <(echo "${each_apps[$list]}" | tr ' ' '\n')
 	if ! bash "$install_script" "${apps[@]}"; then
 		HAS_ERROR=true
 	fi

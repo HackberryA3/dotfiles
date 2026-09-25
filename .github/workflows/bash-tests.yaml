@@ -1,0 +1,23 @@
+name: Bash tests
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "**.sh"
+      - "**.bash"
+
+jobs:
+  bash-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run Bash tests
+      run: find tests -type f -name "*_test.sh" -print0 | xargs -0 -r -n1 bash

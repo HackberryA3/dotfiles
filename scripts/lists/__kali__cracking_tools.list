@@ -4,7 +4,7 @@ telnet
 ssh
 ftp
 smbclient
-freerdp2-x11
+freerdp3-x11
 
 # scanning ----------
 nmap

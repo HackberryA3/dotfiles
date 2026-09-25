@@ -45,6 +45,17 @@ git switch -c fix/123-short-description
 - OS、権限、GUI、認証の前提を暗黙にしない。実環境を変更する処理には、検証可能な最小範囲のテストを追加する。
 - package list を更新する際は、対象 OS の CI イメージで解決できるかを確認する。
 
+## OS 接尾辞によるリソース選択
+
+`scripts/`、`scripts/lists/`、`dotfiles/` のファイル名に含める OS 接尾辞には、継承用と完全一致用の2種類がある。
+
+- `__debian__` のように `!` のない接尾辞は、対象 OS とその親 OS に一致する。たとえば Ubuntu と Kali では `debian` のリソースも選ばれる。
+- `__debian!__` のように `!` を付けた接尾辞は、指定した OS が Debian の場合にだけ一致する。Ubuntu や Kali には継承されない。
+
+外部リポジトリの設定や、提供可否が OS ごとに異なる package list には完全一致接尾辞を使う。既存の継承接尾辞の意味を変更しない。
+
+アプリケーション list では、接尾辞・拡張子・先頭番号を除いた名前が同じファイルを1つの論理 list として結合する。たとえば `__debian__pg_lang.list` と `__debian!__pg_lang.list` は選択画面で `PgLang` 1項目となり、その論理 list 内で同じ package は1回だけ導入する。
+
 ## 検証
 
 変更に応じて、少なくとも以下を実行する。
