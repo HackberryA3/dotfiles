@@ -48,17 +48,27 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+# ~/.codex-<名前> ごとに codex-<名前> エイリアスを自動生成
+_codex_profile_aliases() {
+    local directory profile alias_command
+    for directory in "$HOME"/.codex-*; do
+        [[ -d "$directory" ]] || continue
+        profile=${directory##*/.codex-}
+        # コマンド名として使える名前だけを登録
+        [[ "$profile" =~ ^[a-zA-Z0-9_.-]+$ ]] || continue
+        printf -v alias_command 'CODEX_HOME=%q codex' "$directory/"
+        alias "codex-$profile=$alias_command"
+    done
+}
+_codex_profile_aliases
+unset -f _codex_profile_aliases
+
 if (command -v "ffuf" > /dev/null 2>&1); then
 	alias ffuf='ffuf -c'
 fi
 
 if [[ -f '/mnt/c/Windows/explorer.exe' ]]; then
 	alias open='/mnt/c/Windows/explorer.exe'
-fi
-
-echo "$TERM"
-if [[ -z "$TERM" ]]; then
-	export TERM=xterm-256color
 fi
 
 
