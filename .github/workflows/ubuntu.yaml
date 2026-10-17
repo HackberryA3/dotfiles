@@ -2,7 +2,7 @@ name: Ubuntu
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, nightly ]
     paths:
       - "**.sh"
       - "**.bash"
@@ -10,7 +10,7 @@ on:
       - "**debian**"
       - "**ubuntu**"
   pull_request:
-    branches: [ main ]
+    branches: [ main, nightly ]
     paths:
       - "**.sh"
       - "**.bash"

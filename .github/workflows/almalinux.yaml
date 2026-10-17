@@ -2,7 +2,7 @@ name: AlmaLinux
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, nightly ]
     paths:
       - "**.sh"
       - "**.bash"
@@ -10,7 +10,7 @@ on:
       - "**rhel**"
       - "**almalinux**"
   pull_request:
-    branches: [ main ]
+    branches: [ main, nightly ]
     paths:
       - "**.sh"
       - "**.bash"

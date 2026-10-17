@@ -2,7 +2,7 @@ name: Checkshell
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, nightly ]
     paths:
       - "**.sh"
       - "**.bash"
@@ -13,7 +13,7 @@ on:
       - "**.zshrc"
       - "**.zprofile"
   pull_request:
-    branches: [ main ]
+    branches: [ main, nightly ]
     paths:
       - "**.sh"
       - "**.bash"

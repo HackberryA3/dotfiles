@@ -1,5 +1,3 @@
-Closes #
-
 ## Summary
 
 <!-- What problem does this PR solve, and what changed? -->
@@ -16,6 +14,10 @@ Closes #
 - [ ] Relevant Bash tests and/or `bash -n`
 - [ ] ShellCheck or PSScriptAnalyzer, when applicable
 - [ ] Relevant GitHub Actions workflow is passing, or the reason it was not run is stated below
+
+## Limitations
+
+<!-- Describe unfinished behavior, unverified platforms, and known constraints. -->
 
 ## Impact
 

@@ -2,14 +2,14 @@ name: Debian
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, nightly ]
     paths:
       - "**.sh"
       - "**.bash"
       - "**linux**"
       - "**debian**"
   pull_request:
-    branches: [ main ]
+    branches: [ main, nightly ]
     paths:
       - "**.sh"
       - "**.bash"
